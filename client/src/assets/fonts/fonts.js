@@ -5,6 +5,7 @@ import RobotoThin from './Roboto-Thin.woff'
 import RobotoLight from './Roboto-Light.woff'
 import RobotoBold from './Roboto-Bold.woff'
 import BebasNeue from './BebasNeue-Regular.woff'
+import PTSansBold from './PTSans-Bold.woff'
 
 const FontStyles =  createGlobalStyle`
     @font-face {
@@ -35,6 +36,12 @@ const FontStyles =  createGlobalStyle`
         font-family: 'Bebas Neue';
         src: local('Bebas Neue'), 
         url(${BebasNeue}) format('woff');
+    }
+
+    @font-face {
+        font-family: 'PTSans Bold';
+        src: local('PTSans Bold'), 
+        url(${PTSansBold}) format('woff');
     }
     
 `;

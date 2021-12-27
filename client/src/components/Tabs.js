@@ -7,36 +7,47 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column; 
     align-items: center;
+    margin-top: 5%;
 `
 
 const NavItems = styled.ul`
     width: 85%;
+    height: 5vh;
     background-color: #455a64;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
 `
 
 const NavItem = styled.li`
-    display: inline;
+    display: flex;
     font-family: 'Roboto Regular';
+    letter-spacing: 1px;
     font-size: 1.3rem;
     border: 1px solid white;
     border-top: none;
     border-bottom: none;
     width: 100%;
-    text-align: center;
-    background-color: ${props => props.active? 'teal':'white'};
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: ${props => props.active? 'black':'#b8bcbf'};
+    border-top: ${props => props.active? '5px solid #0540d4': "0px"};
+    background-color: ${props => props.active? '#cdd9f6':'white'};
 
     &:hover{
         cursor: pointer;
+        background-color: #e0e0e0;
+        border-top: 5px solid ;
+        color: black;
     }
 `
 
 const InputsContainer = styled.div`
     width: 85%;
     background-color: #cfd8dc;
-    height: 40vh;
+    height: auto;
 `
 
 const Tabs = (props) => {
