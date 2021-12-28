@@ -1,9 +1,10 @@
 import React from "react";
-import SRForm from '../components/SRForm'
+import Tabs from "../components/Tabs";
+
 
 const CreateSR = (props) => {
     return(
-        <SRForm></SRForm>
+        <Tabs> </Tabs>
     )
 }
 

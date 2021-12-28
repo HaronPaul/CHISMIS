@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import HCLTab from './AllTabs/HCLTab'
 import ControlRoomTab from './AllTabs/ControlRoomTab'
 import EvapTabs from './AllTabs/EvapTabs'
+import BrineTab from './AllTabs/BrineTab'
+import ElectrolysisTab from './AllTabs/ElectrolysisTab'
 
 const FormContainer = styled.div`
     display: flex;
     flex-direction: column; 
     align-items: center;
-    margin-top: 5%;
 `
 
 const NavItems = styled.ul`
@@ -39,9 +40,11 @@ const NavItem = styled.li`
 
     &:hover{
         cursor: pointer;
-        background-color: #e0e0e0;
-        border-top: 5px solid ;
+        /* background-color: #e0e0e0; */
+        border-top: ${props => props.active? '5px solid #0540d4': "5px solid #424242"};
+        background-color: ${props => props.active? '#cdd9f6':'#e0e0e0'};
         color: black;
+        transition: 0.3s;
     }
 `
 
@@ -69,10 +72,12 @@ const Tabs = (props) => {
                 <NavItem active={activeTab === "tab1"? true:false} onClick={() => switchTab("tab1", ControlRoomTab)}>Control Room</NavItem>
                 <NavItem active={activeTab === "tab2"? true:false} onClick={() => switchTab("tab2", HCLTab)}>HCl</NavItem>
                 <NavItem active={activeTab === "tab3"? true:false} onClick={() => switchTab("tab3", EvapTabs)}>Evaporator</NavItem>
-                <NavItem active={activeTab === "tab4"? true:false} onClick={() => switchTab("tab4")}>Primary Brine</NavItem>
-                <NavItem active={activeTab === "tab5"? true:false} onClick={() => switchTab("tab5")}>QC Brine</NavItem>
-                <NavItem active={activeTab === "tab6"? true:false} onClick={() => switchTab("tab6")}>Specific Usages</NavItem>
-                <NavItem active={activeTab === "tab7"? true:false} onClick={() => switchTab("tab7")}>Others</NavItem>
+                <NavItem active={activeTab === "tab4"? true:false} onClick={() => switchTab("tab4", BrineTab)}>Primary Brine</NavItem>
+                <NavItem active={activeTab === "tab5"? true:false} onClick={() => switchTab("tab5", ElectrolysisTab)}>Electrolysis</NavItem>
+                <NavItem active={activeTab === "tab6"? true:false} onClick={() => switchTab("tab6")}>NaClO</NavItem>
+                <NavItem active={activeTab === "tab7"? true:false} onClick={() => switchTab("tab7")}>QC Brine</NavItem>
+                <NavItem active={activeTab === "tab8"? true:false} onClick={() => switchTab("tab8")}>Specific Usages</NavItem>
+                <NavItem active={activeTab === "tab9"? true:false} onClick={() => switchTab("tab9")}>Others</NavItem>
             </NavItems>
             <InputsContainer>
                 {activeContent}
