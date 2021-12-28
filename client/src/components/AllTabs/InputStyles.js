@@ -15,6 +15,23 @@ const InputLabel = styled.div`
     flex-grow: 1;
 `
 
+const Subcontainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: blanchedalmond;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    padding: 20px;
+    flex-wrap: wrap;
+`
+
+const HorizontalContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-wrap: wrap;
+`
+
 const Label = styled.label`
     margin-bottom: 6px;
     font-family: 'Roboto Bold';
@@ -33,4 +50,4 @@ const Input = styled.input`
     }
 `
 
-export {InputContainer, InputLabel, Label, Input}
+export {InputContainer, InputLabel, Label, Input, Subcontainer, HorizontalContainer}
