@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import HCLTab from './AllTabs/HCLTab'
 import ControlRoomTab from './AllTabs/ControlRoomTab'
+import EvapTabs from './AllTabs/EvapTabs'
 
 const FormContainer = styled.div`
     display: flex;
@@ -67,7 +68,7 @@ const Tabs = (props) => {
                 {/* Tab navigation */}
                 <NavItem active={activeTab === "tab1"? true:false} onClick={() => switchTab("tab1", ControlRoomTab)}>Control Room</NavItem>
                 <NavItem active={activeTab === "tab2"? true:false} onClick={() => switchTab("tab2", HCLTab)}>HCl</NavItem>
-                <NavItem active={activeTab === "tab3"? true:false} onClick={() => switchTab("tab3")}>Evaporator</NavItem>
+                <NavItem active={activeTab === "tab3"? true:false} onClick={() => switchTab("tab3", EvapTabs)}>Evaporator</NavItem>
                 <NavItem active={activeTab === "tab4"? true:false} onClick={() => switchTab("tab4")}>Primary Brine</NavItem>
                 <NavItem active={activeTab === "tab5"? true:false} onClick={() => switchTab("tab5")}>QC Brine</NavItem>
                 <NavItem active={activeTab === "tab6"? true:false} onClick={() => switchTab("tab6")}>Specific Usages</NavItem>
