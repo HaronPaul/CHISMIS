@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+const SubTitle = styled.h2`
+    font-family: 'Roboto Bold';
+    margin-bottom: 15px;
+`
+
 const InputContainer = styled.div`
     display: flex;
     margin: 1% 2%;
@@ -18,11 +23,13 @@ const InputLabel = styled.div`
 const Subcontainer = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: blanchedalmond;
+    background-color: #eeeeee;
     margin-bottom: 20px;
     flex-grow: 1;
     padding: 20px;
     flex-wrap: wrap;
+    border-radius: 7px;
+
 `
 
 const HorizontalContainer = styled.div`
@@ -50,4 +57,4 @@ const Input = styled.input`
     }
 `
 
-export {InputContainer, InputLabel, Label, Input, Subcontainer, HorizontalContainer}
+export {InputContainer, InputLabel, Label, Input, Subcontainer, HorizontalContainer, SubTitle}
