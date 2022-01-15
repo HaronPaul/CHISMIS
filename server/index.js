@@ -16,5 +16,3 @@ app.use('/api/v1/user', user)
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} listening to Port ${PORT}`)
 })
-
-

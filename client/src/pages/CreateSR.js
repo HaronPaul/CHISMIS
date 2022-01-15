@@ -1,10 +1,10 @@
 import React from "react";
-import Tabs from "../components/Tabs";
+import OSRTabs from "../components/Tabs";
 
 
 const CreateSR = (props) => {
     return(
-        <Tabs> </Tabs>
+        <OSRTabs> </OSRTabs>
     )
 }
 
