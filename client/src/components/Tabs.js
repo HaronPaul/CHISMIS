@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core'
 import ControlRoomTab from './AllTabs/ControlRoomTab'
 import HCLTab from './AllTabs/HCLTab'
 import EvapTabs from './AllTabs/EvapTabs'
-
+import BrineTab from './AllTabs/BrineTab'
+import ElectrolysisTab from './AllTabs/ElectrolysisTab'
+import NaCLOTab from './AllTabs/NaClOTab'
 
 const useStyles = makeStyles({
     mainContainer: {
@@ -72,12 +74,13 @@ const TabPanel = ({value}) => {
         case 0: return <ControlRoomTab />
         case 1: return <HCLTab />
         case 2: return <EvapTabs />
-        case 3: return <h1> Wew3 </h1>
-        case 4: return <h1> Wew4 </h1>
-        case 5: return <h1> Wew5 </h1>
+        case 3: return <BrineTab />
+        case 4: return <ElectrolysisTab />
+        case 5: return <NaCLOTab/>
         case 6: return <h1> Wew6 </h1>   
         case 7: return <h1> Wew7 </h1>  
-        case 8: return <h1> Wew8 </h1>      
+        case 8: return <h1> Wew8 </h1>
+        default: return <ControlRoomTab />
     }
 }
 

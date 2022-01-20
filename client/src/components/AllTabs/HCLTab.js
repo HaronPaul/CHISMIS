@@ -1,10 +1,21 @@
 import React from "react";
-import {useStyles} from './styles'
-import {Select, MenuItem, FormControl, InputLabel, Typography} from '@material-ui/core'
+import {Select, MenuItem, FormControl, InputLabel, Typography, makeStyles} from '@material-ui/core'
 import { Grid } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
+const useStyles = makeStyles({
+    formControl: {
+        minWidth: '100%',
+    },
 
+    input: {
+        minWidth: '100%',
+    },
+
+    container: {
+        marginBottom: '3%',
+    }
+})
 
 const HCLTab = () => {
     
@@ -14,7 +25,7 @@ const HCLTab = () => {
         <>
             <div className={classes.container}>
                 <Typography variant="h4">Operators</Typography>
-                <Grid container spacing={3}>
+                <Grid container spacing={2}>
                     <Grid item lg={6} sm={6} xs={6}>
                         <FormControl className={classes.formControl}>
                             <InputLabel>Previous Operator</InputLabel>

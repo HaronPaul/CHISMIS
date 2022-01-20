@@ -1,9 +1,19 @@
 import React from "react";
-import {useStyles} from './styles'
 import {Select, MenuItem, FormControl, InputLabel, makeStyles} from '@material-ui/core'
 import { Grid } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
+const useStyles = makeStyles({
+    formControl: {
+        minWidth: '100%',
+    },
+    input: {
+        minWidth: '100%',
+    },
+    container: {
+        marginBottom: '3%',
+    }
+})
 
 const ControlRoomTab = () => {
     

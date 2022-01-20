@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core"
 
-export const useStyles = makeStyles({
+const useStyles = makeStyles({
     formControl: {
         minWidth: '100%',
     },
@@ -13,3 +13,5 @@ export const useStyles = makeStyles({
         marginBottom: '3%',
     }
 })
+
+export default useStyles
