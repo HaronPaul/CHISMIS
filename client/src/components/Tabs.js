@@ -7,6 +7,8 @@ import EvapTabs from './AllTabs/EvapTabs'
 import BrineTab from './AllTabs/BrineTab'
 import ElectrolysisTab from './AllTabs/ElectrolysisTab'
 import NaCLOTab from './AllTabs/NaClOTab'
+import QCBrine from './AllTabs/QCBrine'
+import SpecificUsagesTab from './AllTabs/SpecificUsages'
 
 const useStyles = makeStyles({
     mainContainer: {
@@ -77,8 +79,8 @@ const TabPanel = ({value}) => {
         case 3: return <BrineTab />
         case 4: return <ElectrolysisTab />
         case 5: return <NaCLOTab/>
-        case 6: return <h1> Wew6 </h1>   
-        case 7: return <h1> Wew7 </h1>  
+        case 6: return <QCBrine />   
+        case 7: return <SpecificUsagesTab/>  
         case 8: return <h1> Wew8 </h1>
         default: return <ControlRoomTab />
     }
