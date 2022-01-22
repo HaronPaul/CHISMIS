@@ -7,7 +7,7 @@ import './override.css'
 const App = () => {
   return (
     <div>
-      <CreateSR/>
+      <Home/>
     </div>
   );
 }
