@@ -2,7 +2,6 @@ import React from "react";
 import {Select, MenuItem, FormControl, InputLabel, Typography, makeStyles, Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
-
 const useStyles = makeStyles({
     formControl: {
         minWidth: '100%',
@@ -12,6 +11,9 @@ const useStyles = makeStyles({
     },
     container: {
         marginBottom: '3%',
+    },  
+    header: {
+        marginBottom: '1%'
     }
 })
 
@@ -115,6 +117,21 @@ const NaCLOTab = () => {
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField label='Storage IV' placeholder="" className={classes.input}></TextField>
+                    </Grid>
+                </Grid>
+            </div>
+
+            <div className={classes.container}>
+                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
+                <Grid container spacing={4}>
+                    <Grid item lg={12} sm={12} xs={12}>
+                        <TextField
+                            variant="outlined"
+                            label="Operational Remarks"
+                            multiline
+                            maxRows={4}
+                            className={classes.input}
+                        />
                     </Grid>
                 </Grid>
             </div>

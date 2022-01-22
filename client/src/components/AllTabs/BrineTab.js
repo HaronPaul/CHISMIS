@@ -11,6 +11,9 @@ const useStyles = makeStyles({
     },
     container: {
         marginBottom: '3%',
+    },  
+    header: {
+        marginBottom: '1%'
     }
 })
 
@@ -47,36 +50,53 @@ const BrineTab = () => {
                 </Grid>
             </div>
             
-            <Typography variant="h4">Other Information</Typography>
-            <Grid container spacing={4}>
-                <Grid item lg= {2} sm={4} xs={4}>
-                    <TextField label='Salt loaded' placeholder="6-10" className={classes.input}></TextField>
+            <div className={classes.container}>
+                <Typography variant="h4">Other Information</Typography>
+                <Grid container spacing={4}>
+                    <Grid item lg= {2} sm={4} xs={4}>
+                        <TextField label='Salt loaded' placeholder="6-10" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Polished Brine Concentration' placeholder="280-320 gpl" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Precoat Operating Hours' placeholder=">= 75 hours" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Ca+Mg Concentration' placeholder="5 max" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Excess NaOH Concentration' placeholder="0.1 - 1.5" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Differential Pressure in Precoat' placeholder="0.2" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Brine Overflow' placeholder="" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Excess Na2CO3 Concentration' placeholder="0.1 - 1.5" className={classes.input}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField label='Precoat Flow Rate ' placeholder="20 minutes" className={classes.input}></TextField>
+                    </Grid>
                 </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Polished Brine Concentration' placeholder="280-320 gpl" className={classes.input}></TextField>
+            </div>
+
+            <div className={classes.container}>
+                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
+                <Grid container spacing={4}>
+                    <Grid item lg={12} sm={12} xs={12}>
+                        <TextField
+                            variant="outlined"
+                            label="Operational Remarks"
+                            multiline
+                            maxRows={4}
+                            className={classes.input}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Precoat Operating Hours' placeholder=">= 75 hours" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Ca+Mg Concentration' placeholder="5 max" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Excess NaOH Concentration' placeholder="0.1 - 1.5" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Differential Pressure in Precoat' placeholder="0.2" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Brine Overflow' placeholder="" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Excess Na2CO3 Concentration' placeholder="0.1 - 1.5" className={classes.input}></TextField>
-                </Grid>
-                <Grid item lg={2} sm={4} xs={4}>
-                    <TextField label='Precoat Flow Rate ' placeholder="20 minutes" className={classes.input}></TextField>
-                </Grid>
-            </Grid>
+            </div>
         </>
     )
 }

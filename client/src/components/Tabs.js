@@ -9,17 +9,10 @@ import ElectrolysisTab from './AllTabs/ElectrolysisTab'
 import NaCLOTab from './AllTabs/NaClOTab'
 import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
+import SPEval from './AllTabs/SPEval'
+
 
 const useStyles = makeStyles({
-    mainContainer: {
-        width: '100vw',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: 'auto',
-    },
-
-
     container: {
         width: '90%',
         flexGrow: 1,
@@ -38,13 +31,12 @@ const useStyles = makeStyles({
 
 const OSRTabs = (props) => {
     const classes = useStyles()
-    
     const [value, setValue] = useState(0)
     const handleTabs = (event, value) => {
         setValue(value)
     }
     return( 
-        <div className={classes.mainContainer}>
+        <>
             <div className={classes.container}>
             <Tabs 
                 value={value}
@@ -66,8 +58,7 @@ const OSRTabs = (props) => {
             <div className={classes.tabPanelContainer}>
                 <TabPanel value={value}></TabPanel>
             </div>
-            
-        </div>
+        </>
     )
 }
 
@@ -81,7 +72,7 @@ const TabPanel = ({value}) => {
         case 5: return <NaCLOTab/>
         case 6: return <QCBrine />   
         case 7: return <SpecificUsagesTab/>  
-        case 8: return <h1> Wew8 </h1>
+        case 8: return <SPEval />
         default: return <ControlRoomTab />
     }
 }
