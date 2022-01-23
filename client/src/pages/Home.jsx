@@ -1,26 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import HomeImage from '../assets/MVC-364.jpg'
-import { Grid, Paper, Typography, TextField, makeStyles, Button } from "@material-ui/core";
+import { Grid, Paper, Typography, TextField, makeStyles, Button, MenuItem,
+Select, InputLabel, FormControl, useMediaQuery, useTheme} from "@material-ui/core";
+import Register from '../components/Register'
+import LogIn from "../components/Login";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const LeftContainer = styled.div`
-  width: 50%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
   paperContainer: {
-    minWidth: '80%',
+    width: '70%',
     padding: '2.5rem',
     display: 'flex',
     flexDirection: 'column'
@@ -47,37 +35,73 @@ const useStyles = makeStyles({
   },
   minicontent: {
     marginRight: '10px'
-  }
-})
+  },
+  
+  mainTitle: {
+    color: 'white',
+    textAlign: 'center'
+  },
+  // Containers styles
+  
+  mainContainer:{
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap'
+
+  },
+
+  rightGrid: {
+    color: 'black',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: `url(${HomeImage})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    [theme.breakpoints.down('md')]: {
+      padding: '3%',
+    }
+  },
+
+  leftGrid: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+      height: 'auto',
+      paddingTop: '5%',
+      marginBottom: '3%'
+    }
+  },
+}))
+
 
 const Home = () => {
     const classes = useStyles()
 
+    const [isLogin, setLogin] = useState(1)
+
+    const handleClick = () => {
+      isLogin? setLogin(0):setLogin(1)
+      console.log(isLogin)
+    }
+
     return(
-      <Container>
-        <LeftContainer>
-          <Paper className={classes.paperContainer} elevation={3}>
-            <Typography variant="h2" className={classes.title}>Sign In</Typography>
-            <Grid container spacing={2}>
-              <Grid item lg={12} sm={12} xs={12}>
-                <TextField variant="outlined" label="Username" className={classes.textArea}></TextField>
-              </Grid>
-
-              <Grid item lg={12} sm={12} xs={12}>
-                <TextField variant="outlined" label="Password" className={classes.textArea} type='password'></TextField>
-              </Grid>
-
-              <Grid item lg={12} sm={12} xs={12}>
-                <Button size="large" variant="contained" color='primary' disableElevation className={classes.button}>Sign In</Button>
-              </Grid>
-              <Grid item>
-                  <Typography className={classes.minicontent}>Don't have an account yet?</Typography>
-                  <Button size="small" variant="outlined">Register Here</Button>
-              </Grid>
-            </Grid>
+      <Grid container className={classes.mainContainer}>
+        <Grid item lg={6} sm={12} className={classes.rightGrid}>
+            <Typography variant="h1" className={classes.mainTitle}>CHISMIS</Typography>
+            <Typography variant="h4" className={classes.mainTitle}>Centralized Historical and Integrated Shift Management Information System</Typography>
+        </Grid>
+        <Grid item lg={6} sm={12} className={classes.leftGrid}>
+          <Paper className={classes.paperContainer} elevation={5}>
+            {isLogin==1? <LogIn handleClick={handleClick}/>:<Register handleClick={handleClick}/>}
           </Paper>
-        </LeftContainer>
-      </Container>
+        </Grid>
+      </Grid>
     )
 }
 
