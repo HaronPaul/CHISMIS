@@ -1,72 +1,76 @@
 const Joi = require('joi')
+const User = require('../model/User')
+
+
+// Validation for data
+let schema = Joi.object({
+    firstName: Joi.string().required().messages({
+        'string.empty': "First Name is required field"
+    }),
+
+    lastName: Joi.string().required().messages({
+        'string.empty': "Last Name is required field"
+    }),
+
+    username: Joi
+    .string()
+    .min(7)
+    .max(20)
+    .required()
+    .messages({
+        'string.empty': "Username is required field",
+        'string.min': "Username length must be at least 7 characters long"
+    }),
+
+    password: Joi
+    .string()
+    .alphanum()
+    .pattern(new RegExp('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'))
+    .min(8)
+    .max(20)
+    .required()
+    .messages(
+        {'string.empty': "Password is a required field",
+        'string.pattern.base': "Password must have at least one character and at least one number", 
+        'string.min': "Password length must be at least 8 characters long" }),
+
+    role: Joi.string().valid("MANAGER", "SUPERVISOR", "ADMINISTRATOR")
+    .messages({'any.only': 'Role must be either Manager, Supervisor, or Administrator'})
+})
+
 
 // @method:     POST
 // @access:     Public
 // @desc:       This will add a user to the DB
 // @route:      /api/v1/user
-function createUser(req, res) {
-
-    // Validation Part
-    let schema = Joi.object({
-        firstName: Joi.string().required().messages({
-            'string.empty': "First Name is required field"
-        }),
-
-        lastName: Joi.string().required().messages({
-            'string.empty': "Last Name Name is required field"
-        }),
-
-        username: Joi
-        .string()
-        .min(7)
-        .max(20)
-        .required()
-        .messages({
-            'string.empty': "Username is required field",
-            'string.min': "Username length must be at least 7 characters long"
-        }),
-
-        password: Joi
-        .string()
-        .alphanum()
-        .pattern(new RegExp('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'))
-        .min(8)
-        .max(20)
-        .required()
-        .messages(
-            {'string.empty': "Password is a required field",
-            'string.pattern.base': "Password is must have at least one character and at least one number", 
-            'string.min': "Password length must be at least 8 characters long" }),
-
-        role: Joi.string().valid("MANAGER", "SUPERVISOR", "ADMINISTRATOR")
-        .messages({'any.only': 'Role must be either Manager, Supervisor, or Administrator'})
-    })
-
+const createUser =  async (req, res) => {
     // Destructure the contents of the body
     const {firstName, lastName, username, password, role} = req.body
 
-    const {error, value} = schema.validate({firstName, lastName, username, password, role})
-    console.log(`Validation result: ${value}`)
-    if(error) {
-        return res.status(400).json({
+    try {
+        await schema.validateAsync({firstName, lastName, username, password, role})
+        
+        // Check if user already exists
+        let user = await User.findOne({username})
+
+        if(user) {
+            return res.json({
+                success: false,
+                message: 'Username already taken'
+            })
+        }
+        
+        //Insert the user in the databas 
+        const newUser = await User.create(new User({firstName, lastName, username, password, role}))
+        res.status(200).json({
+            success: true,
+            message: "Successfully created user. Contact your admin to verify your account",
+        })
+    } catch(err) {
+        res.json({
             success: false,
-            message: error.message
+            message: err.message
         })
     }
-    res.status(200).json({
-        success: true,
-        msg: "Successfully created user"
-    })
 }
-
 module.exports = {createUser}
-
-/*
-{
-  firstName: 'Haron Paul',
-  lastName: 'Lorente',
-  username: 'yeahpoy',
-  password: 'Hplorente26',
-  role: 'SUPERVISOR'
-}
-*/

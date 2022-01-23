@@ -14,29 +14,6 @@ const useStyles = makeStyles( theme => ({
     flexDirection: 'column'
   },
 
-  title: {
-    margin: '1%',
-    textAlign: 'center'
-  },
-
-  textArea: {
-    minWidth: '100%',
-    marginBottom: '3%',
-  },
-
-  button: {
-    minWidth: '100%',
-  },
-
-  miniContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  minicontent: {
-    marginRight: '10px'
-  },
-  
   mainTitle: {
     color: 'white',
     textAlign: 'center'
