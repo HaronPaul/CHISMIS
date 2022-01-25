@@ -1,8 +1,8 @@
 const Joi = require('joi')
 const User = require('../model/User')
+const bcrypt = require('bcryptjs')
 
-
-// Validation for data
+// Validation for user data
 let schema = Joi.object({
     firstName: Joi.string().required().messages({
         'string.empty': "First Name is required field"
@@ -59,9 +59,17 @@ const createUser =  async (req, res) => {
                 message: 'Username already taken'
             })
         }
+
+        // Create a new user
+        const newUser = new User({firstName, lastName, username, password, role})
         
-        //Insert the user in the databas 
-        const newUser = await User.create(new User({firstName, lastName, username, password, role}))
+        // Encrypt user's password using bcrypt
+        const salt = await bcrypt.genSalt(10)
+        newUser.password = await bcrypt.hash(password, salt)
+
+        //Insert the user in the database 
+        await newUser.save()
+
         res.status(200).json({
             success: true,
             message: "Successfully created user. Contact your admin to verify your account",
@@ -73,4 +81,5 @@ const createUser =  async (req, res) => {
         })
     }
 }
+
 module.exports = {createUser}

@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import styled from "styled-components";
 import HomeImage from '../assets/MVC-364.jpg'
-import { Grid, Paper, Typography, TextField, makeStyles, Button, MenuItem,
-Select, InputLabel, FormControl, useMediaQuery, useTheme} from "@material-ui/core";
+import { Grid, Paper, Typography, makeStyles} from "@material-ui/core";
 import Register from '../components/Register'
 import LogIn from "../components/Login";
 
@@ -11,20 +9,18 @@ const useStyles = makeStyles( theme => ({
     width: '70%',
     padding: '2.5rem',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
 
   mainTitle: {
     color: 'white',
     textAlign: 'center'
   },
-  // Containers styles
-  
+
   mainContainer:{
     display: 'flex',
     flexDirection: 'row-reverse',
-    flexWrap: 'wrap'
-
+    flexWrap: 'wrap',
   },
 
   rightGrid: {
@@ -47,11 +43,11 @@ const useStyles = makeStyles( theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    background: 'linear-gradient(to bottom, #34e89e, #0f3443)',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
-      height: 'auto',
+      height: '95vh',
       paddingTop: '5%',
-      marginBottom: '3%'
     }
   },
 }))
@@ -74,8 +70,8 @@ const Home = () => {
             <Typography variant="h4" className={classes.mainTitle}>Centralized Historical and Integrated Shift Management Information System</Typography>
         </Grid>
         <Grid item lg={6} sm={12} className={classes.leftGrid}>
-          <Paper className={classes.paperContainer} elevation={5}>
-            {isLogin==1? <LogIn handleClick={handleClick}/>:<Register handleClick={handleClick}/>}
+          <Paper className={classes.paperContainer} elevation={7}>
+            {isLogin===1? <LogIn handleClick={handleClick}/>:<Register handleClick={handleClick}/>}
           </Paper>
         </Grid>
       </Grid>

@@ -117,8 +117,8 @@ const Register = ({handleClick}) => {
                   </Select>
               </FormControl>
           </Grid>
-          {alert == 1 && <SuccessAlert message={message}/>}
-          {alert == -1 && <ErrorAlert message={message}/>}
+          {alert === 1 && <SuccessAlert message={message}/>}
+          {alert === -1 && <ErrorAlert message={message}/>}
           <Grid item lg={12} sm={12} xs={12}>
             <Button size="large" variant="contained" color='primary' disableElevation style={{minWidth: '100%'}} onClick={() => handleRegisterButton()}>Register</Button>
           </Grid>
