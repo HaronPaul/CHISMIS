@@ -93,9 +93,11 @@ const Users = () => {
             <Container>
                 <Typography variant="h4" style={{color: 'white'}}> Pending users</Typography>
                 {unverifiedUsers.map((user, index) => {
-                    return(
-                        <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
-                    )
+                    if(!user.verified) {
+                        return(
+                            <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
+                        )
+                    }
                 })}
             </Container>
         </>

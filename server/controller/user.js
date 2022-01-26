@@ -89,7 +89,7 @@ const createUser =  async (req, res) => {
 // @route:      /api/v1/user
 const getUsers = async (req,res) => {
     try {
-        const users = await User.find({verified: false}).select('firstName lastName username verified role')
+        const users = await User.find().select('firstName lastName username verified role')
         res.status(200).json(users)
     } catch(error) {
         res.status(400).json({
