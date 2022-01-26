@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const User = require('../model/User')
 const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
 
 // Validation for user data
 let schema = Joi.object({
@@ -88,8 +89,7 @@ const createUser =  async (req, res) => {
 // @route:      /api/v1/user
 const getUsers = async (req,res) => {
     try {
-        const users = await User.find().select('firstName lastName username verified role')
-
+        const users = await User.find({verified: false}).select('firstName lastName username verified role')
         res.status(200).json(users)
     } catch(error) {
         res.status(400).json({
@@ -98,4 +98,24 @@ const getUsers = async (req,res) => {
     }
 }
 
-module.exports = {createUser, getUsers}
+
+// @method:     GET
+// @access:     Private
+// @desc:       This will get all users
+// @route:      /api/v1/user/:id
+const editUser = async (req,res) => {
+
+    try {
+        const update = req.body
+        const user = await User.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.params.id)}, update, {new: true})
+        res.status(200).json({
+            message: "Successfully updated user",
+            data: user
+        })
+    } catch(error) {
+        console.log(error.message)
+        res.status(400).json(error.message)
+    }
+}
+
+module.exports = {createUser, getUsers, editUser} 
