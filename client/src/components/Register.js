@@ -58,8 +58,6 @@ const Register = ({handleClick}) => {
         response.data.success? setAlert(1):setAlert(-1)
         setMessage(response.data.message)
 
-        response.data.success? setAlert(1):setAlert(-1)
-
       } catch(err) {
         console.log(err.message)
       }

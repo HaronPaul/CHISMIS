@@ -44,11 +44,10 @@ const Box = styled.div`
     position: relative;
     width: 225px;
     height: 225px;
-    background: linear-gradient(to top, #373b44, #4286f4); 
     margin-right: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
-
+    background: linear-gradient(to top, #373b44, #4286f4);
     flex-direction: column;
     display: flex;
     justify-content: center;

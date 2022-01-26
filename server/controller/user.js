@@ -41,7 +41,7 @@ let schema = Joi.object({
 
 // @method:     POST
 // @access:     Public
-// @desc:       This will add a user to the DB
+// @desc:       This will register a user to the DB
 // @route:      /api/v1/user
 const createUser =  async (req, res) => {
     // Destructure the contents of the body
@@ -82,4 +82,20 @@ const createUser =  async (req, res) => {
     }
 }
 
-module.exports = {createUser}
+// @method:     GET
+// @access:     Private
+// @desc:       This will get all users
+// @route:      /api/v1/user
+const getUsers = async (req,res) => {
+    try {
+        const users = await User.find().select('firstName lastName username verified role')
+
+        res.status(200).json(users)
+    } catch(error) {
+        res.status(400).json({
+            message: error.message
+        })
+    }
+}
+
+module.exports = {createUser, getUsers}
