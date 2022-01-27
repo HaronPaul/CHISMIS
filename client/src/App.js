@@ -1,15 +1,15 @@
 import React from "react";
-import Home from "./pages/Home";
-import CreateSR from './pages/CreateSR'
+import Authorization from "./components/Authorization";
 import './override.css'
-import Admin from "./pages/Admin";
-import Users from "./pages/Users";
+import { UserProvider } from "./contexts/UserContext";
 
 const App = () => {
   return (
-    <div>
-      <Users/>
-    </div>
+    <>
+    <UserProvider>
+      <Authorization></Authorization>
+    </UserProvider>
+    </>
   );
 }
 

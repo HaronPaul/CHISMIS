@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import HomeImage from '../assets/MVC-364.jpg'
 import { Grid, Paper, Typography, makeStyles} from "@material-ui/core";
 import Register from '../components/Register'
 import LogIn from "../components/Login";
+import { UserContext } from "../contexts/UserContext";
 
 const useStyles = makeStyles( theme => ({
   paperContainer: {
@@ -53,15 +54,22 @@ const useStyles = makeStyles( theme => ({
 }))
 
 
-const Home = () => {
+const Home = (props) => {
     const classes = useStyles()
-
+    const [user] = useContext(UserContext)
     const [isLogin, setLogin] = useState(1)
 
     const handleClick = () => {
       isLogin? setLogin(0):setLogin(1)
       console.log(isLogin)
     }
+
+    useEffect(() => {
+      if(sessionStorage.getItem('token') && user) {
+        console.log("Token is present")
+        props.history.push('/manager')
+      }
+    }, [])
 
     return(
       <Grid container className={classes.mainContainer}>

@@ -6,7 +6,7 @@ const login = require('../controller/login')
 // Route localhost:8000/api/v1/user
 router.get('/', getUsers)
 router.post('/', createUser)
+router.post('/login', login)
 router.put('/:id', editUser)
-router.get('/login', login)
 
 module.exports = router
