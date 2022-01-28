@@ -31,7 +31,6 @@ const ErrorAlert = ({message}) => {
 
 const LogIn = ({handleClick}) => {
     const classes = useStyles()
-    const location = useLocation()
 
     // States
     const [user, setUser] = useContext(UserContext)
@@ -62,7 +61,6 @@ const LogIn = ({handleClick}) => {
                 console.log('Go to supervisor page')
               case "MANAGER":
                 window.location.href = '/manager'
-                console.log(location)
             }
           }
         }

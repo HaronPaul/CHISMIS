@@ -65,9 +65,11 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-      if(sessionStorage.getItem('token') && user) {
-        console.log("Token is present")
-        props.history.push('/manager')
+      if(user) {
+        switch(user.role){
+          case 'MANAGER': props.history.push('/manager')
+          case 'ADMINISTRATOR': props.history.push('/admin')
+          }
       }
     }, [])
 

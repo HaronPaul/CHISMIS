@@ -18,9 +18,17 @@ let schema = Joi.object({
 // @access  Public    
 const login = async (req, res) => {
     const {username, password} = req.body
+
+    // Validate the values in the fields
+    const validationResult = schema.validate({username, password})
+    if(validationResult.error) {
+        return res.json({
+            success: false,
+            message: validationResult.error.details[0].message
+        })
+    }
+
     try {
-        // Validate the values in the fields
-        await schema.validateAsync({username, password})
 
         // Check if user exists
         const user = await User.findOne({username})
@@ -64,9 +72,10 @@ const login = async (req, res) => {
             }
         )
     } catch(error) {
+        
         res.json({
             success: false,
-            message: error.details[0].message || error
+            error: error
         })
     }
 }
