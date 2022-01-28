@@ -1,8 +1,6 @@
-import React, {useContext} from "react";
-import { UserContext } from "../contexts/UserContext";
+import React from "react";
 
 const Managers = () => {
-    const [user, setUser] = useContext(UserContext)
     return(
         <div>
             <h1> This is the manager page</h1>

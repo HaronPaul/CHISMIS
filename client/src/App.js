@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './override.css'
 import Home from "./pages/Home";
@@ -8,14 +8,8 @@ import Supervisor from "./pages/Supervisor";
 import Manager from "./pages/Manager"
 import Users from "./pages/Users";
 // import PrivateRoute from "./components/PrivateRoute";
-import { UserContext } from "./contexts/UserContext";
 
-const App = () => {
-  const [user] = useContext(UserContext)
-
-  useEffect(() => {
-    console.log('User is added')
-  }, [user])
+const App = (props) => {
 
   return (
       <Routes>

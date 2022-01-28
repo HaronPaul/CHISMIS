@@ -62,7 +62,7 @@ const login = async (req, res) => {
         jwt.sign(
             payload,
             process.env.JWT_SECRET,
-            {expiresIn: 36000},
+            {expiresIn: 10},
             (err, token) => {
                 if(err) throw err
                 res.json({
@@ -72,10 +72,10 @@ const login = async (req, res) => {
             }
         )
     } catch(error) {
-        
-        res.json({
+        console.log(error)
+        res.status(400).json({
             success: false,
-            error: error
+            error
         })
     }
 }

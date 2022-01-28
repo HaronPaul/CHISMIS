@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react"
-import {useLocation} from 'react-router-dom'
+import React, { useState } from "react"
 import { Typography, Grid, TextField, Button, makeStyles } from "@material-ui/core"
 import axios from 'axios'
 import {Alert} from '@material-ui/lab'
-import { UserContext } from "../contexts/UserContext"
 import jwt from 'jwt-decode'
+import { useNavigate } from "react-router-dom"
+
 
 const useStyles = makeStyles( theme => ({
     textArea: {
@@ -31,9 +31,9 @@ const ErrorAlert = ({message}) => {
 
 const LogIn = ({handleClick}) => {
     const classes = useStyles()
+    const navigate = useNavigate()
 
     // States
-    const [user, setUser] = useContext(UserContext)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState(0)
@@ -44,30 +44,24 @@ const LogIn = ({handleClick}) => {
 
       try {
         const response = await axios.post('http://localhost:8000/api/v1/user/login', body)
+
         if(!response.data.success) {
+          console.log(response)
           setAlert(-1)
           setMessage(response.data.message)
         }
 
         else {
           const token = response.data.token
-          if(token) {
-            sessionStorage.setItem('token', JSON.stringify(token))
-            const decodedUser = jwt(token).user
-            setUser({...decodedUser})
-
-            switch(decodedUser.role) {
-              case "SUPERVISOR":
-                console.log('Go to supervisor page')
-              case "MANAGER":
-                window.location.href = '/manager'
-            }
+          if(response.data.token) {
+            localStorage.setItem('token', JSON.stringify(token))
+            const decodedToken = jwt(token)
           }
         }
       } catch(error) {
         console.log(error)
       }
-    } 
+    }
 
     return(
       <>
