@@ -42,32 +42,33 @@ const login = async (req, res) => {
         // Check if passwords match
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "Invalid username/password"
             })
         }
 
         // Creating the payload for JWT
-        const payload = {
-            user: {
-                id: user.id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                role: user.role
-            }
+        const loggedInUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            role: user.role
         }
         
         jwt.sign(
-            payload,
+            {loggedInUser},
             process.env.JWT_SECRET,
             {expiresIn: 10},
             (err, token) => {
                 if(err) throw err
                 res.json({
                     success: true,
-                    token: token
+                    user: {
+                        ...loggedInUser,
+                        token: token
+                    }
                 })
             }
         )

@@ -1,17 +1,17 @@
 import React, { useState } from "react"
 import { Typography, Grid, TextField, Button, makeStyles } from "@material-ui/core"
-import axios from 'axios'
 import {Alert} from '@material-ui/lab'
-import jwt from 'jwt-decode'
-import { useNavigate } from "react-router-dom"
 
+// Redux related improts
+import {useDispatch} from 'react-redux'
+import {login} from '../redux/apiCalls'
 
 const useStyles = makeStyles( theme => ({
     textArea: {
       minWidth: '100%',
       marginBottom: '3%',
     },
-  }))
+}))
 
 const SuccessAlert = ({message}) => {
   return(
@@ -31,7 +31,7 @@ const ErrorAlert = ({message}) => {
 
 const LogIn = ({handleClick}) => {
     const classes = useStyles()
-    const navigate = useNavigate()
+    const dispatch = useDispatch()  
 
     // States
     const [username, setUsername] = useState('')
@@ -41,26 +41,7 @@ const LogIn = ({handleClick}) => {
 
     const handleLoginButton = async ( ) => {
       const body = {username,password}
-
-      try {
-        const response = await axios.post('http://localhost:8000/api/v1/user/login', body)
-
-        if(!response.data.success) {
-          console.log(response)
-          setAlert(-1)
-          setMessage(response.data.message)
-        }
-
-        else {
-          const token = response.data.token
-          if(response.data.token) {
-            localStorage.setItem('token', JSON.stringify(token))
-            const decodedToken = jwt(token)
-          }
-        }
-      } catch(error) {
-        console.log(error)
-      }
+      login(dispatch, body)
     }
 
     return(
