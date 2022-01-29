@@ -11,6 +11,8 @@ import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
 import SPEval from './AllTabs/SPEval'
 
+// Import initials states from each tab
+import { ctrlrm_values } from './TabStates' 
 
 const useStyles = makeStyles({
     container: {
@@ -32,9 +34,12 @@ const useStyles = makeStyles({
 const OSRTabs = (props) => {
     const classes = useStyles()
     const [value, setValue] = useState(0)
+    
     const handleTabs = (event, value) => {
         setValue(value)
     }
+
+
     return( 
         <>
             <div className={classes.container}>
@@ -42,17 +47,16 @@ const OSRTabs = (props) => {
                 value={value}
                 onChange={handleTabs}
                 variant="fullWidth" 
-                textColor="white"
                 indicatorColor='primary'>
-                    <Tab label="Control Room" wrapped> </Tab>
-                    <Tab label="HCL" wrapped> </Tab>
-                    <Tab label="Evaporator" wrapped> </Tab>
-                    <Tab label="Primary Brine" wrapped> </Tab>
-                    <Tab label="Electrolysis" wrapped> </Tab>
-                    <Tab label="Hypochlorite" wrapped> </Tab>
-                    <Tab label="QC Brine" wrapped> </Tab>
-                    <Tab label="Specific Usages" wrapped> </Tab>
-                    <Tab label="SP Evaluation" wrapped> </Tab>
+                    <Tab label="Control Room" wrapped />
+                    <Tab label="HCL" wrapped />
+                    <Tab label="Evaporator" wrapped /> 
+                    <Tab label="Primary Brine" wrapped/> 
+                    <Tab label="Electrolysis" wrapped /> 
+                    <Tab label="Hypochlorite" wrapped/> 
+                    <Tab label="QC Brine" wrapped/> 
+                    <Tab label="Specific Usages" wrapped/>
+                    <Tab label="SP Evaluation" wrapped/> 
             </Tabs>
             </div>
             <div className={classes.tabPanelContainer}>
@@ -63,8 +67,10 @@ const OSRTabs = (props) => {
 }
 
 const TabPanel = ({value}) => {
+    const [controlRoom, setControlRoom] = useState(ctrlrm_values)
+
     switch(value) {
-        case 0: return <ControlRoomTab />
+        case 0: return <ControlRoomTab controlRoom={controlRoom} setControlRoom={setControlRoom}/>
         case 1: return <HCLTab />
         case 2: return <EvapTabs />
         case 3: return <BrineTab />

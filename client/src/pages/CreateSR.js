@@ -1,6 +1,6 @@
 import React from "react";
 import OSRTabs from "../components/Tabs";
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography, makeStyles, Button } from "@material-ui/core";
 
 
 const useStyles = makeStyles({
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         alignSelf: 'flex-start',
         marginTop: '2%',
         marginBottom: '1%',
-        marginLeft: '5%'
+        marginLeft: '5%',
     }
 })
 
@@ -27,6 +27,8 @@ const CreateSR = (props) => {
         <div className={classes.mainContainer}>  
             <Typography variant="h2" className={classes.title}>Create Operation Shift Report</Typography>
             <OSRTabs> </OSRTabs>
+            <Button variant="outlined" style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%'}}>Submit Report</Button>
+
         </div>
     )
 }

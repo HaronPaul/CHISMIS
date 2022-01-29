@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        required: true
+        required: true  
     },
     username: {
         type: String,
@@ -24,7 +24,8 @@ const UserSchema = new mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
-    } 
+    }
 })
+
 
 module.exports = User = mongoose.model('user', UserSchema)

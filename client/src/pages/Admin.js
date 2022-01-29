@@ -47,7 +47,8 @@ const Box = styled.div`
     margin-right: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
-    background: linear-gradient(to top, #373b44, #4286f4);
+    background-color: #00695C;
+    /* background: linear-gradient(to top, #2980b9, #2c3e50); */
     flex-direction: column;
     display: flex;
     justify-content: center;
@@ -57,14 +58,15 @@ const Box = styled.div`
 
     :hover {
         cursor: pointer;
-        opacity: 0.6;
+        /* opacity: 0.6; */
+        background-color: #009688;
         transform: scale(1.1)
     }
 `
 
 const Image = styled.img`
-    width: 60%;
-    height: 60%;
+    width: 50%;
+    height: 50%;
     object-fit: contain;
 `
 
@@ -76,17 +78,17 @@ const Admin = () => {
             <Typography variant="h2"> Welcome Administrator</Typography>
             <Typography variant='h4' style={{margin: '20px 0'}}> What do you want to do?</Typography>
             <OptionsContainer>
-                <Box style={{background: 'linear-gradient(to bottom, #00b4db, #0083b0)'}}>
+                <Box>
                     <Image src={people}/>
-                    <Typography variant='h6'>Edit Users  </Typography>
+                    <Typography variant='h6' style={{color: 'whitesmoke'}}>Edit Users  </Typography>
                 </Box>
-                <Box style={{background: 'linear-gradient(to bottom, #da4453, #89216b)'}}></Box>
-                <Box style={{background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)'}}> </Box>
-                <Box style={{background: 'linear-gradient(to bottom, #00b09b, #96c93d)'}}> </Box>
-                <Box style={{background: 'linear-gradient(to bottom, #c33764, #1d2671)'}}> </Box>
+                <Box></Box>
+                <Box> </Box>
+                <Box> </Box>
+                <Box> </Box>
                 <Box> </Box>
                 <Box></Box>
-            </OptionsContainer>
+            </OptionsContainer> 
         </MainContainer>
     )
 }

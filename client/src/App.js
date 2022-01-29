@@ -29,13 +29,16 @@ const App = (props) => {
             <Admin/>
           </Route>
           <Route path='/admin/users' exact>
-            <Admin/>
+            <Users/>
           </Route>
           <Route path='/' exact>
             {currentUser? <Redirect to={roleRoute}/>:<Home/>}
           </Route>
-          <Route path='/supervisor'>
+          <Route path='/supervisor' exact>
             <Supervisor/>
+          </Route>
+          <Route path='/supervisor/create'>
+            <CreateSR/>
           </Route>
           <Route path='/manager'>
             <Manager/>

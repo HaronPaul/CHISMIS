@@ -30,7 +30,7 @@ const ControlRoomTab = () => {
                     <Grid item lg={6} sm={6} xs={6}>
                         <FormControl className={classes.formControl}>
                             <InputLabel>Previous Operator</InputLabel>
-                            <Select defaultValue = "" >
+                            <Select defaultValue = "">
                                 <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
                                 <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
                                 <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
