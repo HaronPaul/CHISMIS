@@ -1,4 +1,4 @@
-export const ctrlrm_values = {
+export const controlRoom_values = {
     previous_operator: '',
     present_operator: '',
     interlock_engaged: null,

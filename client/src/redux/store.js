@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from './userSlice'
+import sectionReducer from './sectionSlice'
+
 import {
     persistStore,
     persistReducer,
@@ -22,7 +24,8 @@ const persistedReducer = persistReducer(persistConfig, userReducer)
 
 export const store = configureStore({
     reducer: {
-        user: persistedReducer
+        user: persistedReducer,
+        section: sectionReducer
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

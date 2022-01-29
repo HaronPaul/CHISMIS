@@ -10,10 +10,8 @@ import NaCLOTab from './AllTabs/NaClOTab'
 import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
 import SPEval from './AllTabs/SPEval'
-
-// Import initials states from each tab
-import { ctrlrm_values } from './TabStates' 
-
+import { useDispatch, useSelector} from 'react-redux'
+ 
 const useStyles = makeStyles({
     container: {
         width: '90%',
@@ -38,7 +36,6 @@ const OSRTabs = (props) => {
     const handleTabs = (event, value) => {
         setValue(value)
     }
-
 
     return( 
         <>
@@ -67,10 +64,8 @@ const OSRTabs = (props) => {
 }
 
 const TabPanel = ({value}) => {
-    const [controlRoom, setControlRoom] = useState(ctrlrm_values)
-
     switch(value) {
-        case 0: return <ControlRoomTab controlRoom={controlRoom} setControlRoom={setControlRoom}/>
+        case 0: return <ControlRoomTab/>
         case 1: return <HCLTab />
         case 2: return <EvapTabs />
         case 3: return <BrineTab />
