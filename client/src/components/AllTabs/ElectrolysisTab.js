@@ -161,7 +161,7 @@ const ElectrolysisTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
-                        label='Number of Nitrogen Cylinders Available' 
+                        label='Nitrogen Cylinders Available' 
                         placeholder="" 
                         className={classes.input}
                         name='num_n_cylinders'
@@ -170,7 +170,7 @@ const ElectrolysisTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
-                        label='Decomposer Operating Temperature' 
+                        label='Decomposer Operating Temp' 
                         placeholder="" 
                         className={classes.input}
                         name='decomposer_op_temp'

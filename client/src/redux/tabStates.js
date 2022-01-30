@@ -101,3 +101,51 @@ export const naclo_values = {
     storage4: '',
     remarks: ''
 }
+
+export const qcbrine_values = {
+    spb_camg: '',
+    spb_naclo3: '',
+    spb_na2so4: '',
+    db_naclo3: '',
+    db_nacl: '',
+    db_free_cl: '',
+    naoh_conc_50: '',
+    naoh_conc_32: '',
+    naohfe_conc: '',
+    hcl_online: '',
+    remarks: ''
+}
+
+export const usages_values = {
+    ac_salt: '',
+    ac_soda_ash: '',
+    ac_naoh: '',
+    ac_hcl: '',
+    ac_bacl2: '',
+    ac_flocullant: '',
+    ac_na2so3: '',
+    ac_alpha_cellulose: '',
+    ac_power: '',
+    ac_steam_evap: '',
+    ac_steam_brine: '',
+    pdn_salt: '',
+    pdn_soda_ash: '',
+    pdn_naoh: '',
+    pdn_hcl: '',
+    pdn_bacl2: '',
+    pdn_flocullant: '',
+    pdn_na2so3: '',
+    pdn_alpha_cellulose: '',
+    pdn_power: '',
+    pdn_steam_evap: '',
+    pdn_steam_brine: '',
+    clt_ph: '',
+    cold_well_ph: '',
+    total_ph: '',
+    after_digester_ph: '',
+    naoh_50: '',
+    naoh_32: '',
+    hcl: '',
+    naocl: '',
+    naocl_waste: ''
+}
