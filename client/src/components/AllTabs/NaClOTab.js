@@ -1,6 +1,8 @@
 import React from "react";
 import {Select, MenuItem, FormControl, InputLabel, Typography, makeStyles, Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import {useDispatch, useSelector} from 'react-redux'
+import { addNaocl } from "../../redux/sectionSlice";
 
 const useStyles = makeStyles({
     formControl: {
@@ -18,8 +20,9 @@ const useStyles = makeStyles({
 })
 
 const NaCLOTab = () => {
-    
+    const dispatch = useDispatch()
     const classes = useStyles()
+    const {nacloSection} = useSelector((state) => state.section)
 
     return(
         <>
