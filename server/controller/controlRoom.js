@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const ControlRoom = require('../model/ControlRoom')
 
 // Validation for data control room data
 let schema = Joi.object({
@@ -32,36 +33,45 @@ let schema = Joi.object({
         'number.base': 'Rectifier Demi Water must be a number'
     }),
     cells_voltage: Joi.number().required().messages({
+        'number.base': 'Cells Voltage must be a number'
+    }),
+    cells_total_voltage: Joi.number().required().messages({
         'number.base': 'Cells Total Voltage must be a number'
     }),
     xformer_oil_temp: Joi.number().required().messages({
         'number.base': 'Transformer Oil Temperature value must be a number'
     }),
-    remarks: Joi.string()
+    remarks: Joi.string().optional().allow('')
 })
 
-// @route   ap1/v1/tabs/control_room
+// @route   POST ap1/v1/tabs/control_room
 // @access  Private
 // @desc    This will create a document for the control room tab information
-const createControlRoom = async (req, res) => {
+const createControlRoom = async (data) => {
     let validation
-    data = req.body
 
     try {
         validation = await schema.validateAsync(data,{abortEarly: false})
-        return res.status(200).json({
-            success: true,
-            message: 'Successfully added control room info'
-        })
-
+        const newControlRoom = new ControlRoom(data)
+        const savedDoc = await newControlRoom.save()
+        console.log(savedDoc)
+        return true
     } catch(error) {
+
         // If there is an error in validation
         if(!validation) {
             const errorMessages = error.details.map((detail) => {return detail.message})
-            return res.status(400).json(errorMessages)
+            return {error: true, errorMessages}
         }
-        res.status(400).json(error)
+        return error
     }
 }
 
-module.exports = {createControlRoom}
+// @route   GET ap1/v1/tabs/control_room
+// @access  Private
+// @desc    This will get a document from the control room collection
+const getControlRoom = async(req,res) => {
+
+}   
+
+module.exports = {createControlRoom, getControlRoom}

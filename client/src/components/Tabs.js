@@ -40,21 +40,21 @@ const OSRTabs = (props) => {
     return( 
         <>
             <div className={classes.container}>
-            <Tabs 
-                value={value}
-                onChange={handleTabs}
-                variant="fullWidth" 
-                indicatorColor='primary'>
-                    <Tab label="Control Room" wrapped />
-                    <Tab label="HCL" wrapped />
-                    <Tab label="Evaporator" wrapped /> 
-                    <Tab label="Primary Brine" wrapped/> 
-                    <Tab label="Electrolysis" wrapped /> 
-                    <Tab label="Hypochlorite" wrapped/> 
-                    <Tab label="QC Brine" wrapped/> 
-                    <Tab label="Specific Usages" wrapped/>
-                    <Tab label="SP Evaluation" wrapped/> 
-            </Tabs>
+                <Tabs 
+                    value={value}
+                    onChange={handleTabs}
+                    variant="fullWidth" 
+                    indicatorColor='primary'>
+                        <Tab label="Control Room" wrapped />
+                        <Tab label="HCL" wrapped />
+                        <Tab label="Evaporator" wrapped /> 
+                        <Tab label="Primary Brine" wrapped/> 
+                        <Tab label="Electrolysis" wrapped /> 
+                        <Tab label="Hypochlorite" wrapped/> 
+                        <Tab label="QC Brine" wrapped/> 
+                        <Tab label="Specific Usages" wrapped/>
+                        <Tab label="SP Evaluation" wrapped/> 
+                </Tabs>
             </div>
             <div className={classes.tabPanelContainer}>
                 <TabPanel value={value}></TabPanel>

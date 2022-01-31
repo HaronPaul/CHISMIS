@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const {createControlRoom} = require('../controller/controlRoom')
+const {createControlRoom, getControlRoom} = require('../controller/controlRoom')
 
-router.get('/control_room', createControlRoom)
+router.post('/control_room', createControlRoom)
+router.get('/control_room', getControlRoom)
 
 module.exports = router

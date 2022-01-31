@@ -49,7 +49,6 @@ const ControlRoomSchema = new mongoose.Schema({
     },
     remarks: {
         type: String,
-        required: true
     }
 })
 

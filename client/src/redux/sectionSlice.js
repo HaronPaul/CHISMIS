@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values,
-qcbrine_values, usages_values } from "./tabStates";
+qcbrine_values, usages_values, eval_values} from "./tabStates";
 
 const sectionSlice = createSlice({
     name: "section",
@@ -13,7 +13,7 @@ const sectionSlice = createSlice({
         nacloSection: naclo_values,
         qcBrineSection: qcbrine_values,
         usagesSection: usages_values,
-        evalSection: null
+        evalSection: eval_values
     },
     reducers: { 
         addControlRoom: (state, action) => {
@@ -41,7 +41,7 @@ const sectionSlice = createSlice({
             state.usagesSection[`${action.payload.name}`] = action.payload.value
         },
         addEval: (state,action) => {    
-            state.evalSection = action.payload
+            state.evalSection[`${action.payload.name}`] = action.payload.value
         },
     }
 })

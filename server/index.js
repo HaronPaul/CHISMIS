@@ -5,11 +5,11 @@ const connectDB = require('./config/db')
 // Route files
 const user = require('./routes/user')
 const tabs = require('./routes/tabs')
-
+const shiftReport = require('./routes/shiftReport')
 // Load env vars
 dotenv.config({path: './config/config.env'})
 
-// connectDB()
+connectDB()
 const app = express()
 const PORT = process.env.PORT || 5000
 
@@ -24,7 +24,7 @@ app.use(function(req,res,next) {
 
 // Mount routers
 app.use('/api/v1/user', user)
-app.use('/api/v1/tabs', tabs)
+app.use('/api/v1/shift_report', shiftReport)
 
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} listening to Port ${PORT}`)

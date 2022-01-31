@@ -3,7 +3,7 @@ export const controlRoom_values = {
     present_operator: '',
     interlock_engaged: '',
     daq_operational: '',
-    rr_water: '',
+    rr_water: '',   
     cells: '',
     avg_load: '',
     eos_load: '',
@@ -148,4 +148,14 @@ export const usages_values = {
     hcl: '',
     naocl: '',
     naocl_waste: ''
+}
+
+export const eval_values = {
+    plan_vol_att: '',
+    prod_num_offspecs: '',
+    spec_usage: '',
+    proc_ctrl_range: '',
+    manpower_no_24duty: '',
+    shift_report_completeness: '',
+    shift_rating: ''
 }
