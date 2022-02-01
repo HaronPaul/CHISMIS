@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const connectDB = require('./config/db')
+
 // Route files
 const user = require('./routes/user')
 const shiftReport = require('./routes/shiftReport')

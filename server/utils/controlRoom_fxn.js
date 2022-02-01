@@ -18,27 +18,35 @@ let schema = Joi.object({
         'any.only': 'Value must be either YES, NO, or PARTIAL'
     }),
     rr_water: Joi.number().required().messages({
+        'string.empty': 'Rectifier Raw Water field required',
         'number.base': 'Rectifier Raw Water value must be a number'
     }),
     cells: Joi.number().required().messages({
+        'string.empty': 'Cells field required',
         'number.base': 'Number of cells must be a number'
     }),
     avg_load: Joi.number().required().messages({
+        'string.empty': 'Average Load field required',
         'number.base': 'Average Load must be a number'
     }),
     eos_load: Joi.number().required().messages({
+        'string.empty': 'End of Shift Load field required',
         'number.base': 'End of Shift Load must be a number'
     }),
     rd_water: Joi.number().required().messages({
+        'string.empty': 'Rectifier Demi Water required',
         'number.base': 'Rectifier Demi Water must be a number'
     }),
     cells_voltage: Joi.number().required().messages({
+        'string.empty': 'Cells Voltage field required',
         'number.base': 'Cells Voltage must be a number'
     }),
     cells_total_voltage: Joi.number().required().messages({
+        'string.empty': 'Cells Total Voltage required',
         'number.base': 'Cells Total Voltage must be a number'
     }),
     xformer_oil_temp: Joi.number().required().messages({
+        'string.empty': 'Transformer Oil Temperaturerequired',
         'number.base': 'Transformer Oil Temperature value must be a number'
     }),
     remarks: Joi.string().optional().allow('')
