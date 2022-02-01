@@ -9,7 +9,7 @@ let schema = Joi.object({
     present_operator:  Joi.string().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
-    interlock_engaged:  Joi.string().required().valid("YES", "NO", "PARTIAL").messages({
+     interlock_engaged:  Joi.string().required().valid("YES", "NO", "PARTIAL").messages({
         'string.empty': 'Interlock Engaged field required',
         'any.only': 'Interlock Engaged Value must be either YES, NO, or PARTIAL'
     }),
@@ -44,32 +44,29 @@ let schema = Joi.object({
     remarks: Joi.string().optional().allow('')
 })
 
-// @route   POST ap1/v1/tabs/control_room
-// @access  Private
-// @desc    This will create a document for the control room tab information
+// This is a function for validating the values of the control room json object.
+// This also adds a document to the db. When validation is successful, it returns
+// an object with property 'success: true' with the objectID of the inserted document. 
 const createControlRoom = async (data) => {
     let validation
-
+    
     try {
         validation = await schema.validateAsync(data,{abortEarly: false})
-        const newControlRoom = new ControlRoom(data)
-        const savedDoc = await newControlRoom.save()
-        console.log(savedDoc)
-        return true
+        // const newControlRoom = new ControlRoom(data)
+        // const savedDoc = await newControlRoom.save()
+        return {success: true}
     } catch(error) {
 
         // If there is an error in validation
         if(!validation) {
             const errorMessages = error.details.map((detail) => {return detail.message})
-            return {error: true, errorMessages}
+            return {success: false, errorMessages}
         }
         return error
     }
 }
 
-// @route   GET ap1/v1/tabs/control_room
-// @access  Private
-// @desc    This will get a document from the control room collection
+
 const getControlRoom = async(req,res) => {
 
 }   
