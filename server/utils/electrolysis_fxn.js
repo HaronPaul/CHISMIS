@@ -1,10 +1,10 @@
 const Joi = require('joi')
 
 const schema = Joi.object({
-    previous_operator: Joi.string().required().messages({
+    previous_operator: Joi.string().trim().required().messages({
         'string.empty': 'Previous Operator Field Required'
     }),
-    present_operator: Joi.string().required().messages({
+    present_operator: Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
     electro_eff:  Joi.number().required().messages({

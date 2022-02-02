@@ -3,17 +3,17 @@ const ControlRoom = require('../model/ControlRoom')
 
 // Validation for data control room data
 let schema = Joi.object({
-    previous_operator: Joi.string().required().messages({
+    previous_operator: Joi.string().trim().required().messages({
         'string.empty': 'Previous Operator Field Required'
     }),
-    present_operator:  Joi.string().required().messages({
+    present_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
-     interlock_engaged:  Joi.string().required().valid("YES", "NO", "PARTIAL").messages({
+     interlock_engaged:  Joi.string().trim().required().valid("YES", "NO", "PARTIAL").messages({
         'string.empty': 'Interlock Engaged field required',
         'any.only': 'Interlock Engaged Value must be either YES, NO, or PARTIAL'
     }),
-    daq_operational:  Joi.string().required().valid("YES", "NO", "PARTIAL").messages({
+    daq_operational:  Joi.string().trim().required().valid("YES", "NO", "PARTIAL").messages({
         'string.empty': 'DAQ Operational Field Required',
         'any.only': 'Value must be either YES, NO, or PARTIAL'
     }),
