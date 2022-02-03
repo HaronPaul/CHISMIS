@@ -21,9 +21,9 @@ const schema = Joi.object({
         'string.empty': 'DB NaCl Field Required',
         'number.base': 'DB NaCl must be a number'
     }),
-    db_free_cl: Joi.number().required().messages({
-        'string.empty': 'DB Free Cl Quality Field Required',
-        'number.base': 'DB Free Cl Quality must be a number'
+    db_free_cl: Joi.string().trim().required().valid("POSITIVE", "NEGATIVE").messages({
+        'string.empty': 'DAQ Operational Field Required',
+        'any.only': 'Value must be either POSTIVE or NEGATIVE'
     }),
     naoh_conc_50: Joi.number().required().messages({
         'string.empty': '50% NaOH Concentration Field Required',
