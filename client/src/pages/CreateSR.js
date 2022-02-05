@@ -3,8 +3,9 @@ import OSRTabs from "../components/Tabs";
 import { Typography, makeStyles, Button, Paper, Grid, FormControl, InputLabel, Select, MenuItem, TextField } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
 import { changeDate, changeShift } from "../redux/sectionSlice"
+import DateFnsUtils from '@date-io/date-fns';
+import { alpha } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
     mainContainer: {
@@ -39,13 +40,13 @@ const CreateSR = (props) => {
     const {currentSupervisor, date, shift} = useSelector((state) => state.section)
 
     const handleDateChange = (date) => {
-        console.log(date)
         const DD = String(date.getDate()).padStart(2, '0');
         const MM = String(date.getMonth() + 1).padStart(2, '0');
         const YYYY = date.getFullYear();
-        const dateCreated = `${MM}-${DD}-${YYYY}` 
+        const dateCreated = `${MM}/${DD}/${YYYY}`
+        console.log(dateCreated) 
         dispatch(changeDate(dateCreated))
-    }
+        }
 
     return(
         <div className={classes.mainContainer}>
@@ -58,17 +59,17 @@ const CreateSR = (props) => {
                         <Typography variant="h6">Supervisor: {currentSupervisor} </Typography>
                     </Grid>
                     <Grid item lg={4}>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
-                                style={{minWidth: '80%'}}
+                                style={{minWidth: '90%'}}
                                 autoOk
                                 variant="inline"
                                 inputVariant="outlined"
                                 label="Date Created"
-                                format="MM/DD/YYYY"
+                                format="MM/dd/yyyy"
                                 InputAdornmentProps={{ position: "start" }}
                                 value={date || new Date()}    
-                                onChange={date => handleDateChange(date.toDate())}
+                                onChange={date => handleDateChange(date)}
                             />
                         </MuiPickersUtilsProvider>
                     </Grid>
