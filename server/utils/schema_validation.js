@@ -537,6 +537,15 @@ const spEvalSchema = Joi.object({
     })
 })
 
+let shiftReportSchema = Joi.object({
+    date: Joi.date().required().messages({
+        'date.base': 'Date must be a valid date'
+    }),
+    shift: Joi.number().required().valid(1,2,3).messages({
+        'number.base': 'Shift must be a number/not empty',
+        'any.only': 'Shift must either be 1, 2, or 3'
+    }),
+})
 
 module.exports = {
     controlRoomSchema, 
@@ -547,5 +556,6 @@ module.exports = {
     nacloSchema,
     qcBrineschema,
     usagesSchema,
-    spEvalSchema
+    spEvalSchema,
+    shiftReportSchema
 }

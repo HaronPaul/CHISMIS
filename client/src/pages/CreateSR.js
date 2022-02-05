@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { changeDate, changeShift } from "../redux/sectionSlice"
 import DateFnsUtils from '@date-io/date-fns';
-import { alpha } from "@material-ui/core/styles";
+import axios from 'axios'
 
 const useStyles = makeStyles({
     mainContainer: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 const CreateSR = (props) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const shiftReportData = useSelector((state) => state.section)
     const {currentSupervisor, date, shift} = useSelector((state) => state.section)
 
     const handleDateChange = (date) => {
@@ -47,6 +48,16 @@ const CreateSR = (props) => {
         console.log(dateCreated) 
         dispatch(changeDate(dateCreated))
         }
+
+    const handleSubmitButton = async () => {
+        console.log(shiftReportData)
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report')
+            console.log(response.data)
+        } catch(error) {
+            console.log(error)
+        }
+    }
 
     return(
         <div className={classes.mainContainer}>
@@ -90,7 +101,10 @@ const CreateSR = (props) => {
                 </Grid>
             </Paper>  
             <OSRTabs> </OSRTabs>
-            <Button variant="outlined" style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%'}}>Submit Report</Button>
+            <Button 
+            variant="contained" 
+            style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%'}}
+            onClick={handleSubmitButton}>Submit Report</Button>
         </div>
     )
 }

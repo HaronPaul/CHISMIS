@@ -9,12 +9,20 @@ const {
     nacloSchema,
     qcBrineschema,
     usagesSchema,
-    spEvalSchema
+    spEvalSchema,
+    shiftReportSchema
 } = require('../utils/schema_validation')
 const validate = require('../utils/validator')
 
+
+
 router.post('/', async (req,res) => {
     let errors = []
+
+    let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
+    const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
+    if(!shiftReportResponse.success) errors.push(...shiftReportResponse.error)
+
     const controlRoomResponse = await validate(req.body.controlRoomSection, controlRoomSchema)
     if(!controlRoomResponse.success) errors.push(...controlRoomResponse.error)
 

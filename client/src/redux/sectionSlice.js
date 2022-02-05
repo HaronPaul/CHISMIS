@@ -6,10 +6,12 @@ const sectionSlice = createSlice({
     name: "section",
     initialState: {
         currentSupervisor: 'Haron Paul Lorente',
-        manager: '',
-        incomingSupervisor: '',
+        manager: null,
+        incomingSupervisor: null,
         date: null,
         shift: null,
+        signCount: 0,
+        isComplete: false,
         controlRoomSection: controlRoom_values,
         hclSection: hcl_values,
         evapSection: evap_values,
@@ -19,7 +21,6 @@ const sectionSlice = createSlice({
         qcBrineSection: qcbrine_values,
         usagesSection: usages_values,
         evalSection: eval_values,
-        signCount: 0
     },
     reducers: { 
         addControlRoom: (state, action) => { state.controlRoomSection[`${action.payload.name}`] = action.payload.value;},
@@ -33,7 +34,10 @@ const sectionSlice = createSlice({
         addEval: (state,action) => {state.evalSection[`${action.payload.name}`] = action.payload.value},
         changeShift: (state, action) => {state.shift = action.payload },
         changeDate: (state, action) => {state.date = action.payload },
-        addSignCount: (state) => {state.signCount += 1}
+        addSignCount: (state) => {
+            state.signCount += 1
+            state.isComplete = state.signCount === 3? true: false
+        }
     }
 })
 
