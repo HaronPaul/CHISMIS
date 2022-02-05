@@ -5,6 +5,11 @@ qcbrine_values, usages_values, eval_values} from "./tabStates";
 const sectionSlice = createSlice({
     name: "section",
     initialState: {
+        currentSupervisor: 'Haron Paul Lorente',
+        manager: '',
+        incomingSupervisor: '',
+        date: null,
+        shift: null,
         controlRoomSection: controlRoom_values,
         hclSection: hcl_values,
         evapSection: evap_values,
@@ -43,9 +48,25 @@ const sectionSlice = createSlice({
         addEval: (state,action) => {    
             state.evalSection[`${action.payload.name}`] = action.payload.value
         },
+        changeShift: (state, action) => {
+            state.shift = action.payload 
+        },
+        changeDate: (state, action) => {
+            state.date = action.payload
+        }
     }
 })
 
-export const {addControlRoom, addHcl, addEvap, addPrBrine, addElectro, addNaocl, addQcbrine, addUsages, addEval } = sectionSlice.actions
-
+export const {
+    addControlRoom, 
+    addHcl, 
+    addEvap, 
+    addPrBrine, 
+    addElectro, 
+    addNaocl, 
+    addQcbrine, 
+    addUsages, 
+    addEval, 
+    changeShift, 
+    changeDate } = sectionSlice.actions
 export default sectionSlice.reducer
