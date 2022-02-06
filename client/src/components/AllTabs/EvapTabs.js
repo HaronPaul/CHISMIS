@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvap } from "../../redux/sectionSlice";
 import ErrorSection from "./ErrorSection";
-import { addErrors } from "../../redux/errorSlice";
 
 const EvapTabs = () => {
     const dispatch = useDispatch()
     const {evapSection} = useSelector((state) => state.section)
+    const {evapErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -19,6 +19,7 @@ const EvapTabs = () => {
     return(
         <>
             <div style={{ marginBottom: '3%'}}>
+                {evapErrors.length === 0? <></>:<ErrorSection errors={evapErrors} type="evap"/>}
                 <Typography variant="h4" style={{ marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>
@@ -56,7 +57,6 @@ const EvapTabs = () => {
                     </Grid>
                 </Grid>
             </div>
-            
             <div style={{ marginBottom: '3%'}}>
                 <Typography variant="h4" style={{ marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>

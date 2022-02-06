@@ -2,10 +2,12 @@ import React from "react";
 import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addElectro } from "../../redux/sectionSlice";
+import ErrorSection from './ErrorSection'
 
 const ElectrolysisTab = () => {
     const dispatch = useDispatch()
     const {electroSection} = useSelector((state) => state.section)
+    const {electroErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -16,6 +18,7 @@ const ElectrolysisTab = () => {
     return(
         <>
             <div style = {{  marginBottom: '3%'}}>
+                {electroErrors.length === 0? <></>:<ErrorSection errors={electroErrors} type="electro"/>}
                 <Typography variant="h4" style = {{  marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>

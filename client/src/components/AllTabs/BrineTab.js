@@ -3,10 +3,13 @@ import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField}
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addPrBrine } from "../../redux/sectionSlice";
+import ErrorSection from './ErrorSection'
+
 
 const BrineTab = () => {
     const dispatch = useDispatch()
     const {prBrineSection} = useSelector((state) => state.section)
+    const {prBrineErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -17,6 +20,7 @@ const BrineTab = () => {
     return(
         <>
             <div style ={{marginBottom: '3%'}}>
+                {prBrineErrors.length === 0? <></>:<ErrorSection errors={prBrineErrors} type="prbrine"/>}
                 <Typography variant="h6" style ={{marginBottom: '1%'}}> MTD Salt Loaded: </Typography>
                 <Typography variant="h4" style ={{marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>

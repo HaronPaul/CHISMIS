@@ -2,10 +2,12 @@ import React from "react";
 import {Select, MenuItem, FormControl, InputLabel, Typography, Grid, TextField} from "@mui/material";
 import {useDispatch, useSelector} from 'react-redux'
 import { addNaocl } from "../../redux/sectionSlice";
+import ErrorSection from "./ErrorSection";
 
 const NaCLOTab = () => {
     const dispatch = useDispatch()
     const {nacloSection} = useSelector((state) => state.section)
+    const {nacloErrors} = useSelector((state)=>state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -16,6 +18,7 @@ const NaCLOTab = () => {
     return(
         <>
             <div style = {{marginBottom: '3%'}}>
+                {nacloErrors.length === 0? <></>:<ErrorSection errors={nacloErrors} type="naclo"/>}
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>

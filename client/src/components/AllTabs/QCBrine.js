@@ -2,11 +2,13 @@ import React from "react";
 import {Select, MenuItem, FormControl, InputLabel, Typography, Grid, TextField} from "@mui/material";
 import {useSelector, useDispatch} from 'react-redux'
 import { addQcbrine } from "../../redux/sectionSlice";
+import ErrorSection from "./ErrorSection";
 
 const QCBrine = () => {
     const dispatch = useDispatch()
-
     const {qcBrineSection} = useSelector((state) => state.section)
+    const {qcBrineErrors} = useSelector((state) => state.error)
+
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -16,6 +18,7 @@ const QCBrine = () => {
     return(
         <>
             <div style = {{marginBottom: '3%'}}>
+                {qcBrineErrors.length === 0? <></>:<ErrorSection errors={qcBrineErrors} type="qcbrine"/>}
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Quality Control Brine</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {3} sm={4} xs={6}>

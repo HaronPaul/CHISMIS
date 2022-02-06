@@ -21,7 +21,7 @@ const ControlRoomTab = () => {
     return(
         <>
             <div style={{marginBottom: '2%'}}>
-                {controlRoomErrors.length === 0? <></>:<ErrorSection errors={controlRoomErrors}/>}
+                {controlRoomErrors.length === 0? <></>:<ErrorSection errors={controlRoomErrors} type="ctrlrm"/>}
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>

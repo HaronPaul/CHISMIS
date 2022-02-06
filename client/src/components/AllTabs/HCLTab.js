@@ -19,7 +19,7 @@ const HCLTab = () => {
     return( 
         <>
             <div style={{ marginBottom: '2%'}}>
-                {hclErrors.length === 0? <></>:<ErrorSection errors={hclErrors}/>}
+                {hclErrors.length === 0? <></>:<ErrorSection errors={hclErrors} type="hcl" />}
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Operators</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>

@@ -153,7 +153,7 @@ const prBrineSchema = Joi.object({
         'string.empty': 'Previous Operator Field Required'
     }),
     present_operator:  Joi.string().trim().required().messages({
-        'string.empty': 'Previous Operator Field Required'
+        'string.empty': 'Present Operator Field Required'
     }),
     salt_loaded: Joi.number().required().messages({
         'string.empty': 'Salt Loaded field required',

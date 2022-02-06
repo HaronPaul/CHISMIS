@@ -12,13 +12,13 @@ const ErrorContainer = styled.div`
     border-radius: 20px;
 `
 
-const ErrorSection = ({errors}) => {
+const ErrorSection = ({errors, type}) => {
     return(
         <ErrorContainer>
             <List>
                 {errors.map(err => {
                     return(
-                        <ListItem key={errors.indexOf(err)}> 
+                        <ListItem key={type + errors.indexOf(err)}> 
                             <Alert severity="error" style={{width: '100%'}}>{err}</Alert>    
                         </ListItem>   
                     )    
