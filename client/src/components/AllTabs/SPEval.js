@@ -1,23 +1,10 @@
 import React from "react";
-import {Typography, makeStyles, Grid, Select, MenuItem, FormControl, InputLabel} from "@material-ui/core";
+import {Typography, Grid, Select, MenuItem, FormControl, InputLabel} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { addEval } from "../../redux/sectionSlice";
 
-const useStyles = makeStyles({
-    formControl: {
-        minWidth: '100%',
-    },
-    input: {
-        minWidth: '100%',
-    },
-    container: {
-        marginBottom: '3%',
-    }
-})
-
 const SPEval = () => {
     const dispatch = useDispatch()
-    const classes = useStyles()
     const {evalSection} = useSelector((state) => state.section)
     
     const handleChange = (e) => {
@@ -28,13 +15,15 @@ const SPEval = () => {
 
     return(
         <>
-            <div className={classes.container}>
+            <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4">SP Evaluation</Typography>
-                <Grid container spacing={3}>
+                <Grid container spacing={1}>
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Planned Volume Attained</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="planned vol">Planned Volume Attained</InputLabel>
                             <Select 
+                            labelid="planned vol"
+                            label= "Planned Volume Attained"
                             defaultValue = ''
                             name='plan_vol_att'
                             value={evalSection.plan_vol_att || ''}
@@ -46,9 +35,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Production No. Off Specs</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="prod no">Production No. Off Specs</InputLabel>
                             <Select
+                            labelid="prod no"
+                            label= "Production No. Off Specs"
                             defaultValue = ''
                             name='prod_num_offspecs'
                             value={evalSection.prod_num_offspecs || ''}
@@ -60,9 +51,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Specific Usage lte Standard</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="spec usage">Specific Usage lte Standard</InputLabel>
                             <Select 
+                            labelid="spec usage"
+                            label= "Specific Usage lte Standard"
                             defaultValue = ''
                             name='spec_usage'
                             value={evalSection.spec_usage || ''}
@@ -74,9 +67,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Process Control within Range</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="proc control">Process Control within Range</InputLabel>
                             <Select 
+                            labelid="proc control"
+                            label= "Process Control within Range"
                             defaultValue = ''
                             name='proc_ctrl_range'
                             value={evalSection.proc_ctrl_range || ''}
@@ -88,9 +83,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Manpower no 24hrs duty</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="manpower">Manpower no 24hrs duty</InputLabel>
                             <Select 
+                            labelid="manpower"
+                            label= "Manpower no 24hrs duty"
                             defaultValue = ''
                             name='manpower_no_24duty'
                             value={evalSection.manpower_no_24duty || ''}
@@ -102,9 +99,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Shift Report Completeness</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="completeness">Shift Report Completeness</InputLabel>
                             <Select
+                            labelid="completeness"
+                            label= "Shift Report Completeness"
                             defaultValue = ''
                             name='shift_report_completeness'
                             value={evalSection.shift_report_completeness || ''}
@@ -116,9 +115,11 @@ const SPEval = () => {
                     </Grid>
 
                     <Grid item lg={3} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Shift Rating</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="rating">Shift Rating</InputLabel>
                             <Select
+                            labelid="rating"
+                            label= "Shift Rating"
                             defaultValue = ''
                             name='shift_rating'
                             value={evalSection.shift_rating || ''}

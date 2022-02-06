@@ -1,27 +1,11 @@
 import React from "react";
-import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, makeStyles} from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addPrBrine } from "../../redux/sectionSlice";
 
-const useStyles = makeStyles({
-    formControl: {
-        minWidth: '100%',
-    },
-    input: {
-        minWidth: '100%',
-    },
-    container: {
-        marginBottom: '3%',
-    },  
-    header: {
-        marginBottom: '1%'
-    }
-})
-
 const BrineTab = () => {
     const dispatch = useDispatch()
-    const classes = useStyles()
     const {prBrineSection} = useSelector((state) => state.section)
 
     const handleChange = (e) => {
@@ -32,14 +16,16 @@ const BrineTab = () => {
 
     return(
         <>
-            <div className={classes.container}>
-                <Typography variant="h6"> MTD Salt Loaded: </Typography>
-                <Typography variant="h4">Operators</Typography>
-                <Grid container spacing={3}>
+            <div style ={{marginBottom: '3%'}}>
+                <Typography variant="h6" style ={{marginBottom: '1%'}}> MTD Salt Loaded: </Typography>
+                <Typography variant="h4" style ={{marginBottom: '1%'}}>Operators</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Previous Operator</InputLabel>
+                        <FormControl style ={{minWidth: '100%'}}>
+                            <InputLabel id="prev_op_brine">Previous Operator</InputLabel>
                             <Select 
+                            labelid="prev_op_brine"
+                            label="Previous Operator"
                             defaultValue = ""
                             name='previous_operator'
                             value={prBrineSection.previous_operator || ''}
@@ -51,9 +37,11 @@ const BrineTab = () => {
                         </FormControl>
                     </Grid>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Present Operator</InputLabel>
+                        <FormControl style ={{minWidth: '100%'}}>
+                            <InputLabel id="pres_op_brine">Present Operator</InputLabel>
                             <Select
+                            labelid="pres_op_brine"
+                            label="Present Operator"
                             defaultValue = ""
                             name='present_operator'
                             value={prBrineSection.present_operator || ''}
@@ -67,14 +55,15 @@ const BrineTab = () => {
                 </Grid>
             </div>
             
-            <div className={classes.container}>
-                <Typography variant="h4">Other Information</Typography>
-                <Grid container spacing={4}>
+            <div style ={{marginBottom: '3%'}}>
+                <Typography variant="h4" style ={{marginBottom: '1%'}}>Parameters</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
                         <TextField
                         label='Salt loaded'
                         placeholder="6-10"
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='salt_loaded'
                         value={prBrineSection.salt_loaded || ''}
                         onChange={handleChange}/>
@@ -83,7 +72,8 @@ const BrineTab = () => {
                         <TextField
                         label='Polished Brine Concentration'
                         placeholder="280-320 gpl"
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='pbrine_conc'
                         value={prBrineSection.pbrine_conc || ''}
                         onChange={handleChange}/>
@@ -92,7 +82,8 @@ const BrineTab = () => {
                         <TextField
                         label='Precoat Operating Hours' 
                         placeholder=">= 75 hours" 
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='precoat_op_hours'
                         value={prBrineSection.precoat_op_hours || ''}
                         onChange={handleChange}/>
@@ -101,7 +92,8 @@ const BrineTab = () => {
                         <TextField
                         label='Ca+Mg Concentration' 
                         placeholder="5 max" 
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='camg_conc'
                         value={prBrineSection.camg_conc || ''}
                         onChange={handleChange} />
@@ -110,7 +102,8 @@ const BrineTab = () => {
                         <TextField 
                         label='Excess NaOH Concentration' 
                         placeholder="0.1 - 1.5" 
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='xcess_naoh_conc'
                         value={prBrineSection.xcess_naoh_conc || ''}
                         onChange={handleChange}/>
@@ -119,7 +112,8 @@ const BrineTab = () => {
                         <TextField
                         label='Differential Pressure in Precoat' 
                         placeholder="0.2" 
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='diff_pressure_precoat'
                         value={prBrineSection.diff_pressure_precoat || ''}
                         onChange={handleChange} />
@@ -128,7 +122,8 @@ const BrineTab = () => {
                         <TextField
                         label='Brine Overflow'
                         placeholder=""
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='brine_overflow'
                         value={prBrineSection.brine_overflow || ''}
                         onChange={handleChange} />
@@ -137,7 +132,8 @@ const BrineTab = () => {
                         <TextField
                         label='Excess Na2CO3 Concentration'
                         placeholder="0.1 - 1.5"
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='xcess_na2co3_conc'
                         value={prBrineSection.xcess_na2co3_conc || ''}
                         onChange={handleChange}/>
@@ -146,7 +142,8 @@ const BrineTab = () => {
                         <TextField 
                         label='Precoat Flow Rate' 
                         placeholder="20 minutes"
-                        className={classes.input}
+                        type="number"
+                        style ={{minWidth: '100%'}}
                         name='precoat_flowrate'
                         value={prBrineSection.precoat_flowrate || ''}
                         onChange={handleChange}/>
@@ -154,16 +151,16 @@ const BrineTab = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
-                <Grid container spacing={4}>
+            <div style ={{marginBottom: '3%'}}>
+                <Typography variant="h4" style ={{marginBottom: '1%'}}>Operational Remarks</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={12} sm={12} xs={12}>
                         <TextField
                             variant="outlined"
                             label="Operational Remarks"
                             multiline
                             maxRows={4}
-                            className={classes.input}
+                            style ={{minWidth: '100%'}}
                             name='remarks'
                             value={prBrineSection.remarks || ''}
                             onChange={handleChange}

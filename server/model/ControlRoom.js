@@ -1,19 +1,9 @@
 const mongoose = require('mongoose')
 
 const ControlRoomSchema = new mongoose.Schema({
-    previous_operator: {
-        type: String,
-        required: true
-    }, 
-    present_operator: {
-        type: String,
-        required: true
-    },
-    interlock_engaged: {
-        type: String,
-        required: true,
-        enum: ['YES', 'NO', 'PARTIAL']
-    }, 
+    previous_operator: {type: String, required: true}, 
+    present_operator: { type: String, required: true},
+    interlock_engaged: { type: String, required: true, enum: ['YES', 'NO', 'PARTIAL'] }, 
     daq_operational: {
         type: String,
         required: true,

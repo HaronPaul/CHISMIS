@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import { Typography, Grid, FormControl, Select, InputLabel, makeStyles, MenuItem, TextField, Button}
-from "@material-ui/core";
-import {Alert} from '@material-ui/lab'
+import { Typography, Grid, FormControl, InputLabel, MenuItem, TextField, Button, Alert}
+from "@mui/material";
+import Select from '@mui/material/Select'
+import { makeStyles } from "@mui/styles";
 import axios from 'axios'
 
 const useStyles = makeStyles({
@@ -71,7 +72,7 @@ const Register = ({handleClick}) => {
             variant="outlined"
             label="First Name"
             name="firstName"
-            className={classes.textArea}
+            style={{ minWidth: '100%'}}
             onChange={handleInputChange}
             value={credentials.firstName}
             /> 
@@ -81,7 +82,7 @@ const Register = ({handleClick}) => {
             variant="outlined"
             name='lastName'
             label="Last Name"
-            className={classes.textArea}
+            style={{ minWidth: '100%'}}
             onChange={handleInputChange}
             value={credentials.lastName}> </TextField>
           </Grid>
@@ -89,7 +90,7 @@ const Register = ({handleClick}) => {
             <TextField 
             variant="outlined"
             label="Username"
-            className={classes.textArea}
+            style={{ minWidth: '100%'}}
             name="username"
             onChange={handleInputChange}
             value={credentials.username}></TextField>
@@ -99,15 +100,15 @@ const Register = ({handleClick}) => {
             type='password'
             variant="outlined"
             label="Password"
-            className={classes.textArea}
+            style={{ minWidth: '100%'}}
             name="password"
             onChange={handleInputChange}
             value={credentials.password}></TextField>
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
-              <FormControl className={classes.textArea}>
-                  <InputLabel>Role</InputLabel>
-                  <Select defaultValue = "" name="role" onChange={handleInputChange}>
+              <FormControl style={{ minWidth: '100%'}}>
+                  <InputLabel labelid="role">Role</InputLabel>
+                  <Select defaultValue = "" name="role" id="role" label="Role" onChange={handleInputChange}>
                       <MenuItem value={'SUPERVISOR'}>SUPERVISOR</MenuItem>
                       <MenuItem value={'MANAGER'}>MANAGER</MenuItem>
                       <MenuItem value={'ADMINISTRATOR'}>ADMINISTRATOR</MenuItem>

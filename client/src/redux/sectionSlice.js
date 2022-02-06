@@ -9,7 +9,7 @@ const sectionSlice = createSlice({
         manager: null,
         incomingSupervisor: null,
         date: null,
-        shift: null,
+        shift: 1,
         signCount: 0,
         isComplete: false,
         controlRoomSection: controlRoom_values,

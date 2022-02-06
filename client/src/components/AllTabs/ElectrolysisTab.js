@@ -1,27 +1,10 @@
 import React from "react";
-import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, makeStyles} from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addElectro } from "../../redux/sectionSlice";
 
-const useStyles = makeStyles({
-    formControl: {
-        minWidth: '100%',
-    },
-    input: {
-        minWidth: '100%',
-    },
-    container: {
-        marginBottom: '3%',
-    },  
-    header: {
-        marginBottom: '1%'
-    }
-})
-
 const ElectrolysisTab = () => {
     const dispatch = useDispatch()
-    const classes = useStyles()
     const {electroSection} = useSelector((state) => state.section)
 
     const handleChange = (e) => {
@@ -32,13 +15,15 @@ const ElectrolysisTab = () => {
 
     return(
         <>
-            <div className={classes.container}>
-                <Typography variant="h4">Operators</Typography>
-                <Grid container spacing={3}>
+            <div style = {{  marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{  marginBottom: '1%'}}>Operators</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Previous Operator</InputLabel>
+                        <FormControl style = {{minWidth: '100%'}}>
+                            <InputLabel id="prev_op_electro">Previous Operator</InputLabel>
                             <Select
+                            labelid="prev_op_electro"
+                            label="Previous Operator"
                             defaultValue = ""
                             name='previous_operator'
                             value={electroSection.previous_operator || ''}
@@ -50,9 +35,11 @@ const ElectrolysisTab = () => {
                         </FormControl>
                     </Grid>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Present Operator</InputLabel>
+                        <FormControl style = {{minWidth: '100%'}}>
+                            <InputLabel id="pres_op_electro">Present Operator</InputLabel>
                             <Select 
+                            labelid="pres_op_electro"
+                            label="Present Operator"
                             defaultValue = ""
                             name='present_operator'
                             value={electroSection.present_operator || ''}
@@ -66,131 +53,145 @@ const ElectrolysisTab = () => {
                 </Grid>
             </div>
             
-            <div className={classes.container}>
-                <Typography variant="h4">Other Information</Typography>
-                <Grid container spacing={4}>
+            <div style = {{  marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{  marginBottom: '1%'}}>Other Information</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={6}>
-                        <TextField 
+                        <TextField
+                        type="number"
                         label='Electrolyzer Efficiency'
                         placeholder="" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='electro_eff'
                         value={electroSection.electro_eff || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='Cell Liquor Production' 
                         placeholder="11.90"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='cell_liq_prod'
                         value={electroSection.cell_liq_prod || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField
+                        type="number"
                         label='SPB Inlet Temperature'
                         placeholder="60-90"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='spb_inlet_temp'
                         value={electroSection.spb_inlet_temp || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='NaOH Inlet Temperature'
                         placeholder="60-90"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_inlet_temp'
                         value={electroSection.naoh_inlet_temp || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='Chelate Operating Hours Tower A'
                         placeholder="42hrs/tk"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='chelate_op_hours_ta'
                         value={electroSection.chelate_op_hours_ta || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='Chelate Operating Hours Tower B'
                         placeholder="42hrs/tk"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='chelate_op_hours_tb'
                         value={electroSection.chelate_op_hours_tb || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField
+                        type="number"
                         label='NaOH Concentration'
                         placeholder="30% - 32%"
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_conc'
                         value={electroSection.naoh_conc || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='NaOH Specific Gravity'
                         placeholder="" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_sg'
                         value={electroSection.naoh_sg || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='NaOH Flow Rate'
                         placeholder="21 m³/hr" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_flowrate'
                         value={electroSection.naoh_flowrate || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='DB Free Chlorine Quality' 
                         placeholder="" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='db_free_cl_qual'
                         value={electroSection.db_free_cl_qual || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='Nitrogen Cylinders Available' 
                         placeholder="" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='num_n_cylinders'
                         value={electroSection.num_n_cylinders || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='Decomposer Operating Temp' 
                         placeholder="" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='decomposer_op_temp'
                         value={electroSection.decomposer_op_temp || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='DB Concentration'
                         placeholder="180-220" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='db_conc'
                         value={electroSection.db_conc || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='SPB concentration'
                         placeholder="280-320" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='spb_conc'
                         value={electroSection.spb_conc || ''}
                         onChange={handleChange}></TextField>
@@ -198,16 +199,16 @@ const ElectrolysisTab = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
-                <Grid container spacing={4}>
+            <div style = {{  marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{  marginBottom: '1%'}}>Operational Remarks</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={12} sm={12} xs={12}>
                         <TextField
                             variant="outlined"
                             label="Operational Remarks"
                             multiline
                             maxRows={4}
-                            className={classes.input}
+                            style = {{minWidth: '100%'}}
                             name='remarks'
                             value={electroSection.remarks || ''}
                             onChange={handleChange}

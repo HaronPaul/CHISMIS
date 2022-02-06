@@ -1,29 +1,32 @@
 import React from "react";
 import OSRTabs from "../components/Tabs";
-import { Typography, makeStyles, Button, Paper, Grid, FormControl, InputLabel, Select, MenuItem, TextField } from "@material-ui/core";
+import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { makeStyles } from "@mui/styles";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { changeDate, changeShift } from "../redux/sectionSlice"
+import { addErrors } from "../redux/errorSlice";
 import DateFnsUtils from '@date-io/date-fns';
+
 import axios from 'axios'
 
 const useStyles = makeStyles({
-    mainContainer: {
-        width: '100vw',
+    mainContainerStyle : {
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         height: 'auto',
     },
 
-    title: {
+    titleStyle: {
         alignSelf: 'flex-start',
-        marginTop: '2%',
-        marginBottom: '1%',
-        marginLeft: '5%',
+        marginTop: '2% !important',
+        marginBottom: '1% !important',
+        marginLeft: '5% !important',
     },
 
-    paperContainer: {
+    paperContainerStyle : {
         width: '90%', 
         padding:'1%', 
         boxSizing: 'border-box', 
@@ -47,30 +50,29 @@ const CreateSR = (props) => {
         const dateCreated = `${MM}/${DD}/${YYYY}`
         console.log(dateCreated) 
         dispatch(changeDate(dateCreated))
-        }
+    }
 
     const handleSubmitButton = async () => {
-        console.log(shiftReportData)
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report')
-            console.log(response.data)
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+            console.log(response.data.errors)
+            dispatch(addErrors(response.data.errors))
         } catch(error) {
             console.log(error)
         }
     }
-
     return(
-        <div className={classes.mainContainer}>
-            <Typography variant="h2" className={classes.title}>Create Operation Shift Report</Typography>
+        <div className={classes.mainContainerStyle}>
+            <Typography variant="h2" className={classes.titleStyle}>Create Operation Shift Report</Typography>
             <Paper 
-            className={classes.paperContainer}
+            className={classes.paperContainerStyle}
             elevation={4}>
                 <Grid container spacing={2}>
                     <Grid item lg={4}>
                         <Typography variant="h6">Supervisor: {currentSupervisor} </Typography>
                     </Grid>
                     <Grid item lg={4}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                                 style={{minWidth: '90%'}}
                                 autoOk
@@ -79,15 +81,17 @@ const CreateSR = (props) => {
                                 label="Date Created"
                                 format="MM/dd/yyyy"
                                 InputAdornmentProps={{ position: "start" }}
-                                value={date || new Date()}    
+                                value={date || null}    
                                 onChange={date => handleDateChange(date)}
                             />
                         </MuiPickersUtilsProvider>
                     </Grid>
                     <Grid item lg={4}>
                     <FormControl style={{minWidth: '100%'}}>
-                        <InputLabel>Shift</InputLabel>
+                        <InputLabel labelid="shift">Shift</InputLabel>
                         <Select
+                        id="shift"
+                        label="Shift"
                         defaultValue = ""
                         name='shift'
                         value={shift || ''}
@@ -103,7 +107,7 @@ const CreateSR = (props) => {
             <OSRTabs> </OSRTabs>
             <Button 
             variant="contained" 
-            style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%'}}
+            style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%', marginBottom: '1%'}}
             onClick={handleSubmitButton}>Submit Report</Button>
         </div>
     )

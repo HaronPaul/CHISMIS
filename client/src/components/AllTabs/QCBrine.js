@@ -1,27 +1,10 @@
 import React from "react";
-import {Select, MenuItem, FormControl, InputLabel, Typography, makeStyles, Grid} from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import {Select, MenuItem, FormControl, InputLabel, Typography, Grid, TextField} from "@mui/material";
 import {useSelector, useDispatch} from 'react-redux'
 import { addQcbrine } from "../../redux/sectionSlice";
 
-const useStyles = makeStyles({
-    formControl: {
-        minWidth: '100%',
-    },
-    input: {
-        minWidth: '100%',
-    },
-    container: {
-        marginBottom: '3%',
-    },  
-    header: {
-        marginBottom: '1%'
-    }
-})
-
 const QCBrine = () => {
     const dispatch = useDispatch()
-    const classes = useStyles()
 
     const {qcBrineSection} = useSelector((state) => state.section)
     const handleChange = (e) => {
@@ -32,50 +15,55 @@ const QCBrine = () => {
 
     return(
         <>
-            <div className={classes.container}>
-                <Typography variant="h4">Quality Control Brine</Typography>
-                <Grid container spacing={3}>
+            <div style = {{marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Quality Control Brine</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg= {3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='SPB Ca+MG' 
                         placeholder="15+5 ppb mx" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='spb_camg'
                         value={qcBrineSection.spb_camg || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='SPB NaClO3' 
                         placeholder="20 gpl max" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='spb_naclo3'
                         value={qcBrineSection.spb_naclo3 || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='SPB Na2SO4' 
                         placeholder="7 gpl max" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='spb_na2so4'
                         value={qcBrineSection.spb_na2so4 || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='DB NaClO3' 
                         placeholder="20 gpl mx" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='db_naclo3'
                         value={qcBrineSection.db_naclo3 || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='DB NaCl' 
                         placeholder=" gpl mx" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='db_nacl'
                         value={qcBrineSection.db_nacl || ''}
                         onChange={handleChange} />
@@ -83,13 +71,15 @@ const QCBrine = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4">Quality Control Brine and Product</Typography>
-                <Grid container spacing={3}>
+            <div style = {{marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Quality Control Brine and Product</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={3} sm={4} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>DB Free Cl Quality</InputLabel>
-                            <Select 
+                        <FormControl style = {{minWidth: '100%'}}>
+                            <InputLabel id="dbfree">DB Free Cl Quality</InputLabel>
+                            <Select
+                            labelid="dbfree"
+                            label="DB Free Cl Quality"
                             defaultValue = ""
                             name='db_free_cl'
                             value={qcBrineSection.db_free_cl || ''}
@@ -100,37 +90,41 @@ const QCBrine = () => {
                         </FormControl>
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
-                        <TextField 
+                        <TextField
+                        type="number" 
                         label='50% NaOH Concentration' 
                         placeholder="48-50" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_conc_50'
                         value={qcBrineSection.naoh_conc_50 || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
+                        type="number"
                         label='32% NaOH Concentration' 
                         placeholder="30-32" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naoh_conc_32'
                         value={qcBrineSection.naoh_conc_32 || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
-                        <TextField 
+                        <TextField
+                        type="number" 
                         label='NaOH Fe Concentration' 
                         placeholder="5 ppm max" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='naohfe_conc'
                         value={qcBrineSection.naohfe_conc || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
-                        <TextField 
+                        <TextField
+                        type="number" 
                         label='HCl on-line' 
                         placeholder="32-33.5" 
-                        className={classes.input}
+                        style = {{minWidth: '100%'}}
                         name='hcl_online'
                         value={qcBrineSection.hcl_online || ''}
                         onChange={handleChange} />
@@ -138,16 +132,16 @@ const QCBrine = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
-                <Grid container spacing={4}>
+            <div style = {{marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Operational Remarks</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={12} sm={12} xs={12}>
                         <TextField
                             variant="outlined"
                             label="Operational Remarks"
                             multiline
                             maxRows={4}
-                            className={classes.input}
+                            style = {{minWidth: '100%'}}
                             name='remarks'
                             value={qcBrineSection.remarks || ''}
                             onChange={handleChange}

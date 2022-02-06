@@ -1,17 +1,9 @@
 import React, { useState } from "react"
-import { Typography, Grid, TextField, Button, makeStyles } from "@material-ui/core"
-import {Alert} from '@material-ui/lab'
+import { Typography, Grid, TextField, Button, Alert } from "@mui/material"
 
 // Redux related improts
 import {useDispatch} from 'react-redux'
 import {login} from '../redux/apiCalls'
-
-const useStyles = makeStyles( theme => ({
-    textArea: {
-      minWidth: '100%',
-      marginBottom: '3%',
-    },
-}))
 
 const SuccessAlert = ({message}) => {
   return(
@@ -30,7 +22,6 @@ const ErrorAlert = ({message}) => {
 }
 
 const LogIn = ({handleClick}) => {
-    const classes = useStyles()
     const dispatch = useDispatch()  
 
     // States
@@ -49,11 +40,16 @@ const LogIn = ({handleClick}) => {
         <Typography variant="h2" style={{margin: '1%', textAlign: 'center'}}>Sign In</Typography>
         <Grid container spacing={2}>
           <Grid item lg={12} sm={12} xs={12}>
-            <TextField variant="outlined" label="Username" className={classes.textArea} onChange={(e)=>setUsername(e.target.value)}></TextField>
+            <TextField variant="outlined" label="Username" 
+            style={{ minWidth: '100%'}} 
+            onChange={(e)=>setUsername(e.target.value)} />
           </Grid>
-  
           <Grid item lg={12} sm={12} xs={12}>
-            <TextField variant="outlined" label="Password" className={classes.textArea} type='password' onChange={(e)=>setPassword(e.target.value)}></TextField>
+            <TextField variant="outlined" 
+            label="Password" 
+            style={{ minWidth: '100%'}} 
+            type='password' 
+            onChange={(e)=>setPassword(e.target.value)}></TextField>
           </Grid>
           {alert === 1 && <SuccessAlert message={message}/>}
           {alert === -1 && <ErrorAlert message={message}/>}

@@ -1,29 +1,16 @@
 import React from "react";
-import {Select, MenuItem, FormControl, InputLabel, makeStyles, Typography} from '@material-ui/core'
-import { Grid } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import {Select, MenuItem, FormControl, InputLabel, Typography} from '@mui/material'
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { addControlRoom } from "../../redux/sectionSlice";
-
-const useStyles = makeStyles({
-    formControl: {
-        minWidth: '100%',
-    },
-    input: {
-        minWidth: '100%',
-    },
-    container: {
-        marginBottom: '3%',
-    },  
-    header: {
-        marginBottom: '1%'
-    }
-})
+import ErrorSection from "./ErrorSection";
 
 const ControlRoomTab = () => {
     const dispatch = useDispatch()
     const {controlRoomSection} = useSelector((state) => state.section)
-    const classes = useStyles()
+    const {controlRoomErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -33,13 +20,16 @@ const ControlRoomTab = () => {
 
     return(
         <>
-            <div className={classes.container}>
-                <Typography variant="h4">Operators</Typography>
-                <Grid container spacing={2}>
+            <div style={{marginBottom: '2%'}}>
+                {controlRoomErrors.length === 0? <></>:<ErrorSection errors={controlRoomErrors}/>}
+                <Typography variant="h4" style={{marginBottom: '1%'}}>Operators</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Previous Operator</InputLabel>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="prev_op">Previous Operator</InputLabel>
                             <Select 
+                            labelId="prev_op"
+                            label="Previous Operator"
                             defaultValue = ''
                             name='previous_operator'
                             value={controlRoomSection.previous_operator || ''}
@@ -51,9 +41,11 @@ const ControlRoomTab = () => {
                         </FormControl>
                     </Grid>
                     <Grid item lg={6} sm={6} xs={6}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Present Operator</InputLabel>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="pres_op">Present Operator</InputLabel>
                             <Select
+                            labelId="pres_op"
+                            label="Present Operator"
                             defaultValue = ""
                             name='present_operator'
                             value={controlRoomSection.present_operator || ''}
@@ -68,14 +60,16 @@ const ControlRoomTab = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4">Other Information</Typography>
-                <Grid container spacing={4}>
+            <div style={{marginBottom: '2%',}}>
+                <Typography variant="h4" style={{marginBottom: '1%'}}>Other Information</Typography>
+                <Grid container spacing={1}>
                     <Grid item lg={2} sm={4} xs={4}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>Interlock Engaged</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="interlock">Interlock Engaged</InputLabel>
                             <Select
                             defaultValue = ""
+                            labelid="interlock"
+                            label="Interlock Engaged"
                             name='interlock_engaged'
                             value={controlRoomSection.interlock_engaged || ''}
                             onChange={handleChange}>
@@ -87,9 +81,11 @@ const ControlRoomTab = () => {
                     </Grid>
 
                     <Grid item lg={2} sm={4} xs={4}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel>DAQ Operational</InputLabel>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel id="daq">DAQ Operational</InputLabel>
                             <Select
+                            labelid="daq"
+                            label="DAQ Operation"
                             defaultValue = ""
                             name='daq_operational'
                             value={controlRoomSection.daq_operational || ''}
@@ -101,10 +97,11 @@ const ControlRoomTab = () => {
                         </FormControl>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
-                        <TextField 
+                        <TextField
+                        style={{minWidth: '100%'}} 
                         label='Rectifier Raw Water'
                         placeholder=">= 250"
-                        className={classes.input} 
+                        type="number"
                         name='rr_water'
                         value={controlRoomSection.rr_water || ''}
                         onChange={handleChange}
@@ -112,53 +109,60 @@ const ControlRoomTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='Cells'
                         placeholder=""
-                        className={classes.input}
+                        type="number"
                         name='cells'
                         value={controlRoomSection.cells || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='Average Load'
                         placeholder="<= 13.25"
-                        className={classes.input}
+                        type="number"
                         name='avg_load'
                         value={controlRoomSection.avg_load || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='End of Shift Load'
                         placeholder=""
-                        className={classes.input}
+                        type="number"
                         name='eos_load'
                         value={controlRoomSection.eos_load || ''}
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='Rectifier Demi water'
                         placeholder=">= 180"
-                        className={classes.input}
+                        type="number"
                         name='rd_water'
                         value={controlRoomSection.rd_water || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='Cells with voltage'
                         placeholder="> 3.4"
-                        className={classes.input}
+                        type="number"
                         name='cells_voltage'
                         value={controlRoomSection.cells_voltage || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
-                        <TextField label='Cells total voltage'
+                        <TextField
+                        style={{minWidth: '100%'}}
+                        label='Cells total voltage'
                         placeholder="< 299.2"
-                        className={classes.input}
+                        type="number"
                         name='cells_total_voltage'
                         value={controlRoomSection.cells_total_voltage || ''}
                         onChange={handleChange}
@@ -166,9 +170,10 @@ const ControlRoomTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        style={{minWidth: '100%'}}
                         label='Transformer oil temperature'
                         placeholder="< 90 °C"
-                        className={classes.input}
+                        type="number"
                         name='xformer_oil_temp'
                         value={controlRoomSection.xformer_oil_temp || ''}
                         onChange={handleChange}></TextField>
@@ -176,16 +181,16 @@ const ControlRoomTab = () => {
                 </Grid>
             </div>
 
-            <div className={classes.container}>
-                <Typography variant="h4" className={classes.header}>Operational Remarks</Typography>
+            <div style={{marginBottom: '2%',}}>
+                <Typography variant="h4" style={{marginBottom: '1%'}}>Operational Remarks</Typography>
                 <Grid container spacing={4}>
                     <Grid item lg={12} sm={12} xs={12}>
                         <TextField
+                            style={{minWidth: '100%'}}
                             variant="outlined"
                             label="Operational Remarks"
                             multiline
                             maxRows={4}
-                            className={classes.input}
                             name='remarks'
                             value={controlRoomSection.remarks || ''}
                             onChange={handleChange}/>
