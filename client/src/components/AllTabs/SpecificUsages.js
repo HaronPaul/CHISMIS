@@ -2,11 +2,12 @@ import React from "react";
 import {Typography, Grid, TextField} from "@mui/material";
 import {useSelector, useDispatch} from 'react-redux'
 import { addUsages } from "../../redux/sectionSlice";
+import ErrorSection from './ErrorSection'
 
 const SpecificUsagesTab = () => {
     const dispatch = useDispatch()
-
     const {usagesSection} = useSelector((state) => state.section)
+    const {usagesErrors} = useSelector((state)=>state.error)
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -15,6 +16,7 @@ const SpecificUsagesTab = () => {
 
     return(
         <>
+            {usagesErrors.length === 0? <></>:<ErrorSection errors={usagesErrors} type="usages"/>}
             <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Specific Usages - Actual Consumption</Typography>
                 <Grid container spacing={1}>
@@ -98,7 +100,7 @@ const SpecificUsagesTab = () => {
                 </Grid>
             </div>
 
-            <div style={{marginBottom: '3%'}}>
+            {/* <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Specific Usages - per DMT NaOH</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={2} xs={6}>
@@ -179,7 +181,7 @@ const SpecificUsagesTab = () => {
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
-            </div>
+            </div> */}
 
             <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Environment Monitoring</Typography>

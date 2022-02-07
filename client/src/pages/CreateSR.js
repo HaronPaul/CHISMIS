@@ -1,12 +1,13 @@
 import React from "react";
 import OSRTabs from "../components/Tabs";
-import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button} from "@mui/material";
+import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { changeDate, changeShift } from "../redux/sectionSlice"
 import { addErrors } from "../redux/errorSlice";
-import DateFnsUtils from '@date-io/date-fns';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns  from '@mui/lab/AdapterDateFns'
 
 import axios from 'axios'
 
@@ -44,19 +45,30 @@ const CreateSR = (props) => {
     const {currentSupervisor, date, shift} = useSelector((state) => state.section)
 
     const handleDateChange = (date) => {
-        const DD = String(date.getDate()).padStart(2, '0');
-        const MM = String(date.getMonth() + 1).padStart(2, '0');
-        const YYYY = date.getFullYear();
-        const dateCreated = `${MM}/${DD}/${YYYY}`
-        console.log(dateCreated) 
-        dispatch(changeDate(dateCreated))
+        try {
+            const dateString = date.toString()
+            if(dateString !== "Invalid Date") {
+                console.log(dateString)
+                const DD = String(date.getDate()).padStart(2, '0');
+                const MM = String(date.getMonth() + 1).padStart(2, '0');
+                const YYYY = date.getFullYear();
+                const dateCreated = `${MM}/${DD}/${YYYY}`
+                dispatch(changeDate(dateCreated))
+            }
+        } catch(err) {
+            console.log('No date inputted')
+        }
     }
 
     const handleSubmitButton = async () => {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-            console.log(response.data.errors)
-            dispatch(addErrors(response.data.errors))
+            if(response.data.success) {
+                // Create a PDF modal containing the data
+            } else {
+                // Print the errors on the DOM
+                dispatch(addErrors(response.data.errors))
+            }
         } catch(error) {
             console.log(error)
         }
@@ -72,19 +84,15 @@ const CreateSR = (props) => {
                         <Typography variant="h6">Supervisor: {currentSupervisor} </Typography>
                     </Grid>
                     <Grid item lg={4}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                style={{minWidth: '90%'}}
-                                autoOk
-                                variant="inline"
-                                inputVariant="outlined"
-                                label="Date Created"
-                                format="MM/dd/yyyy"
-                                InputAdornmentProps={{ position: "start" }}
-                                value={date || null}    
-                                onChange={date => handleDateChange(date)}
-                            />
-                        </MuiPickersUtilsProvider>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DesktopDatePicker
+                        label="Date desktop"
+                        inputFormat="MM/dd/yyyy"
+                        value={date || null}
+                        onChange={handleDateChange}
+                        renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider>
                     </Grid>
                     <Grid item lg={4}>
                     <FormControl style={{minWidth: '100%'}}>

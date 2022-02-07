@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import {Tabs, Tab} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core'
+import {Tabs, Tab} from '@mui/material'
+import { makeStyles } from '@mui/styles'
+
 import ControlRoomTab from './AllTabs/ControlRoomTab'
 import HCLTab from './AllTabs/HCLTab'
 import EvapTabs from './AllTabs/EvapTabs'
@@ -10,7 +11,6 @@ import NaCLOTab from './AllTabs/NaClOTab'
 import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
 import SPEval from './AllTabs/SPEval'
-import { useDispatch, useSelector} from 'react-redux'
  
 const useStyles = makeStyles({
     container: {
@@ -44,7 +44,13 @@ const OSRTabs = (props) => {
                     value={value}
                     onChange={handleTabs}
                     variant="fullWidth" 
-                    indicatorColor='primary'>
+                    scrollButtons="auto"
+                    indicatorColor='secondary'
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: "#000000"
+                         }
+                    }}>
                         <Tab label="Control Room" wrapped />
                         <Tab label="HCL" wrapped />
                         <Tab label="Evaporator" wrapped /> 

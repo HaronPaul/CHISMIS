@@ -2,11 +2,13 @@ import React from "react";
 import {Typography, Grid, Select, MenuItem, FormControl, InputLabel} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { addEval } from "../../redux/sectionSlice";
+import ErrorSection from "./ErrorSection"
 
 const SPEval = () => {
     const dispatch = useDispatch()
     const {evalSection} = useSelector((state) => state.section)
-    
+    const {evalErrors} = useSelector((state) => state.error)
+
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -15,6 +17,7 @@ const SPEval = () => {
 
     return(
         <>
+            {evalErrors.length === 0? <></>:<ErrorSection errors={evalErrors} type="eval"/>}
             <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4">SP Evaluation</Typography>
                 <Grid container spacing={1}>
