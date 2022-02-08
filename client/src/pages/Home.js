@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import HomeImage from '../assets/MVC-364.jpg'
 import { Grid, Paper, Typography} from "@mui/material";
-import {ThemeProvider, makeStyles} from '@mui/styles'
+import {makeStyles} from '@mui/styles'
 import Register from '../components/Register'
 import LogIn from "../components/Login";
 
@@ -62,7 +62,6 @@ const Home = (props) => {
     }
 
     return(
-      <ThemeProvider>
       <Grid container style={mainContainer}>
         <Grid item lg={6} sm={12} style={rightGrid}>
             <Typography variant="h1" style={mainTitle}>CHISMIS</Typography>
@@ -74,7 +73,6 @@ const Home = (props) => {
           </Paper>
         </Grid>
       </Grid>
-      </ThemeProvider>
     )
 }
 
