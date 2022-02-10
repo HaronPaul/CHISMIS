@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const HClSchema = new mongoose.Schema({
     previous_operator: { type: String, required: true },
     present_operator: { type: String, required: true },
+    hcl_eff: {type: Number, required: true},
     hcl_prod: { type: Number, required: true },
     scrubbed_cl_temp: { type: Number, required: true },
     hcl_prod_temp: { type: Number, required: true },

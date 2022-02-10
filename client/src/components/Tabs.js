@@ -59,7 +59,6 @@ const OSRTabs = (props) => {
                         <Tab label="Hypochlorite" wrapped/> 
                         <Tab label="QC Brine" wrapped/> 
                         <Tab label="Specific Usages" wrapped/>
-                        <Tab label="SP Evaluation" wrapped/> 
                 </Tabs>
             </div>
             <div className={classes.tabPanelContainer}>
@@ -79,7 +78,6 @@ const TabPanel = ({value}) => {
         case 5: return <NaCLOTab/>
         case 6: return <QCBrine />   
         case 7: return <SpecificUsagesTab/>  
-        case 8: return <SPEval />
         default: return <ControlRoomTab />
     }
 }

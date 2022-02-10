@@ -83,6 +83,21 @@ const BrineTab = () => {
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
+                        <FormControl style ={{minWidth: '100%'}}>
+                            <InputLabel id="precoat">Precoat</InputLabel>
+                            <Select 
+                            labelid="precoat"
+                            label="Precoat"
+                            defaultValue = ""
+                            name='precoat'
+                            value={prBrineSection.precoat || ''}
+                            onChange={handleChange}>
+                                <MenuItem value={'A'}> A</MenuItem>
+                                <MenuItem value={'B'}>B</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
                         <TextField
                         label='Precoat Operating Hours' 
                         placeholder=">= 75 hours" 
@@ -123,14 +138,22 @@ const BrineTab = () => {
                         onChange={handleChange} />
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
-                        <TextField
-                        label='Brine Overflow'
-                        placeholder=""
-                        type="number"
-                        style ={{minWidth: '100%'}}
-                        name='brine_overflow'
-                        value={prBrineSection.brine_overflow || ''}
-                        onChange={handleChange} />
+                        <FormControl style ={{minWidth: '100%'}}>
+                            <InputLabel id="brine_overflow">Brine Overflow</InputLabel>
+                            <Select
+                            labelid="brine_overflow"
+                            label="Brine Overflow"
+                            defaultValue = ""
+                            name='brine_overflow'
+                            value={prBrineSection.brine_overflow || ''}
+                            onChange={handleChange}>
+                                <MenuItem value={'RESATURATOR'}>RESATURATOR</MenuItem>
+                                <MenuItem value={'MIXING TANKS'}>MIXING TANKS</MenuItem>
+                                <MenuItem value={'T132'}>T132</MenuItem>
+                                <MenuItem value={'T136'}>T136</MenuItem>
+                                <MenuItem value={'NONE'}>NONE</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

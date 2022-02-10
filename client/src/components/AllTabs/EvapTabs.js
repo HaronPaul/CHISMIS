@@ -61,14 +61,7 @@ const EvapTabs = () => {
                 <Typography variant="h4" style={{ marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
-                        <TextField
-                        label='Evaporator Efficiency'
-                        placeholder=""
-                        type="number"
-                        style = {{minWidth: '100%'}}
-                        name='evap_eff'
-                        value={evapSection.evap_eff || ''}
-                        onChange={handleChange} />
+                        <Typography>HCl Synthesis Efficiency: [Value placeholder]</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

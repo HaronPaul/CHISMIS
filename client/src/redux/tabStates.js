@@ -1,6 +1,7 @@
 export const controlRoom_values = {
     previous_operator: '',
     present_operator: '',
+    hours: '',
     interlock_engaged: '',
     daq_operational: '',
     rr_water: '',   
@@ -50,6 +51,7 @@ export const prBrine_values = {
     present_operator: '',
     salt_loaded: '',
     pbrine_conc: '',
+    precoat: '',
     precoat_op_hours: '',
     camg_conc: '',
     xcess_naoh_conc: '',
@@ -99,6 +101,8 @@ export const naclo_values = {
     storage2: '',
     storage3: '',
     storage4: '',
+    space: '',
+    production: '',
     remarks: ''
 }
 

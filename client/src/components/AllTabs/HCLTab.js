@@ -61,14 +61,7 @@ const HCLTab = () => {
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Other Information</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
-                        <TextField 
-                        label='HCL Synthesis Efficiency'
-                        placeholder="< 11.1 dmt"
-                        style= {{minWidth: '100%'}}
-                        type="number"
-                        name='hcl_synth_eff'
-                        value={hclSection.hcl_synth_eff || ''}
-                        onChange={handleChange}/>
+                        <Typography>Evap Efficiency: [Value placeholder]</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

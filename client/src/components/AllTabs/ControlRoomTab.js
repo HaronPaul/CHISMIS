@@ -79,7 +79,6 @@ const ControlRoomTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
-
                     <Grid item lg={2} sm={4} xs={4}>
                         <FormControl style={{minWidth: '100%'}}>
                             <InputLabel id="daq">DAQ Operational</InputLabel>
@@ -95,6 +94,16 @@ const ControlRoomTab = () => {
                                 <MenuItem value={'PARTIAL'}>Partial</MenuItem>
                             </Select>
                         </FormControl>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
+                        style={{minWidth: '100%'}}
+                        label='Hours'
+                        placeholder=""
+                        type="number"
+                        name='hours'
+                        value={controlRoomSection.hours || ''}
+                        onChange={handleChange} />
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

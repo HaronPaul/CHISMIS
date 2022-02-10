@@ -34,4 +34,5 @@ const SpecUsages = new mongoose.Schema({
     naocl_waste: {type: Number, required: true}
 })
 
+
 module.exports = specificUsages = mongoose.model('specific usages', SpecUsages)

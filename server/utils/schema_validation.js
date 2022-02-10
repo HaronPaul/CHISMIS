@@ -20,6 +20,10 @@ let controlRoomSchema = Joi.object({
         'string.empty': 'Rectifier Raw Water field required',
         'number.base': 'Rectifier Raw Water value must be a number'
     }),
+    hours: Joi.number().required().messages({
+        'string.empty': 'Hours field required',
+        'number.base': 'Number of cells must be a number'
+    }),
     cells: Joi.number().required().messages({
         'string.empty': 'Cells field required',
         'number.base': 'Number of cells must be a number'
@@ -163,6 +167,10 @@ const prBrineSchema = Joi.object({
         'string.empty': 'Polished Brine Concentration required',
         'number.base': 'Polished Brine  Concentration must be a number'
     }),
+    precoat:  Joi.string().trim().required().valid("A", "B").messages({
+        'string.empty': 'Precoat Field Required',
+        'any.only': 'Precoat Value must be either A or B'
+    }),
     precoat_op_hours: Joi.number().required().messages({
         'string.empty': 'Precoat Operating Hours required',
         'number.base': 'Precoat Operating Hours must be a number'
@@ -179,9 +187,8 @@ const prBrineSchema = Joi.object({
         'string.empty': 'Differential Pressure in Precoat required',
         'number.base': 'Differential Pressure in Precoat must be a number'
     }),
-    brine_overflow: Joi.number().required().messages({
-        'string.empty': 'Brine Overflow required',
-        'number.base': 'Brine Overflow must be a number'
+    brine_overflow: Joi.string().trim().required().valid("RESATURATOR", "MIXING TANKS", "T132", "T1336", "NONE").messages({
+        'any.only': 'Precoat Value must be either RESATURATOR, MIXING TANKS, T132, T1336, or NONE'
     }),
     xcess_na2co3_conc: Joi.number().required().messages({
         'string.empty': 'Excess Na2CO3 required',
@@ -330,6 +337,14 @@ const nacloSchema = Joi.object({
     storage4: Joi.number().required().messages({
         'string.empty': 'Storage 4 Field Required',
         'number.base': 'Storage 4 must be a number'
+    }),
+    space: Joi.number().required().messages({
+        'string.empty': 'Space Field Required',
+        'number.base': 'Space must be a number'
+    }),
+    production: Joi.number().required().messages({
+        'string.empty': 'Production Field Required',
+        'number.base': 'Production must be a number'
     }),
     remarks: Joi.string().optional().allow('')
 })

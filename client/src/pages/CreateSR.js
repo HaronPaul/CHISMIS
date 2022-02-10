@@ -1,15 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import OSRTabs from "../components/Tabs";
-import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField} from "@mui/material";
+import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal, Box, autocompleteClasses} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { changeDate, changeShift } from "../redux/sectionSlice"
-import { addErrors } from "../redux/errorSlice";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
-
 import axios from 'axios'
+import ModalReport from "../components/ModalReport";
+import ShiftReportDoc from "../components/ShiftReportDoc";
+
 
 const useStyles = makeStyles({
     mainContainerStyle : {
@@ -19,7 +20,6 @@ const useStyles = makeStyles({
         alignItems: 'center',
         height: 'auto',
     },
-
     titleStyle: {
         alignSelf: 'flex-start',
         marginTop: '2% !important',
@@ -38,11 +38,28 @@ const useStyles = makeStyles({
     }
 })
 
+// Style for modal
+const style = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '70vw',
+    bgcolor: 'background.paper',
+    // border: '2px solid #000',
+    boxShadow: 24,
+    p: 5,
+    overflowY: 'scroll',
+};
+
 const CreateSR = (props) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
     const {currentSupervisor, date, shift} = useSelector((state) => state.section)
+    
+    // Modal states and function
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleDateChange = (date) => {
         try {
@@ -62,18 +79,20 @@ const CreateSR = (props) => {
 
     const handleSubmitButton = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-            if(response.data.success) {
-                // Create a PDF modal containing the data
-            } else {
-                // Print the errors on the DOM
-                dispatch(addErrors(response.data.errors))
-            }
+            handleOpen()
+            // const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+            // if(response.data.success) {
+            //     // Create a PDF modal containing the data
+            // } else {
+            //     // Print the errors on the DOM
+            //     dispatch(addErrors(response.data.errors))
+            // }
         } catch(error) {
-            console.log(error)
+            // console.log(error)
         }
     }
     return(
+        <>
         <div className={classes.mainContainerStyle}>
             <Typography variant="h2" className={classes.titleStyle}>Create Operation Shift Report</Typography>
             <Paper 
@@ -116,8 +135,24 @@ const CreateSR = (props) => {
             <Button 
             variant="contained" 
             style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%', marginBottom: '1%'}}
-            onClick={handleSubmitButton}>Submit Report</Button>
+            onClick={handleSubmitButton}>Submit</Button> 
+             <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
+            >
+                <Box sx={style}>
+                    <Typography variant="h4" textAlign={"center"}>Preview Shift Report</Typography>
+                    <ShiftReportDoc/>
+                    <Button variant="contained" style={{marginTop: '20px'}}>Submit Report</Button>
+                </Box>
+
+            </Modal>
         </div>
+        
+       </>
     )
 }
 

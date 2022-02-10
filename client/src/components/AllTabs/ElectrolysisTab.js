@@ -60,14 +60,7 @@ const ElectrolysisTab = () => {
                 <Typography variant="h4" style = {{  marginBottom: '1%'}}>Other Information</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={6}>
-                        <TextField
-                        type="number"
-                        label='Electrolyzer Efficiency'
-                        placeholder="" 
-                        style = {{minWidth: '100%'}}
-                        name='electro_eff'
-                        value={electroSection.electro_eff || ''}
-                        onChange={handleChange}></TextField>
+                        <Typography>Electrolyzer Efficiency: [Value placeholder]</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 

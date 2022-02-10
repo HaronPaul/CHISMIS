@@ -242,6 +242,38 @@ const NaCLOTab = () => {
             </div>
 
             <div style = {{marginBottom: '3%'}}>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Production and Space</Typography>
+                <Grid container spacing={1}>
+                    <Grid item lg={6} sm={4} xs={6}>
+                        <TextField
+                            variant="outlined"
+                            label="Space"
+                            type="number"
+                            multiline
+                            maxRows={4}
+                            style = {{minWidth: '100%'}}
+                            name='space'
+                            value={nacloSection.space || ''}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item lg={6} sm={4} xs={6}>
+                        <TextField
+                            variant="outlined"
+                            label="Production"
+                            type="number"
+                            multiline
+                            maxRows={4}
+                            style = {{minWidth: '100%'}}
+                            name='production'
+                            value={nacloSection.production || ''}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                </Grid>
+            </div>
+
+            <div style = {{marginBottom: '3%'}}>
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Operational Remarks</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={12} sm={12} xs={12}>
