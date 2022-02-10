@@ -65,6 +65,15 @@ const HCLTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        label='HCL'
+                        type="number"
+                        style= {{minWidth: '100%'}}
+                        name='hcl'
+                        value={hclSection.hcl|| ''}
+                        onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
                         label='HCL Production'
                         type="number"
                         style= {{minWidth: '100%'}}
@@ -79,15 +88,6 @@ const HCLTab = () => {
                         style= {{minWidth: '100%'}}
                         name='scrubbed_cl_temp'
                         value={hclSection.scrubbed_cl_temp || ''}
-                        onChange={handleChange}/>
-                    </Grid>
-                    <Grid item lg={2} sm={4} xs={4}>
-                        <TextField
-                        label='HCL product temperature'
-                        type="number"
-                        style= {{minWidth: '100%'}}
-                        name='hcl_prod_temp'
-                        value={hclSection.hcl_prod_temp || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
@@ -152,6 +152,15 @@ const HCLTab = () => {
                         style= {{minWidth: '100%'}}
                         name='sigri_inlet_pressure_h'
                         value={hclSection.sigri_inlet_pressure_h || ''}
+                        onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
+                        label='Full N2 On-site'
+                        type="number"
+                        style= {{minWidth: '100%'}}
+                        name='full_n2'
+                        value={hclSection.full_n2 || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>

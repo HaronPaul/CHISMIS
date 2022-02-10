@@ -24,7 +24,7 @@ let controlRoomSchema = Joi.object({
         'string.empty': 'Hours field required',
         'number.base': 'Number of cells must be a number'
     }),
-    cells: Joi.number().required().messages({
+    cells: Joi.string().required().messages({
         'string.empty': 'Cells field required',
         'number.base': 'Number of cells must be a number'
     }),
@@ -63,6 +63,10 @@ let hclSchema = Joi.object({
     present_operator: Joi.string().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
+    hcl: Joi.number().required().messages({
+        'string.empty': 'HCL Field Required',
+        'number.base': 'HCL must be a number'
+    }),
     hcl_synth_eff: Joi.number().required().messages({
         'string.empty': 'HCL Synthesis Efficiency Field Required',
         'number.base': 'HCL Synthesis Efficiency must be a number'
@@ -74,10 +78,6 @@ let hclSchema = Joi.object({
     scrubbed_cl_temp: Joi.number().required().messages({
         'string.empty': 'Scrubbed Cl Temperature Field Required',
         'number.base': 'Scrubbed Cl Temperature must be a number'
-    }),
-    hcl_prod_temp: Joi.number().required().messages({
-        'string.empty': 'HCL Product Temperature Field Required',
-        'number.base': 'HCL Product Temperature must be a number'
     }),
     hcl_conc: Joi.number().required().messages({
         'string.empty': 'HCL Concentration Field Required',
@@ -106,6 +106,10 @@ let hclSchema = Joi.object({
     sigri_inlet_pressure_h: Joi.number().required().messages({
         'string.empty': 'Sigri Inlet Pressure Hydrogen Required',
         'number.base': 'Sigri Inlet Pressure Hydrogen must be a number'
+    }),
+    full_n2: Joi.number().required().messages({
+        'string.empty': 'Full N2 On-site Required',
+        'number.base': 'Full N2 On-site must be a number'
     }),
     remarks: Joi.string().optional().allow('')
 })

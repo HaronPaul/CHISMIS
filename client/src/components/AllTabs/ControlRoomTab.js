@@ -121,7 +121,6 @@ const ControlRoomTab = () => {
                         style={{minWidth: '100%'}}
                         label='Cells'
                         placeholder=""
-                        type="number"
                         name='cells'
                         value={controlRoomSection.cells || ''}
                         onChange={handleChange} />

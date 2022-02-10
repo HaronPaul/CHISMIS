@@ -16,12 +16,12 @@ export const controlRoom_values = {
 } 
 
 export const hcl_values = {
+    hcl: '',
     previous_operator: '',
     present_operator: '',
     hcl_synth_eff: '',
     hcl_prod: '',
     scrubbed_cl_temp: '',
-    hcl_prod_temp: '',
     hcl_conc: '',
     hcl_sg: '',
     sigri_cooling_water: '',
@@ -29,8 +29,10 @@ export const hcl_values = {
     clh20_flowrate: '',
     sigri_inlet_pressure_c: '',
     sigri_inlet_pressure_h: '',
+    full_n2: '',
     remarks: ''
 }
+
 
 export const evap_values = {
     previous_operator: '',
