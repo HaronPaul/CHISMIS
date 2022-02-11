@@ -12,11 +12,12 @@ const ElectroSchema = new mongoose.Schema({
     naoh_conc: {type: Number, required: true},
     naoh_sg: {type: Number, required: true},
     naoh_flowrate: {type: Number, required: true},
-    db_free_cl_qual: {type: Number, required: true},
+    db_free_cl_qual: {type: String, required: true},
     num_n_cylinders: {type: Number, required: true},
     decomposer_op_temp: {type: Number, required: true},
     db_conc: {type: Number, required: true},
     spb_conc: {type: Number, required: true},
+    full_n2: {type: Number, required: true},
     remarks: ''
 })
 

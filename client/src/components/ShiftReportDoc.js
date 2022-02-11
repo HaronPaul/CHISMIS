@@ -10,10 +10,8 @@ const TableContainer = styled.div`
 `
 
 const ShiftReportDoc = () => {
-    const {controlRoomSection, hclSection, evapSection, prBrineSection} = useSelector((state) => state.section)
+    const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection} = useSelector((state) => state.section)
     const {date, shift} = useSelector((state)=>state.section)
-
-
     return(
         <TableContainer>
             <table border="1" align="center" cellPadding={2} cellSpacing="0">
@@ -321,98 +319,253 @@ const ShiftReportDoc = () => {
                         >
                             <font face="Arial" size="2" >{prBrineSection.pbrine_conc} gpl</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2" >Xcess NaOH (0.1-1.5)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2" >0 gpl</font></td>
+                        <td align="center">
+                            <font face="Arial" size="2" >Xcess NaOH (0.1-1.5)</font>
+                        </td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={prBrineSection.xcess_naoh_conc? ((prBrineSection.xcess_naoh_conc < 0.1|| prBrineSection.xcess_naoh_conc > 0.5)? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2" >{prBrineSection.xcess_naoh_conc} gpl</font>
+                            </td>
                         <td align="center"><font face="Arial" size="2" >Xcess Na₂CO₃(0.1-1.5)</font></td>
-                        <td  align="center" colSpan={3}><font face="Arial" size="2" >0 gpl</font></td>
+                        <td  
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={prBrineSection.xcess_na2co3_conc? ((prBrineSection.xcess_na2co3_conc < 0.1 || prBrineSection.xcess_na2co3_conc > 0.5)? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{prBrineSection.xcess_na2co3_conc} gpl</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"><font face="Arial" size="2">Precoat (75hrs):</font></td>
-                        <td align="center"><font face="Arial" size="2"> A / B</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
+                        <td 
+                        align="center"
+                        >
+                            <font face="Arial" size="2">{prBrineSection.precoat}</font>
+                        </td>
+                        <td 
+                        align="center"
+                        // bgcolor={prBrineSection.precoat_op_hours? (prBrineSection.precoat_op_hours > 5? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{prBrineSection.precoat_op_hours}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2">∆P(0.2):</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">0 MPa</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={prBrineSection.diff_pressure_precoat? (prBrineSection.diff_pressure_precoat >= 0.2? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{prBrineSection.diff_pressure_precoat}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2">Flow (20 min)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">0 </font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={prBrineSection.precoat_flowrate? (prBrineSection.precoat_flowrate < 20? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{prBrineSection.precoat_flowrate}</font>
+                        </td>
                     </tr>
+
+                    {/* Electorylysis Section */}
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Electrolysis</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b> Eff% </b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >&nbsp;</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" >Nakada</font></td>
+                        <td 
+                        colSpan={3} 
+                        align="center"
+                        bgcolor={electroSection.previous_operator.trim() === ''? 'f6685e':"#BFBFBF"}
+                        >
+                            <font face="Arial" size="2" >{electroSection.previous_operator}</font>
+                        </td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b> Pres Optr </b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" >Akimoto</font></td>
+                        <td 
+                        bgcolor="#BFBFBF" 
+                        colSpan={3} align="center"
+                        bgcolor={electroSection.present_operator.trim() === ''? 'f6685e':"#BFBFBF"}>
+                            <font face="Arial" size="2" >{electroSection.present_operator}</font>
+                        </td>
                         <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2"></font></td>
                     </tr>
                     <tr>
                         <td align="center"><font face="Arial" size="2" >Cell Liquor (11.90):</font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >10.0 dmt</font></td>
-                        <td align="center" colSpan={1}><font face="Arial" size="2" >Conc(31±1%)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2" >0</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={2}
+                        bgcolor={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 20? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{electroSection.cell_liq_prod} dmt</font>
+                        </td>
+                        <td align="center" colSpan={1}><font face="Arial" size="2">Conc(31±1%)</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={electroSection.naoh_conc? (electroSection.naoh_conc > 32? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2" >{electroSection.naoh_conc}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2" >Full N2 on site (4 min)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2" >0 cylinders</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={electroSection.full_n2? (electroSection.full_n2 < 4? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2" >{electroSection.full_n2} cylinders</font>
+                        </td>
                     </tr>
                     <tr>
                         <td  align="center"><font face="Arial" size="2" >SPB/NaOH(60-90)</font></td>
-                        <td align="center"><font face="Arial" size="2" >0</font></td>
-                        <td align="center"><font face="Arial" size="2" >0</font></td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.spb_inlet_temp? (electroSection.spb_inlet_temp < 60? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2" >{electroSection.spb_inlet_temp}</font>
+                        </td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.naoh_inlet_temp? (electroSection.naoh_inlet_temp <90? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{electroSection.naoh_inlet_temp}</font></td>
                         <td  align="center" colSpan={1}><font face="Arial" size="2"  >NaOH Flowrate (21) :</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2" >0 m³/hr</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={electroSection.naoh_flowrate? (electroSection.naoh_flowrate < 21? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{electroSection.naoh_flowrate} m³/hr</font></td>
                         <td align="center"><font face="Arial" size="2" >Decomposer</font></td>
-                        <td  align="center"><font face="Arial" size="2" >OFFLINE</font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >65 &deg;C</font></td>
+                        <td align="center"><font face="Arial" size="2" >{electroSection.decomposer_op_temp> 65? "ONLINE":"OFFLINE"}</font></td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" >{electroSection.decomposer_op_temp} &deg;C</font></td>
                     </tr>
                     <tr>
-                        <td  align="center"><font face="Arial" size="2">Chelate (42hrs /tk):</font></td>
-                        <td align="center"><font face="Arial" size="2">A - 28</font></td>
-                        <td align="center"><font face="Arial" size="2">B - 45</font></td>
+                        <td align="center"><font face="Arial" size="2">Chelate (42hrs /tk):</font> </td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.chelate_op_hours_ta? (electroSection.chelate_op_hours_ta > 42? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">A - {electroSection.chelate_op_hours_ta}</font>
+                        </td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb > 42? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">B - {electroSection.chelate_op_hours_tb}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2">DB Free Cl2</font></td>
-                        <td align="center"><font face="Arial" size="2">23</font></td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.db_free_cl_qual? (electroSection.db_free_cl_qual === "POSITIVE"? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{electroSection.db_free_cl_qual}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2">SG</font></td>
-                        <td align="center"><font face="Arial" size="2">43</font></td>
+                        <td align="center"><font face="Arial" size="2">{electroSection.naoh_sg}</font></td>
+                        
                         <td align="center"><font face="Arial" size="2">DB NaCl (180-220) / SPB (280-320)</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2">0</font></td>
+                        <td 
+                        align="center"
+                        bgcolor={electroSection.db_conc? ((electroSection.db_conc < 180|| prBrineSection.db_conc > 220)? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{electroSection.db_conc}</font>
+                        </td>
+                        <td 
+                        align="center" 
+                        colSpan={2}
+                        bgcolor={electroSection.spb_conc? ((electroSection.spb_conc < 280|| electroSection.spb_conc > 320)? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{electroSection.spb_conc}</font></td>
                     </tr>
+
+                    {/* NaClO Section */}
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>HYPO: (20.11)</b></font></td>
                         <td bgcolor="#BFBFBF" colSpan={2} align="center"><font face="Arial" size="2"><b>WCl2 ( )</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>Prev Op</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center" colSpan={3}><font face="Arial" size="2">Ybanez</font></td>
+                        <td 
+                        bgcolor={nacloSection.previous_operator === ''? "#f6685e":"#BFBFBF"} 
+                        align="center" 
+                        colSpan={3}
+                        >
+                            <font face="Arial" size="2">{nacloSection.previous_operator}</font>
+                        </td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>Pres Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center"  colSpan={3}><font face="Arial" size="2">Jimenez</font></td>
+                        <td 
+                        bgcolor={nacloSection.present_operator === ''? "#f6685e":"#BFBFBF"} 
+                        align="center" 
+                        colSpan={3}>
+                            <font face="Arial" size="2">{nacloSection.present_operator}</font>
+                        </td>
                         <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Hypo : (7.8±3% NaOCl) / # of batches (60)</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
+                        <td 
+                        align="center" 
+                        bgcolor={nacloSection.naclo_ct1? ((nacloSection.naclo_ct1 < 7.5|| nacloSection.naclo_ct1 > 8.1)? "#f6685e": "white"):"white"}> 
+                            <font face="Arial" size="2">{nacloSection.naclo_ct1}</font></td>
+                        <td 
+                        align="center" 
+                        bgcolor={nacloSection.naclo_ct2? ((nacloSection.naclo_ct2 < 7.5|| nacloSection.naclo_ct2 > 8.1)? "#f6685e": "white"):"white"}> 
+                            <font face="Arial" size="2">{nacloSection.naclo_ct2}</font>
+                        </td>
+                        <td 
+                        align="center" 
+                        bgcolor={nacloSection.naclo_ct3? ((nacloSection.naclo_ct3 < 7.5|| nacloSection.naclo_ct3 > 8.1)? "#f6685e": "white"):"white"}> 
+                            <font face="Arial" size="2">{nacloSection.naclo_ct3}</font></td>
+                        <td 
+                        align="center" 
+                        bgcolor={nacloSection.naclo_ct4? ((nacloSection.naclo_ct4 < 7.5|| nacloSection.naclo_ct4 > 8.1)? "#f6685e": "white"):"white"}> 
+                            <font face="Arial" size="2">{nacloSection.naclo_ct4}</font></td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline1? (nacloSection.fline1 > 100? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{nacloSection.fline1}</font>
+                        </td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline2? (nacloSection.fline2 > 100? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{nacloSection.fline2}</font>
+                        </td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline3? (nacloSection.fline3 > 100? "#f6685e": "white"):"white"}
+                        width={65}>
+                            <font face="Arial" size="2">{nacloSection.fline3}</font>
+                        </td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline4? (nacloSection.fline4 > 100? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{nacloSection.fline4}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td colSpan={3} align="center"><font face="Arial" size="2">Excess NaOH (0.4-1.0%)/ Storage #</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
-                        <td align="center"><font face="Arial" size="2">0</font></td>
+                        <td 
+                        align="center"
+                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct1 < 0.4|| nacloSection.naoh_ct1 > 1)? "#f6685e": "white"):"white"}
+                        ><font face="Arial" size="2">{nacloSection.naoh_ct1}</font>
+                        </td>
+                        <td
+                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct2 < 0.4|| nacloSection.naoh_ct2 > 1)? "#f6685e": "white"):"white"} 
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct2}</font></td>
+                        <td 
+                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct3 < 0.4|| nacloSection.naoh_ct3 > 1)? "#f6685e": "white"):"white"}
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct3}</font></td>
+                        <td 
+                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct4 < 0.4|| nacloSection.naoh_ct4 > 1)? "#f6685e": "white"):"white"}
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct4}</font></td>
+                        <td align="center"><font face="Arial" size="2">{nacloSection.storage1}</font></td>
+                        <td align="center"><font face="Arial" size="2">{nacloSection.storage2}</font></td>
+                        <td align="center"><font face="Arial" size="2">{nacloSection.storage3}</font></td>
+                        <td align="center"><font face="Arial" size="2">{nacloSection.storage4}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Production</font></td>
-                        <td align="center"><font face="Arial" size="2">50</font></td>
+                        <td 
+                        align="center"
+                        // bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct4 < 0.4|| nacloSection.naoh_ct4 > 1)? "#f6685e": "white"):"white"}
+                        ><font face="Arial" size="2">{nacloSection.production}</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">Space (430)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">100</font></td>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={nacloSection.space? (nacloSection.space < 100? "#f6685e": "white"):"white"}
+                        ><font face="Arial" size="2">{nacloSection.space}</font></td>
                     </tr>
 
+                    {/* QC Brine */}
                     <tr>
                         <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2"><b>QC Brine</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>Actual</b></font></td>
@@ -421,34 +574,70 @@ const ShiftReportDoc = () => {
                         <td rowSpan={6} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
-                        <td  align="center" colSpan={3}><font face="Arial" size="2">SPB Ca+Mg (15+5 ppb mx)</font></td>
-                        <td align="center"><font face="Arial" size="2">500</font></td>
+                        <td align="center" colSpan={3}><font face="Arial" size="2">SPB Ca+Mg (15+5 ppb mx)</font></td>
+                        <td
+                        bgcolor={qcBrineSection.spb_camg? (qcBrineSection.spb_camg < 20? "#f6685e": "white"):"white"}
+                        align="center"
+                        ><font face="Arial" size="2">{qcBrineSection.spb_camg}</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">DB Free Cl2 (negative)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">Negative</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.db_free_cl? (qcBrineSection.db_free_cl === "POSITIVE"? "#f6685e": "white"):"white"}
+                        align="center" 
+                        colSpan={3}>
+                            <font face="Arial" size="2">{qcBrineSection.db_free_cl}</font></td>
                     </tr>
                     <tr>
                         <td colSpan={3} align="center"><font face="Arial" size="2">SPB NaClO3 (20 gpl max)</font></td>
-                        <td align="center"><font face="Arial" size="2">200</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 < 20? "#f6685e": "white"):"white"}
+                        align="center"
+                        ><font face="Arial" size="2">{qcBrineSection.spb_naclo3}</font></td>
                         <td colSpan={4} align="center"><font face="Arial" size="2">NaOH 50% on-line (49±1%)</font></td>
-                        <td colSpan={3} align="center"><font face="Arial" size="2">0</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.naoh_conc_50? ((qcBrineSection.naoh_conc_50 < 48 || qcBrineSection.naoh_conc_50 > 50)? "#f6685e": "white"):"white"}
+                        colSpan={3} 
+                        align="center"
+                        ><font face="Arial" size="2">{qcBrineSection.naoh_conc_50}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3} ><font face="Arial" size="2">SPB Na2SO4 (7 gpl max)</font></td>
-                        <td align="center"><font face="Arial" size="2">300</font></td>
+                        <td
+                        bgcolor={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 < 7? "#f6685e": "white"):"white"}
+                        align="center"
+                        >
+                            <font face="Arial" size="2">{qcBrineSection.spb_na2so4}</font>
+                        </td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">NaOH 32% on-line (31±1%)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">0</font></td>
+
+                        <td 
+                        bgcolor={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 30 || qcBrineSection.naoh_conc_32 > 32)? "#f6685e": "white"):"white"}
+                        align="center" 
+                        colSpan={3}><font face="Arial" size="2">{qcBrineSection.naoh_conc_32} %</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">DB NaClO3 (20 gpl max)</font></td>
-                        <td align="center"><font face="Arial" size="2">200</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.db_naclo3? (qcBrineSection.db_naclo3 > 20? "#f6685e": "white"):"white"}
+                        align="center"><font face="Arial" size="2">{qcBrineSection.db_naclo3} gpl</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">NaOH Fe (5ppm max)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">0</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.naohfe_conc? (qcBrineSection.naohfe_conc > 5? "#f6685e": "white"):"white"}
+                        align="center" 
+                        colSpan={3}>
+                            <font face="Arial" size="2">{qcBrineSection.naohfe_conc} ppm</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">DB NaCl (180-220 gpl)</font></td>
-                        <td align="center"><font face="Arial" size="2">200</font></td>
+                        <td
+                        bgcolor={qcBrineSection.db_nacl? ((qcBrineSection.db_nacl < 180 || qcBrineSection.db_nacl > 220)? "#f6685e": "white"):"white"}
+                        align="center"
+                        ><font face="Arial" size="2">{qcBrineSection.db_nacl} gpl</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">HCL on-line (32+1.5)</font></td>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">0</font></td>
+                        <td 
+                        bgcolor={qcBrineSection.hcl_online? ((qcBrineSection.hcl_online < 32 || qcBrineSection.hcl_online > 33.5)? "#f6685e": "white"):"white"}
+                        align="center" 
+                        colSpan={3}><font face="Arial" size="2">{qcBrineSection.hcl_online}</font></td>
                     </tr>
                     <tr>
                         <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" ><b>Specific Usages /</b></font></td>
@@ -461,88 +650,135 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Salt</font></td>
                         <td align="center"><font face="Arial" size="2">1.74</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">5 mt</font></td>
+                        <td
+                        bgcolor={usagesSection.ac_salt? (usagesSection.ac_salt > 1.74? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2">{usagesSection.ac_salt} mt</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">Plan vol attained</font></td>
                         <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Soda Ash</font></td>
                         <td align="center"><font face="Arial" size="2">5.6</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">4.8 kg</font></td>
+                        <td 
+                        bgcolor={usagesSection.ac_soda_ash? (usagesSection.ac_soda_ash > 5.6? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2">{usagesSection.ac_soda_ash} kg</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">Prodn no off specs</font></td>
                         <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">NaOH</font></td>
                         <td align="center"><font face="Arial" size="2">0.014</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2"> dmt</font></td>
+                        <td 
+                        bgcolor={usagesSection.ac_naoh? (usagesSection.ac_naoh > 0.014? "#f6685e": "white"):"white"} 
+                        colSpan={4} align="center"><font face="Arial" size="2"> {usagesSection.ac_naoh} dmt</font></td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">SP usage {"<"}= Std</font></td>
                         <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">HCl</font></td>
                         <td align="center"><font face="Arial" size="2">0.0224</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2"> dmt</font></td>
+                        <td
+                        bgcolor={usagesSection.ac_hcl? (usagesSection.ac_hcl > 0.0224? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2"> {usagesSection.ac_hcl} dmt</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">Proc Control w/n range</font></td>
                         <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">BaCl2</font></td>
                         <td align="center"><font face="Arial" size="2">1.6</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">7 kg</font></td>
+                        <td 
+                        bgcolor={usagesSection.ac_bacl2? (usagesSection.ac_bacl2 > 1.6? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2">{usagesSection.ac_bacl2} kg</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">Manpower no 24 hrs duty</font></td>
                         <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Flocullant</font></td>
                         <td align="center"><font face="Arial" size="2">13.9</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">10 grm</font></td>
+                        <td 
+                        bgcolor={usagesSection.ac_flocullant? (usagesSection.ac_flocullant > 13.9? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2">{usagesSection.ac_flocullant} grm</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">SReport Completeness</font></td>
                         <td width="80" align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Sodium Sulfite</font></td>
                         <td align="center"><font face="Arial" size="2">2.2</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">7 kg</font></td>
+                        <td
+                        bgcolor={usagesSection.ac_na2so3? (usagesSection.ac_na2so3 > 2.2? "#f6685e": "white"):"white"} 
+                        colSpan={4} 
+                        align="center">
+                            <font face="Arial" size="2"> {usagesSection.ac_na2so3} kg</font>
+                        </td>
                         <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                        <td align="center"><font face="Arial" size="2">0.000</font></td>
+                        <td align="center"><font face="Arial" size="2"></font></td>
                         <td align="center"><font face="Arial" size="2">SHIFT RATING</font></td>
                         <td align="center"><font face="Arial" size="2">FAILURE</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Alpha Cellulose</font></td>
                         <td  align="center"><font face="Arial" size="2" >30kg/75hrs</font></td>
-                        <td  align="center" colSpan={4}><font face="Arial" size="2" >5.6 kg</font></td>
+                        <td
+                        bgcolor={usagesSection.ac_alpha_cellulose? (usagesSection.ac_alpha_cellulose > 30? "#f6685e": "white"):"white"} 
+                        align="center" 
+                        colSpan={4}>
+                            <font face="Arial" size="2" >{usagesSection.ac_alpha_cellulose} kg</font>
+                        </td>
                         <td  colSpan={2} align="center"><font face="Arial" size="2" >Kg backwash used to date: </font></td>
-                        <td  align="center"><font face="Arial" size="2" >25</font></td>
+                        <td  align="center"><font face="Arial" size="2" > </font></td>
                         <td  align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Power</font></td>
                         <td  align="center"><font face="Arial" size="2" >2350</font></td>
-                        <td  align="center" colSpan={4}><font face="Arial" size="2" >4 kwhr</font></td>
-                        <td  colSpan={2} align="center"><font face="Arial" size="2" >0.000</font></td>
+                        <td
+                        bgcolor={usagesSection.ac_power? (usagesSection.ac_power > 2350? "#f6685e": "white"):"white"} 
+                        align="center" 
+                        colSpan={4}>
+                            <font face="Arial" size="2" >{usagesSection.ac_power} kwhr</font>
+                        </td>
+                        <td  colSpan={2} align="center"><font face="Arial" size="2" ></font></td>
                         <td  align="center"><font face="Arial" size="2" >&nbsp;</font></td>
                         <td  align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Steam(Evap / Brine)</font></td>
                         <td align="center"><font face="Arial" size="2" >1.31 / 0.30</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2" >0.2 / 3</font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >0.1 / 0.5</font></td>
-                        <td align="center"><font face="Arial" size="2" >0.4 / 0.3</font></td>
+                        <td
+                        bgcolor={(usagesSection.ac_steam_evap && usagesSection.ac_steam_brine)? ((usagesSection.ac_steam_evap > 1.31 || usagesSection.ac_steam_brine > 0.30)? "#f6685e": "white"):"white"} 
+                        align="center" 
+                        colSpan={4}>
+                            <font face="Arial" size="2" >{usagesSection.ac_steam_evap} / {usagesSection.ac_steam_brine}</font>
+                        </td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" > / </font></td>
+                        <td align="center"><font face="Arial" size="2" > / </font></td>
                         <td align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
@@ -551,13 +787,13 @@ const ShiftReportDoc = () => {
                     </tr>
                     <tr>
                         <td align="center" ><font face="Arial" size="2" >CLT: </font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >4</font></td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" >{usagesSection.clt_ph}</font></td>
                         <td align="center"><font face="Arial" size="2" >Cold Well: </font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >6</font></td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" >{usagesSection.cold_well_ph}</font></td>
                         <td align="center"><font face="Arial" size="2" >Total: </font></td>
-                        <td align="center"><font face="Arial" size="2" >7</font></td>
+                        <td align="center"><font face="Arial" size="2" >{usagesSection.total_ph}</font></td>
                         <td align="center" colSpan={2}><font face="Arial" size="2" >After Digester</font></td>
-                        <td align="center"><font face="Arial" size="2" >7</font></td>
+                        <td align="center"><font face="Arial" size="2" >{usagesSection.after_digester_ph}</font></td>
                     </tr>
                     <tr>
                         <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Quality Monitoring (every 1st Monday)</b></font></td>

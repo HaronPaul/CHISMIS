@@ -248,9 +248,9 @@ const electroSchema = Joi.object({
         'string.empty': 'NaOH Flow Rate Field Required',
         'number.base': 'NaOH Flow Rate must be a number'
     }),
-    db_free_cl_qual:  Joi.number().required().messages({
-        'string.empty': 'DB Free Cl Quality Field Required',
-        'number.base': 'DB Free Cl Quality must be a number'
+    db_free_cl_qual: Joi.string().trim().required().valid("POSITIVE", "NEGATIVE").messages({
+        'string.empty': 'DB Free Cl2 Field Required',
+        'any.only': 'Value must be either POSTIVE or NEGATIVE'
     }),
     num_n_cylinders:  Joi.number().required().messages({
         'string.empty': 'Number of N Cylinders Field Required',
@@ -267,6 +267,10 @@ const electroSchema = Joi.object({
     spb_conc:  Joi.number().required().messages({
         'string.empty': 'SPB Concentration Field Required',
         'number.base': 'SPB Concentration must be a number'
+    }),
+    full_n2: Joi.number().required().messages({
+        'string.empty': 'Full N2 On-site Field Required',
+        'number.base': 'Full N2 On-site must be a number'
     }),
     remarks: Joi.string().optional().allow('')
 })

@@ -135,6 +135,16 @@ const ElectrolysisTab = () => {
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"
+                        label='Full N2 Onsite'
+                        placeholder="" 
+                        style = {{minWidth: '100%'}}
+                        name='full_n2'
+                        value={electroSection.full_n2 || ''}
+                        onChange={handleChange}></TextField>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={6}>
+                        <TextField 
+                        type="number"
                         label='NaOH Flow Rate'
                         placeholder="21 m³/hr" 
                         style = {{minWidth: '100%'}}
@@ -143,14 +153,19 @@ const ElectrolysisTab = () => {
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
-                        <TextField 
-                        type="number"
-                        label='DB Free Chlorine Quality' 
-                        placeholder="" 
-                        style = {{minWidth: '100%'}}
-                        name='db_free_cl_qual'
-                        value={electroSection.db_free_cl_qual || ''}
-                        onChange={handleChange}></TextField>
+                        <FormControl style = {{minWidth: '100%'}}>
+                            <InputLabel id="dbfree">DB Free Cl Quality</InputLabel>
+                            <Select
+                            labelid="dbfree"
+                            label="DB Free Cl Quality"
+                            defaultValue = ""
+                            name='db_free_cl_qual'
+                            value={electroSection.db_free_cl_qual || ''}
+                            onChange={handleChange}>
+                                <MenuItem value={'POSITIVE'}>Positive</MenuItem>
+                                <MenuItem value={'NEGATIVE'}>Negative</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
