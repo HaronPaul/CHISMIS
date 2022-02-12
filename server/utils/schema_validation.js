@@ -8,7 +8,7 @@ let controlRoomSchema = Joi.object({
     present_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
-     interlock_engaged:  Joi.string().trim().required().valid("YES", "NO", "PARTIAL").messages({
+    interlock_engaged:  Joi.string().trim().required().valid("YES", "NO", "PARTIAL").messages({
         'string.empty': 'Interlock Engaged field required',
         'any.only': 'Interlock Engaged Value must be either YES, NO, or PARTIAL'
     }),
@@ -24,7 +24,7 @@ let controlRoomSchema = Joi.object({
         'string.empty': 'Hours field required',
         'number.base': 'Number of cells must be a number'
     }),
-    cells: Joi.string().required().messages({
+    cells: Joi.number().required().messages({
         'string.empty': 'Cells field required',
         'number.base': 'Number of cells must be a number'
     }),
@@ -40,9 +40,8 @@ let controlRoomSchema = Joi.object({
         'string.empty': 'Rectifier Demi Water required',
         'number.base': 'Rectifier Demi Water must be a number'
     }),
-    cells_voltage: Joi.number().required().messages({
-        'string.empty': 'Cells Voltage field required',
-        'number.base': 'Cells Voltage must be a number'
+    cells_voltage: Joi.string().required().messages({
+        'string.empty': 'Cells with Voltage field required',
     }),
     cells_total_voltage: Joi.number().required().messages({
         'string.empty': 'Cells Total Voltage required',
@@ -71,9 +70,9 @@ let hclSchema = Joi.object({
         'string.empty': 'HCL Synthesis Efficiency Field Required',
         'number.base': 'HCL Synthesis Efficiency must be a number'
     }),
-    hcl_prod: Joi.number().required().messages({
-        'string.empty': 'HCL Production Field Required',
-        'number.base': 'HCL Production must be a number'
+    hcl_prod_temp : Joi.number().required().messages({
+        'string.empty': 'HCL Product Temperature Required',
+        'number.base': 'HCL Product Temperature must be a number'
     }),
     scrubbed_cl_temp: Joi.number().required().messages({
         'string.empty': 'Scrubbed Cl Temperature Field Required',

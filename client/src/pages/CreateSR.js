@@ -10,7 +10,7 @@ import AdapterDateFns  from '@mui/lab/AdapterDateFns'
 import axios from 'axios'
 import ModalReport from "../components/ModalReport";
 import ShiftReportDoc from "../components/ShiftReportDoc";
-
+import { addErrors } from "../redux/errorSlice";
 
 const useStyles = makeStyles({
     mainContainerStyle : {
@@ -60,7 +60,7 @@ const CreateSR = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+ 
     const handleDateChange = (date) => {
         try {
             const dateString = date.toString()
@@ -78,18 +78,18 @@ const CreateSR = (props) => {
     }
 
     const handleSubmitButton = async () => {
-        try {
-            handleOpen()
-            // const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-            // if(response.data.success) {
-            //     // Create a PDF modal containing the data
-            // } else {
-            //     // Print the errors on the DOM
-            //     dispatch(addErrors(response.data.errors))
-            // }
-        } catch(error) {
-            // console.log(error)
-        }
+        handleOpen()
+        // try {
+        //     const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+        //     if(response.data.success) {
+        //         // Create a PDF modal containing the data
+        //     } else {
+        //         // Print the errors on the DOM
+        //         dispatch(addErrors(response.data.errors))
+        //     }
+        // } catch(error) {
+        //     console.log(error)
+        // }
     }
     return(
         <>

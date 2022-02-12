@@ -65,7 +65,7 @@ const HCLTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
-                        label='HCL'
+                        label='HCL Production'
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='hcl'
@@ -74,11 +74,11 @@ const HCLTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
-                        label='HCL Production'
+                        label='HCL Product Temperature'
                         type="number"
                         style= {{minWidth: '100%'}}
-                        name='hcl_prod'
-                        value={hclSection.hcl_prod || ''}
+                        name='hcl_prod_temp'
+                        value={hclSection.hcl_prod_temp || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>

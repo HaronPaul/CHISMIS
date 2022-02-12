@@ -112,6 +112,7 @@ const ControlRoomTab = () => {
                         placeholder=">= 250"
                         type="number"
                         name='rr_water'
+                        error={controlRoomSection.rr_water? (controlRoomSection.rr_water < 250? true:false):false}
                         value={controlRoomSection.rr_water || ''}
                         onChange={handleChange}
                         />
@@ -122,6 +123,7 @@ const ControlRoomTab = () => {
                         label='Cells'
                         placeholder=""
                         name='cells'
+                        type="number"
                         value={controlRoomSection.cells || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -132,6 +134,7 @@ const ControlRoomTab = () => {
                         placeholder="<= 13.25"
                         type="number"
                         name='avg_load'
+                        error={controlRoomSection.avg_load >= 13.25? true:false}
                         value={controlRoomSection.avg_load || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -159,8 +162,6 @@ const ControlRoomTab = () => {
                         <TextField
                         style={{minWidth: '100%'}}
                         label='Cells with voltage'
-                        placeholder="> 3.4"
-                        type="number"
                         name='cells_voltage'
                         value={controlRoomSection.cells_voltage || ''}
                         onChange={handleChange}/>

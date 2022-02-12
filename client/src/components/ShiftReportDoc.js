@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
 import { useSelector } from "react-redux";
 
@@ -9,9 +9,46 @@ const TableContainer = styled.div`
     background-color: white;
 `
 
+function getDay(date) {
+    try {
+        const jsDate = new Date(date)
+
+        if(isNaN(jsDate)) {
+            console.log("Not a valid date")
+            return;
+        }
+
+        if(jsDate.getDay() == 1) {
+            let monday = date.split('/')[1]
+            
+            let increment = 0
+            while(monday > 0) {
+                monday -= 7
+                increment++            
+            }
+
+            return {isMonday: true, numMonday: increment}
+        } else {
+            return {isMonday: false}
+        }
+    }catch(error) {
+        return {isMonday: false, error}
+    }
+}
+
 const ShiftReportDoc = () => {
     const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection} = useSelector((state) => state.section)
     const {date, shift} = useSelector((state)=>state.section)
+    const [monday, setMonday] = useState(0)
+
+    useEffect(() => {
+        const day = getDay(date)
+        if(day.isMonday) {
+            console.log("Day is Monday")
+            setMonday(day.numMonday)
+        }
+    }, [date])
+
     return(
         <TableContainer>
             <table border="1" align="center" cellPadding={2} cellSpacing="0">
@@ -26,7 +63,7 @@ const ShiftReportDoc = () => {
                         <td width={170} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"> <b> Control Room </b> </font></td>
                         <td width={75} bgcolor="#BFBFBF" align="center" colSpan={2}><font face="Arial" size="2">{controlRoomSection.hours  || ''} hours</font></td>
                         <td width={150} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"> <b> Prev Optr </b></font></td>
-                        <td width={150} bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2">{controlRoomSection.previous_operator || ''}</font></td>
+                        <td width={150} bgcolor= {controlRoomSection.previous_operator === ''? "#f6685e":"#BFBFBF"} colSpan={3} align="center"><font face="Arial" size="2">{controlRoomSection.previous_operator || ''}</font></td>
                         <td width={150} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b> Pres Optr </b></font></td>
                         <td width={150} bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2">{controlRoomSection.present_operator || ''}</font></td>
                         <td width={300}bgcolor="#BFBFBF" colSpan={2} align="center"><font face="Arial" size="2">OPERATIONAL REMARKS</font></td>
@@ -193,9 +230,9 @@ const ShiftReportDoc = () => {
                         <td align="center"><font face="Arial" size="2" ><b> HCL prod (50 mx) </b></font></td>
                         <td
                         align="center" colSpan={2}
-                        bgcolor={hclSection.hcl_prod? (hclSection.hcl_prod > 50? "#f6685e": "white"):"white"}
+                        bgcolor={hclSection.hcl_prod? (hclSection.hcl_prod_temp > 50? "#f6685e": "white"):"white"}
                         >
-                            <font face="Arial" size="2">{hclSection.hcl_prod} &deg;C</font>
+                            <font face="Arial" size="2">{hclSection.hcl_prod_temp} &deg;C</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>HCL Space (378)</b></font></td>
                         <td 
@@ -215,14 +252,14 @@ const ShiftReportDoc = () => {
 
                     {/* Evaporator Section */}
                     <tr>
-                        <td  bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Evap</b></font></td>
+                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Evap</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2">Eff%</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >&nbsp;</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
                         <td bgcolor="#BFBFBF" align="center" colSpan={3}><font face="Arial" size="2" >{evapSection.previous_operator}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
-                        <td  bgcolor="#BFBFBF" align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
-                        <td  rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td bgcolor="#BFBFBF" align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
+                        <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td align="center"><font face="Arial" size="2"><b>NaOH (10.83): </b></font></td>
@@ -795,62 +832,82 @@ const ShiftReportDoc = () => {
                         <td align="center" colSpan={2}><font face="Arial" size="2" >After Digester</font></td>
                         <td align="center"><font face="Arial" size="2" >{usagesSection.after_digester_ph}</font></td>
                     </tr>
-                    <tr>
-                        <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Quality Monitoring (every 1st Monday)</b></font></td>
-                        <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Inst calbn: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry</font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Lab Chem: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >GW Calbn: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry &nbsp;/&nbsp; broken</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Cont Improvement: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F &nbsp;/&nbsp; My &nbsp;/&nbsp; Au &nbsp;/&nbsp; N</font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >GH Audit: &nbsp; ( ) done</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >Variance Report: &nbsp;&nbsp;&nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
-                    </tr>
 
-                    <tr>
-                        <td bgcolor="#BFBFBF" align="left" colSpan="11"><font face="Arial" size="2" ><b>Emergency Preparedness (every 2nd Monday)</b></font></td>
-                        <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={8}><font face="Arial" size="2" >Drills (F My Au N): &nbsp;&nbsp; ( ) Fire &nbsp;&nbsp; ( ) Spills &nbsp;&nbsp; ( ) Cl2 &nbsp;&nbsp; ( ) First Aid &nbsp;&nbsp; ( ) Earthquake</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >Emer Light: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( ) Functioning</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Alarms: &nbsp;&nbsp; ( ) Functioning</font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Eyewash &nbsp; ( ) Compliant</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >Fire Extinguisher &nbsp; ( ) Inspected</font></td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Performance Mgt {"&"} Resource Conservation(every 3nd Monday)</b></font></td>
-                        <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Emer Reso Eqpt: &nbsp;&nbsp; ( ) Complete</font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Pollution Accident: &nbsp;&nbsp; ( ) None</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >QObj/OTP's Report: &nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" > Brine Line:  ( ) Declog  &nbsp;( ) Still ok</font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >Budget Review &nbsp; ( ) Done</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >Risk Ass Report: &nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Safety Monitoring(every 4th Monday)</b></font></td>
-                        <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
-                    </tr>
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >O2 Tk press: </font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" >PPE Check ( )</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >Lightings &nbsp;&nbsp; ( &nbsp;) Functioning</font></td>
-                    </tr> 
-                    <tr>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" > SCBA press: </font></td>
-                        <td align="left" colSpan={4}><font face="Arial" size="2" > Chlor-alert ( &nbsp;)</font></td>
-                        <td align="left" colSpan={3}><font face="Arial" size="2" >&nbsp;</font></td>
-                    </tr>
+                    {/* Render every first monday */}
+                    {monday === 1 &&
+                    <>
+                        <tr>
+                            <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Quality Monitoring (every 1st Monday)</b></font></td>
+                            <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Inst calbn: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Lab Chem: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >GW Calbn: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; labels &nbsp;/&nbsp; expiry &nbsp;/&nbsp; broken</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Cont Improvement: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; F &nbsp;/&nbsp; My &nbsp;/&nbsp; Au &nbsp;/&nbsp; N</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >GH Audit: &nbsp; ( ) done</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >Variance Report: &nbsp;&nbsp;&nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
+                        </tr>
+                     </>
+                    }
+                   
+                    {monday === 2 && 
+                    <>
+                         <tr>
+                            <td bgcolor="#BFBFBF" align="left" colSpan="11"><font face="Arial" size="2" ><b>Emergency Preparedness (every 2nd Monday)</b></font></td>
+                            <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={8}><font face="Arial" size="2" >Drills (F My Au N): &nbsp;&nbsp; ( ) Fire &nbsp;&nbsp; ( ) Spills &nbsp;&nbsp; ( ) Cl2 &nbsp;&nbsp; ( ) First Aid &nbsp;&nbsp; ( ) Earthquake</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >Emer Light: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( ) Functioning</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Alarms: &nbsp;&nbsp; ( ) Functioning</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Eyewash &nbsp; ( ) Compliant</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >Fire Extinguisher &nbsp; ( ) Inspected</font></td>
+                        </tr>
+                    </>
+                    }
+                   
+                    {monday === 3 &&
+                    <>
+                        <tr>
+                            <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Performance Mgt {"&"} Resource Conservation(every 3nd Monday)</b></font></td>
+                            <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
+                            </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Emer Reso Eqpt: &nbsp;&nbsp; ( ) Complete</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Pollution Accident: &nbsp;&nbsp; ( ) None</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >QObj/OTP's Report: &nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" > Brine Line:  ( ) Declog  &nbsp;( ) Still ok</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Budget Review &nbsp; ( ) Done</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >Risk Ass Report: &nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
+                        </tr>
+                    </>
+                    }
+                    {monday === 4 && 
+                    <>
+                        <tr>
+                            <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Safety Monitoring(every 4th Monday)</b></font></td>
+                            <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
+                        </tr>
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >O2 Tk press: </font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >PPE Check ( )</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >Lightings &nbsp;&nbsp; ( &nbsp;) Functioning</font></td>
+                        </tr> 
+                        <tr>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" > SCBA press: </font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" > Chlor-alert ( &nbsp;)</font></td>
+                            <td align="left" colSpan={3}><font face="Arial" size="2" >&nbsp;</font></td>
+                        </tr>
+                    </>
+                    }
+               
                     <tr>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>

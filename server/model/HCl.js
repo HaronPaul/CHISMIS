@@ -5,7 +5,7 @@ const HClSchema = new mongoose.Schema({
     present_operator: { type: String, required: true },
     hcl: {type: Number, required: true},
     hcl_eff: {type: Number, required: true},
-    hcl_prod: { type: Number, required: true },
+    hcl_prod_temp: { type: Number, required: true },
     scrubbed_cl_temp: { type: Number, required: true },
     hcl_conc: { type: Number, required: true },
     hcl_sg: { type: Number, required: true },

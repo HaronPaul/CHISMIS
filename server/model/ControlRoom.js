@@ -7,11 +7,11 @@ const ControlRoomSchema = new mongoose.Schema({
     daq_operational: {type: String,required: true,enum: ['YES', 'NO', 'PARTIAL']},
     hours: {type: Number,required: true},
     rr_water: { type: Number, required: true},
-    cells: { type: String, required: true},
+    cells: { type: Number, required: true},
     avg_load: { type: Number, required: true},
     eos_load: {type: Number,required: true},
     rd_water: {type: Number,required: true},
-    cells_voltage: {type: Number,required: true},
+    cells_voltage: {type: String,required: true},
     xformer_oil_temp: {type: Number,required: true},
     remarks: {type: String,}
 })

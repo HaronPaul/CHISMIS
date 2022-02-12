@@ -20,7 +20,7 @@ export const hcl_values = {
     previous_operator: '',
     present_operator: '',
     hcl_synth_eff: '',
-    hcl_prod: '',
+    hcl_prod_temp: '',
     scrubbed_cl_temp: '',
     hcl_conc: '',
     hcl_sg: '',
