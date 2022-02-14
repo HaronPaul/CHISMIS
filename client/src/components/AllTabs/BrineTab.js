@@ -69,6 +69,7 @@ const BrineTab = () => {
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='salt_loaded'
+                        error={prBrineSection.salt_loaded? ((prBrineSection.salt_loaded < 6 || prBrineSection.salt_loaded > 10)? true: false):false}
                         value={prBrineSection.salt_loaded || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -79,6 +80,7 @@ const BrineTab = () => {
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='pbrine_conc'
+                        error={prBrineSection.pbrine_conc? ((prBrineSection.pbrine_conc < 280 || prBrineSection.pbrine_conc > 320)? true: false):false}
                         value={prBrineSection.pbrine_conc || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -100,10 +102,11 @@ const BrineTab = () => {
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
                         label='Precoat Operating Hours' 
-                        placeholder=">= 75 hours" 
+                        placeholder=">= 24 hours" 
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='precoat_op_hours'
+                        error={prBrineSection.precoat_op_hours? (prBrineSection.precoat_op_hours < 24? true: false):false}
                         value={prBrineSection.precoat_op_hours || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -114,6 +117,7 @@ const BrineTab = () => {
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='camg_conc'
+                        error={prBrineSection.camg_conc? (prBrineSection.camg_conc > 5? true: false):false}
                         value={prBrineSection.camg_conc || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -124,16 +128,18 @@ const BrineTab = () => {
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='xcess_naoh_conc'
+                        error={prBrineSection.xcess_naoh_conc? ((prBrineSection.xcess_naoh_conc < 0.1 || prBrineSection.xcess_naoh_conc > 1.5)? true: false):false}
                         value={prBrineSection.xcess_naoh_conc || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
                         label='Differential Pressure in Precoat' 
-                        placeholder="0.2" 
+                        placeholder="<= 0.2" 
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='diff_pressure_precoat'
+                        error={prBrineSection.diff_pressure_precoat? (prBrineSection.diff_pressure_precoat > 0.2? true: false):false}
                         value={prBrineSection.diff_pressure_precoat || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -145,6 +151,7 @@ const BrineTab = () => {
                             label="Brine Overflow"
                             defaultValue = ""
                             name='brine_overflow'
+                            error={prBrineSection.brine_overflow? (prBrineSection.brine_overflow !== "NONE"? true: false):false}
                             value={prBrineSection.brine_overflow || ''}
                             onChange={handleChange}>
                                 <MenuItem value={'RESATURATOR'}>RESATURATOR</MenuItem>
@@ -162,16 +169,18 @@ const BrineTab = () => {
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='xcess_na2co3_conc'
+                        error={prBrineSection.xcess_na2co3_conc? ((prBrineSection.xcess_na2co3_conc < 0.1 || prBrineSection.xcess_na2co3_conc > 1.5)? true: false):false}
                         value={prBrineSection.xcess_na2co3_conc || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Precoat Flow Rate' 
-                        placeholder="20 minutes"
+                        placeholder=">= 20 minutes"
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='precoat_flowrate'
+                        error={prBrineSection.precoat_flowrate? (prBrineSection.precoat_flowrate < 20? true: false):false}
                         value={prBrineSection.precoat_flowrate || ''}
                         onChange={handleChange}/>
                     </Grid>

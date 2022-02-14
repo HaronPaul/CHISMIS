@@ -69,6 +69,7 @@ const ElectrolysisTab = () => {
                         placeholder="11.90"
                         style = {{minWidth: '100%'}}
                         name='cell_liq_prod'
+                        error={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 11.90? true: false):false}
                         value={electroSection.cell_liq_prod || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -79,6 +80,7 @@ const ElectrolysisTab = () => {
                         placeholder="60-90"
                         style = {{minWidth: '100%'}}
                         name='spb_inlet_temp'
+                        error={electroSection.spb_inlet_temp? ((electroSection.spb_inlet_temp < 60 ||electroSection.spb_inlet_temp > 70)? true: false):false}
                         value={electroSection.spb_inlet_temp || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -86,9 +88,10 @@ const ElectrolysisTab = () => {
                         <TextField 
                         type="number"
                         label='NaOH Inlet Temperature'
-                        placeholder="60-90"
+                        placeholder="88-92"
                         style = {{minWidth: '100%'}}
                         name='naoh_inlet_temp'
+                        error={electroSection.naoh_inlet_temp? ((electroSection.naoh_inlet_temp < 88 ||electroSection.naoh_inlet_temp > 92)? true: false):false}
                         value={electroSection.naoh_inlet_temp || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -96,9 +99,10 @@ const ElectrolysisTab = () => {
                         <TextField 
                         type="number"
                         label='Chelate Operating Hours Tower A'
-                        placeholder="42hrs/tk"
+                        placeholder=">= 18"
                         style = {{minWidth: '100%'}}
                         name='chelate_op_hours_ta'
+                        error={electroSection.chelate_op_hours_ta? (electroSection.chelate_op_hours_ta < 18? true: false):false}
                         value={electroSection.chelate_op_hours_ta || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -109,6 +113,7 @@ const ElectrolysisTab = () => {
                         placeholder="42hrs/tk"
                         style = {{minWidth: '100%'}}
                         name='chelate_op_hours_tb'
+                        error={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb < 18? true: false):false}
                         value={electroSection.chelate_op_hours_tb || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -119,6 +124,7 @@ const ElectrolysisTab = () => {
                         placeholder="30% - 32%"
                         style = {{minWidth: '100%'}}
                         name='naoh_conc'
+                        error={electroSection.naoh_conc? ((electroSection.naoh_conc < 31 ||electroSection.naoh_conc > 33)? true: false):false}
                         value={electroSection.naoh_conc || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -139,6 +145,7 @@ const ElectrolysisTab = () => {
                         placeholder="" 
                         style = {{minWidth: '100%'}}
                         name='full_n2'
+                        error={electroSection.full_n2? (electroSection.full_n2 < 4? true: false):false}
                         value={electroSection.full_n2 || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -146,9 +153,10 @@ const ElectrolysisTab = () => {
                         <TextField 
                         type="number"
                         label='NaOH Flow Rate'
-                        placeholder="21 m³/hr" 
+                        placeholder="20-22 m³/hr" 
                         style = {{minWidth: '100%'}}
                         name='naoh_flowrate'
+                        error={electroSection.naoh_flowrate? ((electroSection.naoh_flowrate < 20 || electroSection.naoh_flowrate > 22)? true: false):false}
                         value={electroSection.naoh_flowrate || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -160,6 +168,7 @@ const ElectrolysisTab = () => {
                             label="DB Free Cl Quality"
                             defaultValue = ""
                             name='db_free_cl_qual'
+                            error = {electroSection.db_free_cl_qual === "POSITIVE"? true: false}
                             value={electroSection.db_free_cl_qual || ''}
                             onChange={handleChange}>
                                 <MenuItem value={'POSITIVE'}>Positive</MenuItem>
@@ -167,7 +176,7 @@ const ElectrolysisTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item lg={2} sm={4} xs={6}>
+                    {/* <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"
                         label='Nitrogen Cylinders Available' 
@@ -176,15 +185,16 @@ const ElectrolysisTab = () => {
                         name='num_n_cylinders'
                         value={electroSection.num_n_cylinders || ''}
                         onChange={handleChange}></TextField>
-                    </Grid>
+                    </Grid> */}
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"
                         label='Decomposer Operating Temp' 
-                        placeholder="" 
+                        placeholder=">= 65" 
                         style = {{minWidth: '100%'}}
                         name='decomposer_op_temp'
-                        value={electroSection.decomposer_op_temp || ''}
+                        error={electroSection.decomposer_op_temp? (electroSection.decomposer_op_temp < 65? true: false):false}
+                        value={electroSection.decomposer_op_temp || ''} 
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
@@ -194,6 +204,7 @@ const ElectrolysisTab = () => {
                         placeholder="180-220" 
                         style = {{minWidth: '100%'}}
                         name='db_conc'
+                        error={electroSection.db_conc? ((electroSection.db_conc < 180 || electroSection.db_conc > 220)? true: false):false}
                         value={electroSection.db_conc || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -204,6 +215,7 @@ const ElectrolysisTab = () => {
                         placeholder="280-320" 
                         style = {{minWidth: '100%'}}
                         name='spb_conc'
+                        error={electroSection.spb_conc? ((electroSection.spb_conc < 280 || electroSection.spb_conc > 320)? true: false):false}
                         value={electroSection.spb_conc || ''}
                         onChange={handleChange}></TextField>
                     </Grid>

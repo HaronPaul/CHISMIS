@@ -68,28 +68,32 @@ const EvapTabs = () => {
                         label='NaOH Production'
                         placeholder=""
                         type="number"
+                        placeholder=">= 10.83"
                         style = {{minWidth: '100%'}}
                         name='naoh_prod'
+                        error={evapSection.naoh_prod? (evapSection.naoh_prod < 10.83? true:false): false}
                         value={evapSection.naoh_prod || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
                         label='Evap Feed Flow Rate'
-                        placeholder=""
+                        placeholder="3-5"
                         type="number"
                         style = {{minWidth: '100%'}}
                         name='evap_feed_flowrate'
+                        error={evapSection.evap_feed_flowrate? ((evapSection.evap_feed_flowrate < 3|| evapSection.evap_feed_flowrate > 5)? true:false): false}
                         value={evapSection.evap_feed_flowrate || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='NaOH Concentration' 
-                        placeholder=""
+                        placeholder="48-50"
                         type="number" 
                         style = {{minWidth: '100%'}}
                         name='naoh_conc'
+                        error={evapSection.naoh_conc? ((evapSection.naoh_conc < 48|| evapSection.naoh_conc > 50)? true:false): false}
                         value={evapSection.naoh_conc || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -106,30 +110,33 @@ const EvapTabs = () => {
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Tank 8 Level'
-                        placeholder=""
+                        placeholder=">= 300"
                         type="number" 
                         style = {{minWidth: '100%'}}
                         name='t8_level'
+                        error={evapSection.t8_level? (evapSection.t8_level < 300? true:false): false}
                         value={evapSection.t8_level || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Tank 9 Level' 
-                        placeholder=""
+                        placeholder=">= 300"
                         type="number" 
                         style = {{minWidth: '100%'}}
                         name='t9_level'
+                        error={evapSection.t9_level? (evapSection.t9_level < 300? true:false): false}
                         value={evapSection.t9_level || ''}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Vacuum Pressure' 
-                        placeholder=""
+                        placeholder="400-600"
                         type="number" 
                         style = {{minWidth: '100%'}}
                         name='vacuum_pressure'
+                        error={evapSection.vacuum_pressure? ((evapSection.vacuum_pressure < 400|| evapSection.vacuum_pressure > 600)? true:false): false}
                         value={evapSection.vacuum_pressure || ''}
                         onChange={handleChange}/>
                     </Grid>

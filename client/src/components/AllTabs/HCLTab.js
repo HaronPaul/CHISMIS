@@ -58,7 +58,7 @@ const HCLTab = () => {
             </div>
             
             <div style={{ marginBottom: '2%'}}>
-                <Typography variant="h4" style = {{marginBottom: '1%'}}>Other Information</Typography>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
                         <Typography>Evap Efficiency: [Value placeholder]</Typography>
@@ -67,8 +67,10 @@ const HCLTab = () => {
                         <TextField
                         label='HCL Production'
                         type="number"
+                        placeholder=">= 11.01"
                         style= {{minWidth: '100%'}}
                         name='hcl'
+                        error={hclSection.hcl? (hclSection.hcl < 11.01? true: false):false}
                         value={hclSection.hcl|| ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -78,6 +80,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='hcl_prod_temp'
+                        placeholder="<= 50"
+                        error={hclSection.hcl_prod_temp? (hclSection.hcl_prod_temp > 50? true: false):false}
                         value={hclSection.hcl_prod_temp || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -85,8 +89,10 @@ const HCLTab = () => {
                         <TextField 
                         label='Scrubbed Chlorine Temperature'
                         type="number"
+                        placeholder="<= 40"
                         style= {{minWidth: '100%'}}
                         name='scrubbed_cl_temp'
+                        error={hclSection.scrubbed_cl_temp? (hclSection.scrubbed_cl_temp > 40? true: false):false}
                         value={hclSection.scrubbed_cl_temp || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -96,6 +102,7 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='hcl_conc'
+                        error={hclSection.hcl_conc? ((hclSection.hcl_conc < 32 ||hclSection.hcl_conc > 33.5)? true: false):false}
                         value={hclSection.hcl_conc || ''}
                         onChange={handleChange}
                         />
@@ -103,7 +110,6 @@ const HCLTab = () => {
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
                         label='HCL specific gravity'
-                        placeholder="> 3.4"
                         style= {{minWidth: '100%'}}
                         name='hcl_sg'
                         value={hclSection.hcl_sg || ''}
@@ -112,9 +118,10 @@ const HCLTab = () => {
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Sigri cooling water'
-                        placeholder="< 299.2"
+                        placeholder="= 3"
                         style= {{minWidth: '100%'}}
                         name='sigri_cooling_water'
+                        error={hclSection.sigri_cooling_water? (hclSection.sigri_cooling_water != 3? true:false): false}
                         value={hclSection.sigri_cooling_water || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -124,6 +131,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='hcl_space'
+                        placeholder=">=200"
+                        error={hclSection.hcl_space? (hclSection.hcl_space < 200? true:false): false}
                         value={hclSection.hcl_space || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -133,6 +142,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='clh20_flowrate'
+                        placeholder=">=20"
+                        error={hclSection.clh20_flowrate? (hclSection.clh20_flowrate < 20? true:false): false}
                         value={hclSection.clh20_flowrate || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -142,6 +153,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='sigri_inlet_pressure_c'
+                        placeholder="<= 250"
+                        error={hclSection.sigri_inlet_pressure_c? (hclSection.sigri_inlet_pressure_c > 250? true:false): false}
                         value={hclSection.sigri_inlet_pressure_c || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -151,6 +164,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='sigri_inlet_pressure_h'
+                        placeholder="<= 250"
+                        error={hclSection.sigri_inlet_pressure_h? (hclSection.sigri_inlet_pressure_h > 250? true:false): false}
                         value={hclSection.sigri_inlet_pressure_h || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -160,6 +175,8 @@ const HCLTab = () => {
                         type="number"
                         style= {{minWidth: '100%'}}
                         name='full_n2'
+                        placeholder=">= 10"
+                        error={hclSection.full_n2? (hclSection.full_n2 < 10? true:false): false}
                         value={hclSection.full_n2 || ''}
                         onChange={handleChange}/>
                     </Grid>

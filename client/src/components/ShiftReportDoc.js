@@ -63,9 +63,15 @@ const ShiftReportDoc = () => {
                         <td width={170} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"> <b> Control Room </b> </font></td>
                         <td width={75} bgcolor="#BFBFBF" align="center" colSpan={2}><font face="Arial" size="2">{controlRoomSection.hours  || ''} hours</font></td>
                         <td width={150} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"> <b> Prev Optr </b></font></td>
-                        <td width={150} bgcolor= {controlRoomSection.previous_operator === ''? "#f6685e":"#BFBFBF"} colSpan={3} align="center"><font face="Arial" size="2">{controlRoomSection.previous_operator || ''}</font></td>
+                        <td width={150} bgcolor={controlRoomSection.previous_operator === ''? "#f6685e":"#BFBFBF"} colSpan={3} align="center">
+                            <font face="Arial" size="2">{controlRoomSection.previous_operator || ''}</font>
+                        </td>
                         <td width={150} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b> Pres Optr </b></font></td>
-                        <td width={150} bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2">{controlRoomSection.present_operator || ''}</font></td>
+                        <td 
+                        width={150} 
+                        bgcolor={controlRoomSection.present_operator === ''? "#f6685e":"#BFBFBF"} 
+                        colSpan={3} 
+                        align="center"><font face="Arial" size="2">{controlRoomSection.present_operator || ''}</font></td>
                         <td width={300}bgcolor="#BFBFBF" colSpan={2} align="center"><font face="Arial" size="2">OPERATIONAL REMARKS</font></td>
                     </tr>
                     <tr>
@@ -81,11 +87,11 @@ const ShiftReportDoc = () => {
                         <td align="center" colSpan={3}>
                             <font face="Arial" size="2">{controlRoomSection.cells || ''}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2"> <b> Cells w/ voltage {">"} 3.4 </b></font></td>
+                        <td align="center"><font face="Arial" size="2"> <b> Cells w/ voltage</b></font></td>
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={controlRoomSection.cells_voltage? (controlRoomSection.cells_voltage <= 3.4? "#f6685e": "white"):"white"}>
+                        bgcolor={controlRoomSection.cells_voltage? "f6685e":"white"}>
                             <font face="Arial" size="2">{controlRoomSection.cells_voltage || ''}</font>
                         </td>
                         <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
@@ -100,7 +106,11 @@ const ShiftReportDoc = () => {
                         <td align="center">
                             <font face="Arial" size="2"><b> Ave(13.25) / EOS: </b></font>
                         </td>
-                        <td align="center" colSpan={3}>
+                        <td 
+                        align="center" 
+                        colSpan={3}
+                        bgcolor={(controlRoomSection.avg_load || controlRoomSection.eos_load)? ((controlRoomSection.avg_load > 13.25 || controlRoomSection.eos_load > 13.25)? "#f6685e":"white"):"white"}
+                        >
                             <font face="Arial" size="2">{controlRoomSection.avg_load || ''} / {controlRoomSection.eos_load || ''} </font>
                         </td>
                         <td align="center">
@@ -148,10 +158,18 @@ const ShiftReportDoc = () => {
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>HCL</b></font></td>
                         <td width={75} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Eff% </b></font></td>
                         <td width={75} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >45</font></td>
-                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.previous_operator}</font></td>
+                        <td bgcolor="#BFBFBF" align="center"> <font face="Arial" size="2" ><b>Prev Optr</b></font></td>
+                        <td 
+                        bgcolor={hclSection.previous_operator === ''? "#f6685e":"#BFBFBF"} 
+                        align="center" 
+                        colSpan={3}
+                        >
+                            <font face="Arial" size="2" >{hclSection.previous_operator}</font>
+                        </td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.present_operator}</font></td>
+                        <td 
+                        bgcolor={hclSection.present_operator === ''? "#f6685e":"#BFBFBF"}  
+                        align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.present_operator}</font></td>
                         <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
@@ -166,11 +184,11 @@ const ShiftReportDoc = () => {
                             <font face="Arial" size="2">{hclSection.hcl || ''} dmt</font>
                         </td>
                         <td align="center">
-                            <font face="Arial" size="2"><b>Conc (32 &plusmn; 1.5%)</b></font>
+                            <font face="Arial" size="2"><b>Conc (32+1.5%)</b></font>
                         </td>
                         <td 
                         align="center"
-                        bgcolor={hclSection.hcl_conc? ((hclSection.hcl_conc < 30.5 || hclSection.hcl_conc >33.5)? "#f6685e": "white"):"white"}
+                        bgcolor={hclSection.hcl_conc? ((hclSection.hcl_conc < 32 || hclSection.hcl_conc >33.5)? "#f6685e": "white"):"white"}
                         width={75}
                         >
                             <font face="Arial" size="2">{hclSection.hcl_conc || ''}</font>
@@ -210,19 +228,19 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={hclSection.sigri_cooling_water? ((hclSection.sigri_cooling_water < 2.8 || hclSection.sigri_cooling_water >3.2)? "#f6685e": "white"):"white"}>
+                        bgcolor={hclSection.sigri_cooling_water? (hclSection.sigri_cooling_water != 3? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{hclSection.sigri_cooling_water}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>Sigri in pres(Cl2/H2):</b></font></td>
                         <td 
                         align="center"
-                        bgcolor={hclSection.sigri_inlet_pressure_c? (hclSection.sigri_inlet_pressure_c < 220? "#f6685e": "white"):"white"}>
+                        bgcolor={hclSection.sigri_inlet_pressure_c? (hclSection.sigri_inlet_pressure_c > 250? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{hclSection.sigri_inlet_pressure_c || ''}</font>
                         </td>
                         <td 
                         align="center" 
                         colSpan={2}
-                        bgcolor={hclSection.sigri_inlet_pressure_h? (hclSection.sigri_inlet_pressure_h < 220? "#f6685e": "white"):"white"}>
+                        bgcolor={hclSection.sigri_inlet_pressure_h? (hclSection.sigri_inlet_pressure_h > 250? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{hclSection.sigri_inlet_pressure_h || ''}</font>
                         </td>
                     </tr>
@@ -238,7 +256,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={hclSection.hcl_space? (hclSection.hcl_space > 50? "#f6685e": "white"):"white"}>
+                        bgcolor={hclSection.hcl_space? (hclSection.hcl_space < 200? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{hclSection.hcl_space} m³</font>
                         </td>
                         <td align="center" ><font face="Arial" size="2"><b>Full N2 on site (10 min)</b></font></td>
@@ -256,9 +274,13 @@ const ShiftReportDoc = () => {
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2">Eff%</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >&nbsp;</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center" colSpan={3}><font face="Arial" size="2" >{evapSection.previous_operator}</font></td>
+                        <td 
+						bgcolor={evapSection.previous_operator === ''? "#f6685e":"#BFBFBF"}
+						align="center" colSpan={3}><font face="Arial" size="2" >{evapSection.previous_operator}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
+                        <td 
+						bgcolor={evapSection.present_operator === ''? "#f6685e":"#BFBFBF"}
+						align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
                         <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
@@ -301,7 +323,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={evapSection.t9_level? (evapSection.t9_level > 688? "#f6685e": "white"):"white"}
+                        bgcolor={evapSection.t9_level? (evapSection.t9_level < 300? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{evapSection.t9_level} %/m³</font>
                         </td>
@@ -309,7 +331,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={evapSection.t8_level? (evapSection.t8_level > 688? "#f6685e": "white"):"white"}>
+                        bgcolor={evapSection.t8_level? (evapSection.t8_level < 300? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{evapSection.t8_level} %/m³</font>
                         </td>
                     </tr>
@@ -319,9 +341,16 @@ const ShiftReportDoc = () => {
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Primary Brine</b></font></td>
                         <td bgcolor="#BFBFBF" align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" >{prBrineSection.previous_operator}</font></td>
+                        <td 
+                        bgcolor={prBrineSection.previous_operator === ''? "#f6685e":"#BFBFBF"} 
+                        colSpan={3} 
+                        align="center">
+                            <font face="Arial" size="2" >{prBrineSection.previous_operator}</font>
+                        </td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" >{prBrineSection.present_operator}</font></td>
+                        <td 
+                        bgcolor={prBrineSection.present_operator === ''? "#f6685e":"#BFBFBF"}  
+                        colSpan={3} align="center"><font face="Arial" size="2" >{prBrineSection.present_operator}</font></td>
                         <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
                     </tr>
                     <tr>
@@ -329,7 +358,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={2}
-                        bgcolor={prBrineSection.salt_loaded? (prBrineSection.salt_loaded > 10? "#f6685e": "white"):"white"}>
+                        bgcolor={prBrineSection.salt_loaded? ((prBrineSection.salt_loaded < 6 ||prBrineSection.salt_loaded > 10)? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{prBrineSection.salt_loaded}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2">Ca+Mg (5 max)</font></td>
@@ -341,6 +370,7 @@ const ShiftReportDoc = () => {
                         </td>
                         <td align="center"><font face="Arial" size="2">Brine overflow</font></td>
                         <td 
+                        bgcolor={prBrineSection.brine_overflow? (prBrineSection.brine_overflow !== "NONE"? "#f6685e": "white"):"white"}
                         align="center" 
                         colSpan={3}
                         >
@@ -362,14 +392,14 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={prBrineSection.xcess_naoh_conc? ((prBrineSection.xcess_naoh_conc < 0.1|| prBrineSection.xcess_naoh_conc > 0.5)? "#f6685e": "white"):"white"}>
+                        bgcolor={prBrineSection.xcess_naoh_conc? ((prBrineSection.xcess_naoh_conc < 0.1|| prBrineSection.xcess_naoh_conc > 1.5)? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{prBrineSection.xcess_naoh_conc} gpl</font>
                             </td>
                         <td align="center"><font face="Arial" size="2" >Xcess Na₂CO₃(0.1-1.5)</font></td>
                         <td  
                         align="center" 
                         colSpan={3}
-                        bgcolor={prBrineSection.xcess_na2co3_conc? ((prBrineSection.xcess_na2co3_conc < 0.1 || prBrineSection.xcess_na2co3_conc > 0.5)? "#f6685e": "white"):"white"}
+                        bgcolor={prBrineSection.xcess_na2co3_conc? ((prBrineSection.xcess_na2co3_conc < 0.1 || prBrineSection.xcess_na2co3_conc > 1.5)? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{prBrineSection.xcess_na2co3_conc} gpl</font>
                         </td>
@@ -383,7 +413,7 @@ const ShiftReportDoc = () => {
                         </td>
                         <td 
                         align="center"
-                        // bgcolor={prBrineSection.precoat_op_hours? (prBrineSection.precoat_op_hours > 5? "#f6685e": "white"):"white"}
+                        bgcolor={prBrineSection.precoat_op_hours? (prBrineSection.precoat_op_hours < 24? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2">{prBrineSection.precoat_op_hours}</font>
                         </td>
@@ -391,7 +421,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={prBrineSection.diff_pressure_precoat? (prBrineSection.diff_pressure_precoat >= 0.2? "#f6685e": "white"):"white"}
+                        bgcolor={prBrineSection.diff_pressure_precoat? (prBrineSection.diff_pressure_precoat > 0.2? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2">{prBrineSection.diff_pressure_precoat}</font>
                         </td>
@@ -432,7 +462,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={2}
-                        bgcolor={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 20? "#f6685e": "white"):"white"}
+                        bgcolor={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 11,90? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{electroSection.cell_liq_prod} dmt</font>
                         </td>
@@ -440,7 +470,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={electroSection.naoh_conc? (electroSection.naoh_conc > 32? "#f6685e": "white"):"white"}>
+                        bgcolor={electroSection.naoh_conc? ((electroSection.naoh_conc < 31 ||electroSection.naoh_conc > 33)? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{electroSection.naoh_conc}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" >Full N2 on site (4 min)</font></td>
@@ -455,19 +485,19 @@ const ShiftReportDoc = () => {
                         <td  align="center"><font face="Arial" size="2" >SPB/NaOH(60-90)</font></td>
                         <td 
                         align="center"
-                        bgcolor={electroSection.spb_inlet_temp? (electroSection.spb_inlet_temp < 60? "#f6685e": "white"):"white"}>
+                        bgcolor={electroSection.spb_inlet_temp? ((electroSection.spb_inlet_temp < 60 || electroSection.spb_inlet_temp > 70)? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{electroSection.spb_inlet_temp}</font>
                         </td>
                         <td 
                         align="center"
-                        bgcolor={electroSection.naoh_inlet_temp? (electroSection.naoh_inlet_temp <90? "#f6685e": "white"):"white"}
+                        bgcolor={electroSection.naoh_inlet_temp? ((electroSection.naoh_inlet_temp < 88 || electroSection.naoh_inlet_temp > 92)? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{electroSection.naoh_inlet_temp}</font></td>
                         <td  align="center" colSpan={1}><font face="Arial" size="2"  >NaOH Flowrate (21) :</font></td>
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={electroSection.naoh_flowrate? (electroSection.naoh_flowrate < 21? "#f6685e": "white"):"white"}
+                        bgcolor={electroSection.naoh_flowrate? ((electroSection.naoh_flowrate < 20 || electroSection.naoh_flowrate > 22)? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{electroSection.naoh_flowrate} m³/hr</font></td>
                         <td align="center"><font face="Arial" size="2" >Decomposer</font></td>
@@ -478,12 +508,12 @@ const ShiftReportDoc = () => {
                         <td align="center"><font face="Arial" size="2">Chelate (42hrs /tk):</font> </td>
                         <td 
                         align="center"
-                        bgcolor={electroSection.chelate_op_hours_ta? (electroSection.chelate_op_hours_ta > 42? "#f6685e": "white"):"white"}>
+                        bgcolor={electroSection.chelate_op_hours_ta? (electroSection.chelate_op_hours_ta < 18? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">A - {electroSection.chelate_op_hours_ta}</font>
                         </td>
                         <td 
                         align="center"
-                        bgcolor={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb > 42? "#f6685e": "white"):"white"}>
+                        bgcolor={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb < 18? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">B - {electroSection.chelate_op_hours_tb}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2">DB Free Cl2</font></td>
@@ -536,34 +566,34 @@ const ShiftReportDoc = () => {
                         align="center" 
                         bgcolor={nacloSection.naclo_ct1? ((nacloSection.naclo_ct1 < 7.5|| nacloSection.naclo_ct1 > 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct1}</font></td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline1? (nacloSection.fline1 > 110? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{nacloSection.fline1}</font>
+                        </td>
                         <td 
                         align="center" 
-                        bgcolor={nacloSection.naclo_ct2? ((nacloSection.naclo_ct2 < 7.5|| nacloSection.naclo_ct2 > 8.1)? "#f6685e": "white"):"white"}> 
+                        bgcolor={nacloSection.naclo_ct2? ((nacloSection.naclo_ct2 < 7.5|| nacloSection.naclo_ct2> 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct2}</font>
+                        </td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline2? (nacloSection.fline2 > 110? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{nacloSection.fline2}</font>
                         </td>
                         <td 
                         align="center" 
                         bgcolor={nacloSection.naclo_ct3? ((nacloSection.naclo_ct3 < 7.5|| nacloSection.naclo_ct3 > 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct3}</font></td>
+                        <td align="center"
+                        bgcolor={nacloSection.fline3? (nacloSection.fline3 > 110? "#f6685e": "white"):"white"}
+                        width={65}>
+                            <font face="Arial" size="2">{nacloSection.fline3}</font>
+                        </td>
                         <td 
                         align="center" 
                         bgcolor={nacloSection.naclo_ct4? ((nacloSection.naclo_ct4 < 7.5|| nacloSection.naclo_ct4 > 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct4}</font></td>
                         <td align="center"
-                        bgcolor={nacloSection.fline1? (nacloSection.fline1 > 100? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2">{nacloSection.fline1}</font>
-                        </td>
-                        <td align="center"
-                        bgcolor={nacloSection.fline2? (nacloSection.fline2 > 100? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2">{nacloSection.fline2}</font>
-                        </td>
-                        <td align="center"
-                        bgcolor={nacloSection.fline3? (nacloSection.fline3 > 100? "#f6685e": "white"):"white"}
-                        width={65}>
-                            <font face="Arial" size="2">{nacloSection.fline3}</font>
-                        </td>
-                        <td align="center"
-                        bgcolor={nacloSection.fline4? (nacloSection.fline4 > 100? "#f6685e": "white"):"white"}>
+                        bgcolor={nacloSection.fline4? (nacloSection.fline4 > 110? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{nacloSection.fline4}</font>
                         </td>
                     </tr>

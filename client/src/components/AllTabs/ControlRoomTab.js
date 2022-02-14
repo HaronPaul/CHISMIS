@@ -61,7 +61,7 @@ const ControlRoomTab = () => {
             </div>
 
             <div style={{marginBottom: '2%',}}>
-                <Typography variant="h4" style={{marginBottom: '1%'}}>Other Information</Typography>
+                <Typography variant="h4" style={{marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg={2} sm={4} xs={4}>
                         <FormControl style={{minWidth: '100%'}}>
@@ -134,7 +134,7 @@ const ControlRoomTab = () => {
                         placeholder="<= 13.25"
                         type="number"
                         name='avg_load'
-                        error={controlRoomSection.avg_load >= 13.25? true:false}
+                        error={controlRoomSection.avg_load? (controlRoomSection.avg_load > 13.25? true:false):false}
                         value={controlRoomSection.avg_load || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -145,6 +145,7 @@ const ControlRoomTab = () => {
                         placeholder=""
                         type="number"
                         name='eos_load'
+                        error={controlRoomSection.eos_load? (controlRoomSection.eos_load > 13.25? true:false):false}
                         value={controlRoomSection.eos_load || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -155,6 +156,7 @@ const ControlRoomTab = () => {
                         placeholder=">= 180"
                         type="number"
                         name='rd_water'
+                        error={controlRoomSection.rd_water? (controlRoomSection.rd_water < 180? true:false):false}
                         value={controlRoomSection.rd_water || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -163,6 +165,7 @@ const ControlRoomTab = () => {
                         style={{minWidth: '100%'}}
                         label='Cells with voltage'
                         name='cells_voltage'
+                        error={controlRoomSection.cells_voltage? true:false}
                         value={controlRoomSection.cells_voltage || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -173,6 +176,7 @@ const ControlRoomTab = () => {
                         placeholder="< 299.2"
                         type="number"
                         name='cells_total_voltage'
+                        error={controlRoomSection.cells_total_voltage? (controlRoomSection.cells_total_voltage >= 299.2? true:false):false}
                         value={controlRoomSection.cells_total_voltage || ''}
                         onChange={handleChange}
                         />
@@ -183,6 +187,7 @@ const ControlRoomTab = () => {
                         label='Transformer oil temperature'
                         placeholder="< 90 °C"
                         type="number"
+                        error={controlRoomSection.xformer_oil_temp? (controlRoomSection.xformer_oil_temp >= 90? true:false):false}
                         name='xformer_oil_temp'
                         value={controlRoomSection.xformer_oil_temp || ''}
                         onChange={handleChange}></TextField>
