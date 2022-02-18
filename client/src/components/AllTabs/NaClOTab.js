@@ -64,9 +64,10 @@ const NaCLOTab = () => {
                         <TextField
                         type="number" 
                         label='Circulation Tank I' 
-                        placeholder=""
+                        placeholder="7.5 - 8.1"
                         style = {{minWidth: '100%'}}
                         name='naclo_ct1'
+                        error={nacloSection.naclo_ct1? ((nacloSection.naclo_ct1 < 7.5 || nacloSection.naclo_ct1 > 8.1) ? true: false):false}
                         value={nacloSection.naclo_ct1 || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -74,9 +75,10 @@ const NaCLOTab = () => {
                         <TextField
                         type="number" 
                         label='Circulation Tank II' 
-                        placeholder="" 
+                        placeholder="7.5 - 8.1"
                         style = {{minWidth: '100%'}}
                         name='naclo_ct2'
+                        error={nacloSection.naclo_ct2? ((nacloSection.naclo_ct2 < 7.5 || nacloSection.naclo_ct2 > 8.1) ? true: false):false}
                         value={nacloSection.naclo_ct2 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -84,9 +86,10 @@ const NaCLOTab = () => {
                         <TextField
                         type="number"
                         label='Circulation Tank III'
-                        placeholder="" 
+                        placeholder="7.5 - 8.1"
                         style = {{minWidth: '100%'}}
                         name='naclo_ct3'
+                        error={nacloSection.naclo_ct3? ((nacloSection.naclo_ct3 < 7.5 || nacloSection.naclo_ct3 > 8.1) ? true: false):false}
                         value={nacloSection.naclo_ct3 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -94,9 +97,10 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Circulation Tank IV' 
-                        placeholder="" 
+                        placeholder="7.5 - 8.1"
                         style = {{minWidth: '100%'}}
                         name='naclo_ct4'
+                        error={nacloSection.naclo_ct4? ((nacloSection.naclo_ct4 < 7.5 || nacloSection.naclo_ct4 > 8.1) ? true: false):false}
                         value={nacloSection.naclo_ct4 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -110,9 +114,10 @@ const NaCLOTab = () => {
                         <TextField
                         type="number" 
                         label='Filter Line I'
-                        placeholder="" 
+                        placeholder="<= 110" 
                         style = {{minWidth: '100%'}}
                         name='fline1'
+                        error={nacloSection.fline1? (nacloSection.fline1 > 110? true: false):false}
                         value={nacloSection.fline1 || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -120,9 +125,10 @@ const NaCLOTab = () => {
                         <TextField
                         type="number" 
                         label='Filter Line II'
-                        placeholder="" 
+                        placeholder="<= 110" 
                         style = {{minWidth: '100%'}}
                         name='fline2'
+                        error={nacloSection.fline2? (nacloSection.fline2 > 110? true: false):false}
                         value={nacloSection.fline2 || ''}
                         onChange={handleChange}/ >
                     </Grid>
@@ -130,9 +136,10 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Filter Line III'
-                        placeholder="" 
+                        placeholder="<= 110" 
                         style = {{minWidth: '100%'}}
                         name='fline3'
+                        error={nacloSection.fline3? (nacloSection.fline3 > 110? true: false):false}
                         value={nacloSection.fline3 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -140,9 +147,10 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Filter Line IV' 
-                        placeholder="" 
+                        placeholder="<= 110" 
                         style = {{minWidth: '100%'}}
                         name='fline4'
+                        error={nacloSection.fline4? (nacloSection.fline4 > 110? true: false):false}
                         value={nacloSection.fline4 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -156,9 +164,10 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Circulation Tank I' 
-                        placeholder="" 
+                        placeholder="0.4 - 1" 
                         style = {{minWidth: '100%'}}
                         name='naoh_ct1'
+                        error={nacloSection.naoh_ct1? ((nacloSection.naoh_ct1 < 0.4 || nacloSection.naoh_ct1 > 1) ? true: false):false}
                         value={nacloSection.naoh_ct1 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -166,19 +175,21 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Circulation Tank II' 
-                        placeholder="" 
+                        placeholder="0.4 - 1" 
                         style = {{minWidth: '100%'}} 
                         name='naoh_ct2'
                         value={nacloSection.naoh_ct2 || ''}
+                        error={nacloSection.naoh_ct2? ((nacloSection.naoh_ct2 < 0.4 || nacloSection.naoh_ct2 > 1) ? true: false):false}
                         onChange={handleChange}/>
                     </Grid>
                     <Grid item lg={3} sm={4} xs={6}>
                         <TextField 
                         type="number"
                         label='Circulation Tank III'
-                        placeholder="" 
+                        placeholder="0.4 - 1" 
                         style = {{minWidth: '100%'}}
                         name='naoh_ct3'
+                        error={nacloSection.naoh_ct3? ((nacloSection.naoh_ct3 < 0.4 || nacloSection.naoh_ct3 > 1) ? true: false):false}
                         value={nacloSection.naoh_ct3 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -186,9 +197,10 @@ const NaCLOTab = () => {
                         <TextField 
                         type="number"
                         label='Circulation Tank IV' 
-                        placeholder="" 
+                        placeholder="0.4 - 1" 
                         style = {{minWidth: '100%'}}
                         name='naoh_ct4'
+                        error={nacloSection.naoh_ct4? ((nacloSection.naoh_ct4 < 0.4 || nacloSection.naoh_ct4 > 1) ? true: false):false}
                         value={nacloSection.naoh_ct4 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -249,10 +261,12 @@ const NaCLOTab = () => {
                             variant="outlined"
                             label="Space"
                             type="number"
+                            placeholder=">= 140"
                             multiline
                             maxRows={4}
                             style = {{minWidth: '100%'}}
-                            name='space'
+                            name='space'    
+                            error={nacloSection.space? (nacloSection.space < 140? true: false):false}
                             value={nacloSection.space || ''}
                             onChange={handleChange}
                         />
@@ -262,10 +276,12 @@ const NaCLOTab = () => {
                             variant="outlined"
                             label="Production"
                             type="number"
+                            placeholder=">= 20"
                             multiline
                             maxRows={4}
                             style = {{minWidth: '100%'}}
                             name='production'
+                            error={nacloSection.production? (nacloSection.production < 20? true: false):false}
                             value={nacloSection.production || ''}
                             onChange={handleChange}
                         />

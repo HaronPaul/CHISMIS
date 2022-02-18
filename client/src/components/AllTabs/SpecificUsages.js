@@ -24,6 +24,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Salt' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_salt'
+                        error={usagesSection.ac_salt? (usagesSection.ac_salt > 1.74? true: false):false}
+                        placeholder="<= 1.74"
                         value={usagesSection.ac_salt || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -31,6 +33,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Soda Ash' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_soda_ash'
+                        placeholder="<= 5.6"
+                        error={usagesSection.ac_soda_ash? (usagesSection.ac_soda_ash > 5.6? true: false):false}
                         value={usagesSection.ac_soda_ash || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -38,6 +42,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='NaOH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_naoh'
+                        placeholder="<= 0.014"
+                        error={usagesSection.ac_naoh? (usagesSection.ac_naoh > 0.014? true: false):false}
                         value={usagesSection.ac_naoh || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -45,6 +51,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='HCl' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_hcl'
+                        placeholder="<= 0.0244"
+                        error={usagesSection.ac_hcl? (usagesSection.ac_hcl > 0.0244? true: false):false}
                         value={usagesSection.ac_hcl || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -52,6 +60,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='BaCl2' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_bacl2'
+                        placeholder="<= 1.6"
+                        error={usagesSection.ac_bacl2? (usagesSection.ac_bacl2 > 1.6? true: false):false}
                         value={usagesSection.ac_bacl2 || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -59,6 +69,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Flocullant' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_flocullant'
+                        placeholder="<= 13.9"
+                        error={usagesSection.ac_flocullant? (usagesSection.ac_flocullant > 13.9? true: false):false}
                         value={usagesSection.ac_flocullant || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -66,6 +78,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Sodium Sulfite' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_na2so3'
+                        placeholder="<= 2.2"
+                        error={usagesSection.ac_na2so3? (usagesSection.ac_na2so3 > 2.2? true: false):false}
                         value={usagesSection.ac_na2so3 || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -73,6 +87,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Alpha Cellulose' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_alpha_cellulose'
+                        placeholder="<= 30"
+                        error={usagesSection.ac_alpha_cellulose? (usagesSection.ac_alpha_cellulose > 30? true: false):false}
                         value={usagesSection.ac_alpha_cellulose || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -80,6 +96,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Power' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_power'
+                        placeholder="<= 2350"
+                        error={usagesSection.ac_power? (usagesSection.ac_power > 2350? true: false):false}
                         value={usagesSection.ac_power || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -87,6 +105,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Steam Evaporation' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_steam_evap'
+                        placeholder="<= 1.31"
+                        error={usagesSection.ac_steam_evap? (usagesSection.ac_steam_evap > 1.31? true: false):false}
                         value={usagesSection.ac_steam_evap || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -94,6 +114,8 @@ const SpecificUsagesTab = () => {
                         <TextField label='Steam Brine' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_steam_brine'
+                        placeholder="<= 0.30"
+                        error={usagesSection.ac_steam_brine? (usagesSection.ac_steam_brine > 0.30? true: false):false}
                         value={usagesSection.ac_steam_brine || ''}
                         onChange={handleChange}/>
                     </Grid>

@@ -25,9 +25,10 @@ const QCBrine = () => {
                         <TextField 
                         type="number"
                         label='SPB Ca+MG' 
-                        placeholder="15+5 ppb mx" 
+                        placeholder="20 ppb mx" 
                         style = {{minWidth: '100%'}}
                         name='spb_camg'
+                        error={qcBrineSection.spb_camg? (qcBrineSection.spb_camg > 20? true: false):false}
                         value={qcBrineSection.spb_camg || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -38,6 +39,7 @@ const QCBrine = () => {
                         placeholder="20 gpl max" 
                         style = {{minWidth: '100%'}}
                         name='spb_naclo3'
+                        error={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 > 20? true: false):false}
                         value={qcBrineSection.spb_naclo3 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -48,6 +50,7 @@ const QCBrine = () => {
                         placeholder="7 gpl max" 
                         style = {{minWidth: '100%'}}
                         name='spb_na2so4'
+                        error={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 > 7? true: false):false}
                         value={qcBrineSection.spb_na2so4 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -58,6 +61,7 @@ const QCBrine = () => {
                         placeholder="20 gpl mx" 
                         style = {{minWidth: '100%'}}
                         name='db_naclo3'
+                        error={qcBrineSection.db_naclo3? (qcBrineSection.db_naclo3 > 20? true: false):false}
                         value={qcBrineSection.db_naclo3 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -65,9 +69,10 @@ const QCBrine = () => {
                         <TextField 
                         type="number"
                         label='DB NaCl' 
-                        placeholder=" gpl mx" 
+                        placeholder="180 - 220 gpl" 
                         style = {{minWidth: '100%'}}
                         name='db_nacl'
+                        error={qcBrineSection.db_nacl? ((qcBrineSection.db_nacl < 180 || qcBrineSection.db_nacl > 220)? true: false):false}
                         value={qcBrineSection.db_nacl || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -85,6 +90,7 @@ const QCBrine = () => {
                             label="DB Free Cl Quality"
                             defaultValue = ""
                             name='db_free_cl'
+                            error={qcBrineSection.db_free_cl? (qcBrineSection.db_free_cl === "POSITIVE"? true: false):false}
                             value={qcBrineSection.db_free_cl || ''}
                             onChange={handleChange}>
                                 <MenuItem value={'POSITIVE'}> Positive</MenuItem>
@@ -96,9 +102,10 @@ const QCBrine = () => {
                         <TextField
                         type="number" 
                         label='50% NaOH Concentration' 
-                        placeholder="48-50" 
+                        placeholder="48-50%" 
                         style = {{minWidth: '100%'}}
                         name='naoh_conc_50'
+                        error={qcBrineSection.naoh_conc_50? ((qcBrineSection.naoh_conc_50 < 48 || qcBrineSection.naoh_conc_50 > 50)? true: false):false}
                         value={qcBrineSection.naoh_conc_50 || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -106,7 +113,8 @@ const QCBrine = () => {
                         <TextField 
                         type="number"
                         label='32% NaOH Concentration' 
-                        placeholder="30-32" 
+                        placeholder="31-33%" 
+                        error={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 31 || qcBrineSection.naoh_conc_32 > 33)? true: false):false}
                         style = {{minWidth: '100%'}}
                         name='naoh_conc_32'
                         value={qcBrineSection.naoh_conc_32 || ''}
@@ -119,6 +127,7 @@ const QCBrine = () => {
                         placeholder="5 ppm max" 
                         style = {{minWidth: '100%'}}
                         name='naohfe_conc'
+                        error={qcBrineSection.naohfe_conc? (qcBrineSection.naohfe_conc > 5? true: false):false}
                         value={qcBrineSection.naohfe_conc || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -129,6 +138,7 @@ const QCBrine = () => {
                         placeholder="32-33.5" 
                         style = {{minWidth: '100%'}}
                         name='hcl_online'
+                        error={qcBrineSection.hcl_online? ((qcBrineSection.hcl_online < 32 || qcBrineSection.hcl_online > 33.5)? true: false):false}
                         value={qcBrineSection.hcl_online || ''}
                         onChange={handleChange} />
                     </Grid>

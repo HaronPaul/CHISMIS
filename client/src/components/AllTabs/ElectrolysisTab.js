@@ -66,7 +66,7 @@ const ElectrolysisTab = () => {
                         <TextField 
                         type="number"
                         label='Cell Liquor Production' 
-                        placeholder="11.90"
+                        placeholder=">= 11.90"
                         style = {{minWidth: '100%'}}
                         name='cell_liq_prod'
                         error={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 11.90? true: false):false}

@@ -462,7 +462,7 @@ const ShiftReportDoc = () => {
                         <td 
                         align="center" 
                         colSpan={2}
-                        bgcolor={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 11,90? "#f6685e": "white"):"white"}
+                        bgcolor={electroSection.cell_liq_prod? (electroSection.cell_liq_prod < 11.90? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" >{electroSection.cell_liq_prod} dmt</font>
                         </td>
@@ -604,31 +604,31 @@ const ShiftReportDoc = () => {
                         bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct1 < 0.4|| nacloSection.naoh_ct1 > 1)? "#f6685e": "white"):"white"}
                         ><font face="Arial" size="2">{nacloSection.naoh_ct1}</font>
                         </td>
-                        <td
-                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct2 < 0.4|| nacloSection.naoh_ct2 > 1)? "#f6685e": "white"):"white"} 
-                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct2}</font></td>
-                        <td 
-                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct3 < 0.4|| nacloSection.naoh_ct3 > 1)? "#f6685e": "white"):"white"}
-                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct3}</font></td>
-                        <td 
-                        bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct4 < 0.4|| nacloSection.naoh_ct4 > 1)? "#f6685e": "white"):"white"}
-                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct4}</font></td>
                         <td align="center"><font face="Arial" size="2">{nacloSection.storage1}</font></td>
+                        <td
+                        bgcolor={nacloSection.naoh_ct2? ((nacloSection.naoh_ct2 < 0.4|| nacloSection.naoh_ct2 > 1)? "#f6685e": "white"):"white"} 
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct2}</font></td>
                         <td align="center"><font face="Arial" size="2">{nacloSection.storage2}</font></td>
+                        <td 
+                        bgcolor={nacloSection.naoh_ct3? ((nacloSection.naoh_ct3 < 0.4|| nacloSection.naoh_ct3 > 1)? "#f6685e": "white"):"white"}
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct3}</font></td>
                         <td align="center"><font face="Arial" size="2">{nacloSection.storage3}</font></td>
+                        <td 
+                        bgcolor={nacloSection.naoh_ct4? ((nacloSection.naoh_ct4 < 0.4|| nacloSection.naoh_ct4 > 1)? "#f6685e": "white"):"white"}
+                        align="center"><font face="Arial" size="2">{nacloSection.naoh_ct4}</font></td>
                         <td align="center"><font face="Arial" size="2">{nacloSection.storage4}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Production</font></td>
                         <td 
                         align="center"
-                        // bgcolor={nacloSection.naoh_ct1? ((nacloSection.naoh_ct4 < 0.4|| nacloSection.naoh_ct4 > 1)? "#f6685e": "white"):"white"}
+                        bgcolor={nacloSection.production? (nacloSection.production < 20? "#f6685e": "white"):"white"}
                         ><font face="Arial" size="2">{nacloSection.production}</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">Space (430)</font></td>
+                        <td align="center" colSpan={4}><font face="Arial" size="2">Space (>=)</font></td>
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={nacloSection.space? (nacloSection.space < 100? "#f6685e": "white"):"white"}
+                        bgcolor={nacloSection.space? (nacloSection.space < 140? "#f6685e": "white"):"white"}
                         ><font face="Arial" size="2">{nacloSection.space}</font></td>
                     </tr>
 
@@ -643,7 +643,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">SPB Ca+Mg (15+5 ppb mx)</font></td>
                         <td
-                        bgcolor={qcBrineSection.spb_camg? (qcBrineSection.spb_camg < 20? "#f6685e": "white"):"white"}
+                        bgcolor={qcBrineSection.spb_camg? (qcBrineSection.spb_camg > 20? "#f6685e": "white"):"white"}
                         align="center"
                         ><font face="Arial" size="2">{qcBrineSection.spb_camg}</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2">DB Free Cl2 (negative)</font></td>
@@ -656,7 +656,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td colSpan={3} align="center"><font face="Arial" size="2">SPB NaClO3 (20 gpl max)</font></td>
                         <td 
-                        bgcolor={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 < 20? "#f6685e": "white"):"white"}
+                        bgcolor={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 > 20? "#f6685e": "white"):"white"}
                         align="center"
                         ><font face="Arial" size="2">{qcBrineSection.spb_naclo3}</font></td>
                         <td colSpan={4} align="center"><font face="Arial" size="2">NaOH 50% on-line (49±1%)</font></td>
@@ -669,7 +669,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td align="center" colSpan={3} ><font face="Arial" size="2">SPB Na2SO4 (7 gpl max)</font></td>
                         <td
-                        bgcolor={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 < 7? "#f6685e": "white"):"white"}
+                        bgcolor={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 > 7? "#f6685e": "white"):"white"}
                         align="center"
                         >
                             <font face="Arial" size="2">{qcBrineSection.spb_na2so4}</font>
@@ -677,7 +677,7 @@ const ShiftReportDoc = () => {
                         <td align="center" colSpan={4}><font face="Arial" size="2">NaOH 32% on-line (31±1%)</font></td>
 
                         <td 
-                        bgcolor={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 30 || qcBrineSection.naoh_conc_32 > 32)? "#f6685e": "white"):"white"}
+                        bgcolor={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 31 || qcBrineSection.naoh_conc_32 > 33)? "#f6685e": "white"):"white"}
                         align="center" 
                         colSpan={3}><font face="Arial" size="2">{qcBrineSection.naoh_conc_32} %</font></td>
                     </tr>
@@ -839,7 +839,7 @@ const ShiftReportDoc = () => {
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Steam(Evap / Brine)</font></td>
                         <td align="center"><font face="Arial" size="2" >1.31 / 0.30</font></td>
                         <td
-                        bgcolor={(usagesSection.ac_steam_evap && usagesSection.ac_steam_brine)? ((usagesSection.ac_steam_evap > 1.31 || usagesSection.ac_steam_brine > 0.30)? "#f6685e": "white"):"white"} 
+                        bgcolor={(usagesSection.ac_steam_evap || usagesSection.ac_steam_brine)? ((usagesSection.ac_steam_evap > 1.31 || usagesSection.ac_steam_brine > 0.30)? "#f6685e": "white"):"white"} 
                         align="center" 
                         colSpan={4}>
                             <font face="Arial" size="2" >{usagesSection.ac_steam_evap} / {usagesSection.ac_steam_brine}</font>
