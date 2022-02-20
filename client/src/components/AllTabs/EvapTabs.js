@@ -55,6 +55,23 @@ const EvapTabs = () => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item lg={6} sm={6} xs={6}>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="incoming_op">Incoming Operator</InputLabel>
+                            <Select
+                            labelId="incoming_op"
+                            label="Incoming Operator"
+                            defaultValue = ""
+                            name='incoming_operator'
+                            value={evapSection.incoming_operator || ''}
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
+                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
+                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </div>
             <div style={{ marginBottom: '3%'}}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addElectro } from "../../redux/sectionSlice";
@@ -6,7 +6,7 @@ import ErrorSection from './ErrorSection'
 
 const ElectrolysisTab = () => {
     const dispatch = useDispatch()
-    const {electroSection} = useSelector((state) => state.section)
+    const {electroSection, controlRoomSection} = useSelector((state) => state.section)
     const {electroErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
@@ -14,6 +14,17 @@ const ElectrolysisTab = () => {
         const value = e.target.value
         dispatch(addElectro({name, value}))
     }
+
+    useEffect(()=> {
+        if(controlRoomSection.hours && controlRoomSection.avg_load && electroSection.cell_liq_prod) {
+            var theoretical = (1.4925 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
+            var eff = parseFloat(((electroSection.cell_liq_prod * 100) / theoretical)).toFixed(2) 
+            console.log(`Efficiency = ${eff}`)
+            dispatch(addElectro({name: 'electro_eff', value: eff}))
+        } else {
+            dispatch(addElectro({name: 'electro_eff', value: ''}))
+        }
+    }, [controlRoomSection.hours, controlRoomSection.avg_load, electroSection.cell_liq_prod, controlRoomSection.cells])
 
     return(
         <>
@@ -53,6 +64,23 @@ const ElectrolysisTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item lg={6} sm={6} xs={6}>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="incoming_op">Incoming Operator</InputLabel>
+                            <Select
+                            labelId="incoming_op"
+                            label="Incoming Operator"
+                            defaultValue = ""
+                            name='incoming_operator'
+                            value={electroSection.incoming_operator || ''}
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
+                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
+                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </div>
             
@@ -60,7 +88,7 @@ const ElectrolysisTab = () => {
                 <Typography variant="h4" style = {{  marginBottom: '1%'}}>Other Information</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={6}>
-                        <Typography>Electrolyzer Efficiency: [Value placeholder]</Typography>
+                        <Typography>Electrolyzer Efficiency: {electroSection.electro_eff}</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
@@ -99,7 +127,7 @@ const ElectrolysisTab = () => {
                         <TextField 
                         type="number"
                         label='Chelate Operating Hours Tower A'
-                        placeholder=">= 18"
+                        placeholder="42hrs/tk"
                         style = {{minWidth: '100%'}}
                         name='chelate_op_hours_ta'
                         error={electroSection.chelate_op_hours_ta? (electroSection.chelate_op_hours_ta < 18? true: false):false}
@@ -113,7 +141,7 @@ const ElectrolysisTab = () => {
                         placeholder="42hrs/tk"
                         style = {{minWidth: '100%'}}
                         name='chelate_op_hours_tb'
-                        error={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb < 18? true: false):false}
+                    error={electroSection.chelate_op_hours_tb? (electroSection.chelate_op_hours_tb < 18? true: false):false}
                         value={electroSection.chelate_op_hours_tb || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
@@ -121,7 +149,7 @@ const ElectrolysisTab = () => {
                         <TextField
                         type="number"
                         label='NaOH Concentration'
-                        placeholder="30% - 32%"
+                        placeholder="31% - 33%"
                         style = {{minWidth: '100%'}}
                         name='naoh_conc'
                         error={electroSection.naoh_conc? ((electroSection.naoh_conc < 31 ||electroSection.naoh_conc > 33)? true: false):false}
@@ -138,6 +166,17 @@ const ElectrolysisTab = () => {
                         value={electroSection.naoh_sg || ''}
                         onChange={handleChange}></TextField>
                     </Grid>
+                    <Grid item lg={2} sm={4} xs={6}>
+                        <TextField 
+                        type="number"
+                        label='NaOH Total Volume'
+                        placeholder="" 
+                        style = {{minWidth: '100%'}}
+                        name='naoh_total_volume'
+                        value={electroSection.naoh_total_volume || ''}
+                        onChange={handleChange}></TextField>
+                    </Grid>
+                    
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"
@@ -176,16 +215,6 @@ const ElectrolysisTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {/* <Grid item lg={2} sm={4} xs={6}>
-                        <TextField 
-                        type="number"
-                        label='Nitrogen Cylinders Available' 
-                        placeholder="" 
-                        style = {{minWidth: '100%'}}
-                        name='num_n_cylinders'
-                        value={electroSection.num_n_cylinders || ''}
-                        onChange={handleChange}></TextField>
-                    </Grid> */}
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"

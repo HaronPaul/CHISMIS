@@ -104,12 +104,12 @@ const ShiftReportDoc = () => {
                             <font face="Arial" size="2">{controlRoomSection.daq_operational || ''}</font>
                         </td>
                         <td align="center">
-                            <font face="Arial" size="2"><b> Ave(13.25) / EOS: </b></font>
+                            <font face="Arial" size="2"><b> Ave(13.25) / EOS(13.25): </b></font>
                         </td>
                         <td 
                         align="center" 
                         colSpan={3}
-                        bgcolor={(controlRoomSection.avg_load || controlRoomSection.eos_load)? ((controlRoomSection.avg_load > 13.25 || controlRoomSection.eos_load > 13.25)? "#f6685e":"white"):"white"}
+                        bgcolor={(controlRoomSection.avg_load || controlRoomSection.eos_load)? ((controlRoomSection.avg_load < 13.25 || controlRoomSection.eos_load < 13.25)? "#f6685e":"white"):"white"}
                         >
                             <font face="Arial" size="2">{controlRoomSection.avg_load || ''} / {controlRoomSection.eos_load || ''} </font>
                         </td>
@@ -157,7 +157,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>HCL</b></font></td>
                         <td width={75} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Eff% </b></font></td>
-                        <td width={75} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >45</font></td>
+                        <td width={75} bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >{hclSection.hcl_synth_eff}</font></td>
                         <td bgcolor="#BFBFBF" align="center"> <font face="Arial" size="2" ><b>Prev Optr</b></font></td>
                         <td 
                         bgcolor={hclSection.previous_operator === ''? "#f6685e":"#BFBFBF"} 
@@ -229,7 +229,7 @@ const ShiftReportDoc = () => {
                         align="center" 
                         colSpan={3}
                         bgcolor={hclSection.sigri_cooling_water? (hclSection.sigri_cooling_water != 3? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2" >{hclSection.sigri_cooling_water}</font>
+                            <font face="Arial" size="2" >{hclSection.sigri_cooling_water} ksc</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>Sigri in pres(Cl2/H2):</b></font></td>
                         <td 
@@ -439,7 +439,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Electrolysis</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b> Eff% </b></font></td>
-                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >&nbsp;</font></td>
+                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >{electroSection.electro_eff}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
                         <td 
                         colSpan={3} 
@@ -593,7 +593,7 @@ const ShiftReportDoc = () => {
                         bgcolor={nacloSection.naclo_ct4? ((nacloSection.naclo_ct4 < 7.5|| nacloSection.naclo_ct4 > 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct4}</font></td>
                         <td align="center"
-                        bgcolor={nacloSection.fline4? (nacloSection.fline4 > 110? "#f6685e": "white"):"white"}>
+                        bgcolor={nacloSection   .fline4? (nacloSection.fline4 > 110? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{nacloSection.fline4}</font>
                         </td>
                     </tr>
@@ -624,12 +624,16 @@ const ShiftReportDoc = () => {
                         align="center"
                         bgcolor={nacloSection.production? (nacloSection.production < 20? "#f6685e": "white"):"white"}
                         ><font face="Arial" size="2">{nacloSection.production}</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">Space (>=)</font></td>
+                        <td align="center" colSpan={4}>
+                            <font face="Arial" size="2">Space ({'>='})</font>
+                        </td>
                         <td 
-                        align="center" 
-                        colSpan={3}
-                        bgcolor={nacloSection.space? (nacloSection.space < 140? "#f6685e": "white"):"white"}
-                        ><font face="Arial" size="2">{nacloSection.space}</font></td>
+                            align="center" 
+                            colSpan={3}
+                            bgcolor={nacloSection.space? (nacloSection.space < 140? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{nacloSection.space}</font>
+                        </td>
                     </tr>
 
                     {/* QC Brine */}
@@ -900,7 +904,7 @@ const ShiftReportDoc = () => {
                         </tr>
                     </>
                     }
-                   
+
                     {monday === 3 &&
                     <>
                         <tr>
@@ -908,7 +912,7 @@ const ShiftReportDoc = () => {
                             <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                             </tr>
                         <tr>
-                            <td align="left" colSpan={4}><font face="Arial" size="2" >Emer Reso Eqpt: &nbsp;&nbsp; ( ) Complete</font></td>
+                            <td align="left" colSpan={4}><font face="Arial" size="2" >Emer Resp Eqpt: &nbsp;&nbsp; ( ) Complete</font></td>
                             <td align="left" colSpan={4}><font face="Arial" size="2" >Pollution Accident: &nbsp;&nbsp; ( ) None</font></td>
                             <td align="left" colSpan={3}><font face="Arial" size="2" >QObj/OTP's Report: &nbsp;&nbsp; Ja &nbsp;&nbsp; A &nbsp;&nbsp; JI &nbsp;&nbsp; O</font></td>
                         </tr>
@@ -919,6 +923,7 @@ const ShiftReportDoc = () => {
                         </tr>
                     </>
                     }
+
                     {monday === 4 && 
                     <>
                         <tr>
@@ -937,7 +942,6 @@ const ShiftReportDoc = () => {
                         </tr>
                     </>
                     }
-               
                     <tr>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>

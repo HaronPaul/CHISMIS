@@ -11,6 +11,7 @@ const ElectroSchema = new mongoose.Schema({
     chelate_op_hours_tb: {type: Number, required: true},
     naoh_conc: {type: Number, required: true},
     naoh_sg: {type: Number, required: true},
+    naoh_total_volume: {type: Number, required: true},
     naoh_flowrate: {type: Number, required: true},
     db_free_cl_qual: {type: String, required: true},
     num_n_cylinders: {type: Number, required: true},

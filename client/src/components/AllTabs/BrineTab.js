@@ -56,6 +56,23 @@ const BrineTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item lg={6} sm={6} xs={6}>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="incoming_op">Incoming Operator</InputLabel>
+                            <Select
+                            labelId="incoming_op"
+                            label="Incoming Operator"
+                            defaultValue = ""
+                            name='incoming_operator'
+                            value={prBrineSection.incoming_operator || ''}
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
+                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
+                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </div>
             
@@ -176,7 +193,7 @@ const BrineTab = () => {
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 
                         label='Precoat Flow Rate' 
-                        placeholder=">= 20 minutes"
+                        placeholder=">= 20 m3/hr"
                         type="number"
                         style ={{minWidth: '100%'}}
                         name='precoat_flowrate'

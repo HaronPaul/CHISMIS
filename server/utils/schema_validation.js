@@ -243,6 +243,10 @@ const electroSchema = Joi.object({
         'string.empty': 'NaOH Specific Gravity Field Required',
         'number.base': 'NaOH Specific Gravity must be a number'
     }),
+    naoh_total_volume:  Joi.number().required().messages({
+        'string.empty': 'NaOH Specific Gravity Field Required',
+        'number.base': 'NaOH Specific Gravity must be a number'
+    }),
     naoh_flowrate:  Joi.number().required().messages({
         'string.empty': 'NaOH Flow Rate Field Required',
         'number.base': 'NaOH Flow Rate must be a number'

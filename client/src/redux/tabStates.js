@@ -1,6 +1,7 @@
 export const controlRoom_values = {
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     hours: '',
     interlock_engaged: '',
     daq_operational: '',
@@ -19,6 +20,7 @@ export const hcl_values = {
     hcl: '',
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     hcl_synth_eff: '',
     hcl_prod_temp: '',
     scrubbed_cl_temp: '',
@@ -37,6 +39,7 @@ export const hcl_values = {
 export const evap_values = {
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     evap_eff: '',
     naoh_prod: '',
     evap_feed_flowrate: '',
@@ -51,6 +54,7 @@ export const evap_values = {
 export const prBrine_values = {
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     salt_loaded: '',
     pbrine_conc: '',
     precoat: '',
@@ -67,6 +71,7 @@ export const prBrine_values = {
 export const electro_values = {
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     electro_eff: '',
     cell_liq_prod: '',
     spb_inlet_temp: '',
@@ -75,6 +80,7 @@ export const electro_values = {
     chelate_op_hours_tb: '',
     naoh_conc: '',
     naoh_sg: '',
+    naoh_total_volume: '',
     naoh_flowrate: '',
     db_free_cl_qual: '',
     num_n_cylinders: '',
@@ -88,6 +94,7 @@ export const electro_values = {
 export const naclo_values = {
     previous_operator: '',
     present_operator: '',
+    incoming_operator: '',
     naclo_ct1: '',
     naclo_ct2: '',
     naclo_ct3: '',

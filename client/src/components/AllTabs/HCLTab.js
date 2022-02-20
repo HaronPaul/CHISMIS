@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Select, MenuItem, FormControl, InputLabel, Typography, Grid, TextField} from '@mui/material'
 import {useDispatch, useSelector} from 'react-redux'
 import { addHcl } from "../../redux/sectionSlice";
@@ -7,14 +7,29 @@ import ErrorSection from "./ErrorSection";
 
 const HCLTab = () => {
     const dispatch = useDispatch()
-    const {hclSection} = useSelector((state) => state.section)
+    const {hclSection, controlRoomSection} = useSelector((state) => state.section)
     const {hclErrors} = useSelector((state) => state.error)
+
+    const calculateEff = () => {
+        
+    }
 
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
         dispatch(addHcl({name, value}))
     }   
+
+    useEffect(()=> {
+        if(controlRoomSection.hours && controlRoomSection.avg_load && hclSection.hcl) {
+            var theoretical = (1.36 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
+            var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
+            console.log(`Efficiency = ${eff}`)
+            dispatch(addHcl({name: 'hcl_synth_eff', value: eff}))
+        } else {
+            dispatch(addHcl({name: 'hcl_synth_eff', value: ''}))
+        }
+    }, [controlRoomSection.hours, controlRoomSection.avg_load, hclSection.hcl, controlRoomSection.cells])
 
     return( 
         <>
@@ -54,6 +69,23 @@ const HCLTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item lg={6} sm={6} xs={6}>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="incoming_op">Incoming Operator</InputLabel>
+                            <Select
+                            labelId="incoming_op"
+                            label="Incoming Operator"
+                            defaultValue = ""
+                            name='incoming_operator'
+                            value={hclSection.incoming_operator || ''}
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
+                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
+                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </div>
             
@@ -61,7 +93,7 @@ const HCLTab = () => {
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
-                        <Typography>Evap Efficiency: [Value placeholder]</Typography>
+                        <Typography>Evap Efficiency: {hclSection.hcl_synth_eff}</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

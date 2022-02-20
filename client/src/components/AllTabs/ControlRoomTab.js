@@ -57,6 +57,23 @@ const ControlRoomTab = () => {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item lg={6} sm={6} xs={6}>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel id="incoming_op">Incoming Operator</InputLabel>
+                            <Select
+                            labelId="incoming_op"
+                            label="Incoming Operator"
+                            defaultValue = ""
+                            name='incoming_operator'
+                            value={controlRoomSection.incoming_operator || ''}
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
+                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
+                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </div>
 
@@ -134,7 +151,7 @@ const ControlRoomTab = () => {
                         placeholder="<= 13.25"
                         type="number"
                         name='avg_load'
-                        error={controlRoomSection.avg_load? (controlRoomSection.avg_load > 13.25? true:false):false}
+                        error={controlRoomSection.avg_load? (controlRoomSection.avg_load < 13.25? true:false):false}
                         value={controlRoomSection.avg_load || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -145,7 +162,7 @@ const ControlRoomTab = () => {
                         placeholder=""
                         type="number"
                         name='eos_load'
-                        error={controlRoomSection.eos_load? (controlRoomSection.eos_load > 13.25? true:false):false}
+                        error={controlRoomSection.eos_load? (controlRoomSection.eos_load < 13.25? true:false):false}
                         value={controlRoomSection.eos_load || ''}
                         onChange={handleChange} />
                     </Grid>
