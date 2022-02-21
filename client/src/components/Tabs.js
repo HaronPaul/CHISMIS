@@ -11,6 +11,7 @@ import NaCLOTab from './AllTabs/NaClOTab'
 import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
 import SPEval from './AllTabs/SPEval'
+import {useSelector} from 'react-redux'
  
 const useStyles = makeStyles({
     container: {
@@ -32,7 +33,8 @@ const useStyles = makeStyles({
 const OSRTabs = (props) => {
     const classes = useStyles()
     const [value, setValue] = useState(0)
-    
+    const {shift} = useSelector((state) => state.section)    
+
     const handleTabs = (event, value) => {
         setValue(value)
     }
@@ -57,7 +59,7 @@ const OSRTabs = (props) => {
                         <Tab label="Primary Brine" wrapped/> 
                         <Tab label="Electrolysis" wrapped /> 
                         <Tab label="Hypochlorite" wrapped/> 
-                        <Tab label="QC Brine" wrapped/> 
+                        {parseInt(shift) === 2? <Tab label="QC Brine" wrapped/>: <></>} 
                         <Tab label="Specific Usages" wrapped/>
                 </Tabs>
             </div>

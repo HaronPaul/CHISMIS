@@ -449,50 +449,50 @@ const usagesSchema = Joi.object({
         'string.empty': 'Steam Brine Actual Consumption Field Required',
         'number.base': 'Steam Brine Actual Consumption must be a number'
     }),
-    // pdn_salt: Joi.number().required().messages({
-    //     'string.empty': 'Salt per DMT NaOH Field Required',
-    //     'number.base': 'Salt per DMT NaOH must be a number'
-    // }),
-    // pdn_soda_ash: Joi.number().required().messages({
-    //     'string.empty': 'Soda Ash per DMT NaOH Field Required',
-    //     'number.base': 'Soda Ash per DMT NaOH must be a number'
-    // }),
-    // pdn_naoh: Joi.number().required().messages({
-    //     'string.empty': 'NaOH per DMT NaOH Field Required',
-    //     'number.base': 'NaOH per DMT NaOH must be a number'
-    // }),
-    // pdn_hcl: Joi.number().required().messages({
-    //     'string.empty': 'HCl per DMT NaOH Field Required',
-    //     'number.base': 'HCl per DMT NaOH must be a number'
-    // }),
-    // pdn_bacl2: Joi.number().required().messages({
-    //     'string.empty': 'BaCl2 per DMT NaOH Field Required',
-    //     'number.base': 'BaCl2 per DMT NaOH must be a number'
-    // }),
-    // pdn_flocullant: Joi.number().required().messages({
-    //     'string.empty': 'Flocullant per DMT NaOH Field Required',
-    //     'number.base': 'Flocullant per DMT NaOH must be a number'
-    // }),
-    // pdn_na2so3: Joi.number().required().messages({
-    //     'string.empty': 'Na2SO3 per DMT NaOH Field Required',
-    //     'number.base': 'Na2SO3 per DMT NaOH must be a number'
-    // }),
-    // pdn_alpha_cellulose: Joi.number().required().messages({
-    //     'string.empty': 'Alpha Cellulose per DMT NaOH Field Required',
-    //     'number.base': 'Alpha Cellulose per DMT NaOH must be a number'
-    // }),
-    // pdn_power: Joi.number().required().messages({
-    //     'string.empty': 'Power per DMT NaOH Field Required',
-    //     'number.base': 'Power per DMT NaOH must be a number'
-    // }),
-    // pdn_steam_evap: Joi.number().required().messages({
-    //     'string.empty': 'Steam Evap per DMT NaOH Field Required',
-    //     'number.base': 'Steam Evap per DMT NaOH must be a number'
-    // }),
-    // pdn_steam_brine: Joi.number().required().messages({
-    //     'string.empty': 'Steam Brine per DMT NaOH Field Required',
-    //     'number.base': 'Steam Brine per DMT NaOH must be a number'
-    // }),
+    pdn_salt: Joi.number().required().messages({
+        'string.empty': 'Salt per DMT NaOH Field Required',
+        'number.base': 'Salt per DMT NaOH must be a number'
+    }),
+    pdn_soda_ash: Joi.number().required().messages({
+        'string.empty': 'Soda Ash per DMT NaOH Field Required',
+        'number.base': 'Soda Ash per DMT NaOH must be a number'
+    }),
+    pdn_naoh: Joi.number().required().messages({
+        'string.empty': 'NaOH per DMT NaOH Field Required',
+        'number.base': 'NaOH per DMT NaOH must be a number'
+    }),
+    pdn_hcl: Joi.number().required().messages({
+        'string.empty': 'HCl per DMT NaOH Field Required',
+        'number.base': 'HCl per DMT NaOH must be a number'
+    }),
+    pdn_bacl2: Joi.number().required().messages({
+        'string.empty': 'BaCl2 per DMT NaOH Field Required',
+        'number.base': 'BaCl2 per DMT NaOH must be a number'
+    }),
+    pdn_flocullant: Joi.number().required().messages({
+        'string.empty': 'Flocullant per DMT NaOH Field Required',
+        'number.base': 'Flocullant per DMT NaOH must be a number'
+    }),
+    pdn_na2so3: Joi.number().required().messages({
+        'string.empty': 'Na2SO3 per DMT NaOH Field Required',
+        'number.base': 'Na2SO3 per DMT NaOH must be a number'
+    }),
+    pdn_alpha_cellulose: Joi.number().required().messages({
+        'string.empty': 'Alpha Cellulose per DMT NaOH Field Required',
+        'number.base': 'Alpha Cellulose per DMT NaOH must be a number'
+    }),
+    pdn_power: Joi.number().required().messages({
+        'string.empty': 'Power per DMT NaOH Field Required',
+        'number.base': 'Power per DMT NaOH must be a number'
+    }),
+    pdn_steam_evap: Joi.number().required().messages({
+        'string.empty': 'Steam Evap per DMT NaOH Field Required',
+        'number.base': 'Steam Evap per DMT NaOH must be a number'
+    }),
+    pdn_steam_brine: Joi.number().required().messages({
+        'string.empty': 'Steam Brine per DMT NaOH Field Required',
+        'number.base': 'Steam Brine per DMT NaOH must be a number'
+    }),
     clt_ph: Joi.number().required().messages({
         'string.empty': 'CLT pH Field Required',
         'number.base': 'CLT pH must be a number'

@@ -43,6 +43,7 @@ export const evap_values = {
     evap_eff: '',
     naoh_prod: '',
     evap_feed_flowrate: '',
+    naoh_total_volume: '',
     naoh_conc: '',
     naoh_sg: '',
     t8_level: '',
@@ -80,7 +81,6 @@ export const electro_values = {
     chelate_op_hours_tb: '',
     naoh_conc: '',
     naoh_sg: '',
-    naoh_total_volume: '',
     naoh_flowrate: '',
     db_free_cl_qual: '',
     num_n_cylinders: '',
@@ -176,11 +176,11 @@ export const usages_values = {
 }
 
 export const eval_values = {
-    plan_vol_att: '',
-    prod_num_offspecs: '',
-    spec_usage: '',
-    proc_ctrl_range: '',
-    manpower_no_24duty: '',
-    shift_report_completeness: '',
-    shift_rating: ''
+    plan_vol_att: 'YES',
+    prod_num_offspecs: 'YES',
+    spec_usage: 'YES',
+    proc_ctrl_range: 'YES',
+    manpower_no_24duty: 'YES',
+    shift_report_completeness: 'YES',
+    shift_rating: 'PERFECT'
 }

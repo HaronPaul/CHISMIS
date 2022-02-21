@@ -17,14 +17,14 @@ const EvapTabs = () => {
     }   
 
     useEffect(()=> {
-        if(electroSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
-            var naoh_total = (electroSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
+        if(evapSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
+            var naoh_total = (evapSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
             var eff = parseFloat((evapSection.naoh_prod * 100) / naoh_total).toFixed(2)
             dispatch(addEvap({name: 'evap_eff', value: eff}))
         } else {
             dispatch(addEvap({name: 'evap_eff', value: eff}))
         }
-    }, [electroSection.naoh_total_volume, electroSection.naoh_sg, electroSection.naoh_conc, evapSection.naoh_prod])
+    }, [evapSection.naoh_total_volume, electroSection.naoh_sg, electroSection.naoh_conc, evapSection.naoh_prod])
 
     return(
         <>
@@ -123,6 +123,16 @@ const EvapTabs = () => {
                         error={evapSection.naoh_conc? ((evapSection.naoh_conc < 48|| evapSection.naoh_conc > 50)? true:false): false}
                         value={evapSection.naoh_conc || ''}
                         onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={6}>
+                        <TextField 
+                        type="number"
+                        label='NaOH Total Volume'
+                        placeholder="" 
+                        style = {{minWidth: '100%'}}
+                        name='naoh_total_volume'
+                        value={evapSection.naoh_total_volume || ''}
+                        onChange={handleChange}></TextField>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField 

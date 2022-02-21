@@ -58,8 +58,8 @@ router.post('/', async (req,res) => {
     const specificUsagesResponse = await validate(req.body.usagesSection, usagesSchema)
     if(!specificUsagesResponse.success) errors.usagesErrors.push(...specificUsagesResponse.error)
 
-    // const spEvalResponse = await validate(req.body.evalSection, spEvalSchema)
-    // if(!spEvalResponse.success) errors.evalErrors.push(...spEvalResponse.error)
+    const spEvalResponse = await validate(req.body.evalSection, spEvalSchema)
+    if(!spEvalResponse.success) errors.evalErrors.push(...spEvalResponse.error)
 
     let response = {
         success: errors.length == 0? true:false,

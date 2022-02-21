@@ -78,18 +78,18 @@ const CreateSR = (props) => {
     }
 
     const handleSubmitButton = async () => {
-        handleOpen()
-        // try {
-        //     const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-        //     if(response.data.success) {
-        //         // Create a PDF modal containing the data
-        //     } else {
-        //         // Print the errors on the DOM
-        //         dispatch(addErrors(response.data.errors))
-        //     }
-        // } catch(error) {
-        //     console.log(error)
-        // }
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+            if(response.data.success) {
+                handleOpen()
+                // Create a PDF modal containing the data
+            } else {
+                // Print the errors on the DOM
+                dispatch(addErrors(response.data.errors))
+            }
+        } catch(error) {
+            console.log(error)
+        }
     }
     return(
         <>

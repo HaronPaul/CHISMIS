@@ -9,13 +9,11 @@ const SpecificUsagesTab = () => {
     const dispatch = useDispatch()
     const {usagesSection, electroSection, evapSection} = useSelector((state) => state.section)
     const {usagesErrors} = useSelector((state)=>state.error)
-    const [selectedState, setSelectedState] = useState('')
    
 
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
-        setSelectedState(name)
 
         //  Change the Actual Consumption value
         dispatch(addUsages({name, value}))
@@ -38,6 +36,8 @@ const SpecificUsagesTab = () => {
             dispatch(addUsages({name: `pdn_steam_evap`, value: parseFloat(pdn_value).toFixed(2)}))
         }
     }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
+
+
 
     return(
         <>

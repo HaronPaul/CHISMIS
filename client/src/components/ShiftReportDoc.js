@@ -9,6 +9,17 @@ const TableContainer = styled.div`
     background-color: white;
 `
 
+const tableStyle = {
+    tableLayout: 'fixed'
+}
+
+const tdStyle = {
+    maxWidth: '230px',
+    wordWrap: 'break-word',
+    padding: '10px',
+    whiteSpace: 'pre-wrap   '
+}
+
 function getDay(date) {
     try {
         const jsDate = new Date(date)
@@ -48,7 +59,7 @@ const ShiftReportDoc = () => {
 
     return(
         <TableContainer>
-            <table border="1" align="center" cellPadding={2} cellSpacing="0">
+            <table border="1" align="center" cellPadding={2} cellSpacing="0" style={tableStyle}>
                 <thead> 
                     <tr>
                         <td colSpan={5} align="center"><font face="Arial" size="2"> <b> Date: {date || ''} </b> </font></td>
@@ -68,8 +79,16 @@ const ShiftReportDoc = () => {
                         width={150} 
                         bgcolor={controlRoomSection.present_operator === ''? "#f6685e":"#BFBFBF"} 
                         colSpan={3} 
-                        align="center"><font face="Arial" size="2">{controlRoomSection.present_operator || ''}</font></td>
-                        <td width={300}bgcolor="#BFBFBF" colSpan={2} align="center"><font face="Arial" size="2">OPERATIONAL REMARKS</font></td>
+                        align="center">
+                            <font face="Arial" size="2">{controlRoomSection.present_operator || ''}</font>
+                        </td>
+                        <td 
+                        bgcolor="#BFBFBF" 
+                        colSpan={2} 
+                        align="center"
+                        >
+                            <font face="Arial" size="2">OPERATIONAL REMARKS</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center">
@@ -91,7 +110,14 @@ const ShiftReportDoc = () => {
                         bgcolor={controlRoomSection.cells_voltage? "f6685e":"white"}>
                             <font face="Arial" size="2">{controlRoomSection.cells_voltage || ''}</font>
                         </td>
-                        <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">{controlRoomSection.remarks}</font></td>
+                        <td 
+                        rowSpan={3} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{controlRoomSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center">

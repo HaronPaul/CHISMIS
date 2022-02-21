@@ -176,18 +176,7 @@ const ElectrolysisTab = () => {
                         name='naoh_sg'
                         value={electroSection.naoh_sg || ''}
                         onChange={handleChange}></TextField>
-                    </Grid>
-                    <Grid item lg={2} sm={4} xs={6}>
-                        <TextField 
-                        type="number"
-                        label='NaOH Total Volume'
-                        placeholder="" 
-                        style = {{minWidth: '100%'}}
-                        name='naoh_total_volume'
-                        value={electroSection.naoh_total_volume || ''}
-                        onChange={handleChange}></TextField>
-                    </Grid>
-                    
+                    </Grid>        
                     <Grid item lg={2} sm={4} xs={6}>
                         <TextField 
                         type="number"

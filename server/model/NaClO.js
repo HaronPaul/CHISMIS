@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const NaClOSchema = new mongoose.Schema({
     previous_operator: {type: String, required: true},
     present_operator: {type: String, required: true},
+    incoming_operator: {type: String, required: true},
     naclo_ct1: {type: Number, required: true},
     naclo_ct2: {type: Number, required: true},
     naclo_ct3: {type: Number, required: true},
