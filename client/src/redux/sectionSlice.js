@@ -37,6 +37,9 @@ const sectionSlice = createSlice({
         addSignCount: (state) => {
             state.signCount += 1
             state.isComplete = state.signCount === 3? true: false
+        },
+        changeCellLiquor: (state, action) => {
+            
         }
     }
 })

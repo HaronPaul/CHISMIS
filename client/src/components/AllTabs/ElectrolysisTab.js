@@ -1,25 +1,36 @@
 import React, { useEffect } from "react";
 import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addElectro } from "../../redux/sectionSlice";
+import { addElectro, addUsages } from "../../redux/sectionSlice";
 import ErrorSection from './ErrorSection'
+
+let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_evap', 'ac_steam_brine']
 
 const ElectrolysisTab = () => {
     const dispatch = useDispatch()
-    const {electroSection, controlRoomSection} = useSelector((state) => state.section)
+    const {electroSection, controlRoomSection, usagesSection} = useSelector((state) => state.section)
     const {electroErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
         dispatch(addElectro({name, value}))
+
+        let calculatePDN
+        if(name === 'cell_liq_prod') {
+            actual_consumptions.forEach((param) => {
+                if(usagesSection[param]) {
+                    calculatePDN = usagesSection[param] / value
+                    dispatch(addUsages({name: `pdn_${param.slice(3, param.length)}`, value: parseFloat(calculatePDN).toFixed(2)}))
+                }
+            })
+        }
     }
 
     useEffect(()=> {
         if(controlRoomSection.hours && controlRoomSection.avg_load && electroSection.cell_liq_prod) {
             var theoretical = (1.4925 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
             var eff = parseFloat(((electroSection.cell_liq_prod * 100) / theoretical)).toFixed(2) 
-            console.log(`Efficiency = ${eff}`)
             dispatch(addElectro({name: 'electro_eff', value: eff}))
         } else {
             dispatch(addElectro({name: 'electro_eff', value: ''}))

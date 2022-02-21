@@ -9,11 +9,7 @@ const HCLTab = () => {
     const dispatch = useDispatch()
     const {hclSection, controlRoomSection} = useSelector((state) => state.section)
     const {hclErrors} = useSelector((state) => state.error)
-
-    const calculateEff = () => {
-        
-    }
-
+    
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
@@ -93,7 +89,7 @@ const HCLTab = () => {
                 <Typography variant="h4" style = {{marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
-                        <Typography>Evap Efficiency: {hclSection.hcl_synth_eff}</Typography>
+                        <Typography>HCl Efficiency: {hclSection.hcl_synth_eff}</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

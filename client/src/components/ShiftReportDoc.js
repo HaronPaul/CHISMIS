@@ -12,7 +12,6 @@ const TableContainer = styled.div`
 function getDay(date) {
     try {
         const jsDate = new Date(date)
-
         if(isNaN(jsDate)) {
             console.log("Not a valid date")
             return;
@@ -20,13 +19,11 @@ function getDay(date) {
 
         if(jsDate.getDay() == 1) {
             let monday = date.split('/')[1]
-            
             let increment = 0
             while(monday > 0) {
                 monday -= 7
                 increment++            
             }
-
             return {isMonday: true, numMonday: increment}
         } else {
             return {isMonday: false}
@@ -94,7 +91,7 @@ const ShiftReportDoc = () => {
                         bgcolor={controlRoomSection.cells_voltage? "f6685e":"white"}>
                             <font face="Arial" size="2">{controlRoomSection.cells_voltage || ''}</font>
                         </td>
-                        <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">{controlRoomSection.remarks}</font></td>
                     </tr>
                     <tr>
                         <td align="center">
@@ -272,7 +269,7 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Evap</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2">Eff%</font></td>
-                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >&nbsp;</font></td>
+                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >{evapSection.evap_eff}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
                         <td 
 						bgcolor={evapSection.previous_operator === ''? "#f6685e":"#BFBFBF"}
@@ -589,11 +586,13 @@ const ShiftReportDoc = () => {
                             <font face="Arial" size="2">{nacloSection.fline3}</font>
                         </td>
                         <td 
-                        align="center" 
+                        align="center"
+                        width={80} 
                         bgcolor={nacloSection.naclo_ct4? ((nacloSection.naclo_ct4 < 7.5|| nacloSection.naclo_ct4 > 8.1)? "#f6685e": "white"):"white"}> 
                             <font face="Arial" size="2">{nacloSection.naclo_ct4}</font></td>
-                        <td align="center"
-                        bgcolor={nacloSection   .fline4? (nacloSection.fline4 > 110? "#f6685e": "white"):"white"}>
+                        <td 
+                        align="center"
+                        bgcolor={nacloSection.fline4? (nacloSection.fline4 > 110? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{nacloSection.fline4}</font>
                         </td>
                     </tr>
@@ -716,157 +715,214 @@ const ShiftReportDoc = () => {
                         <td bgcolor="#BFBFBF" colSpan={4} align="center"><font face="Arial" size="2" ><b>Actual Consumption</b></font></td>
                         <td width={130} bgcolor="#BFBFBF" colSpan={2} align="center"><font face="Arial" size="2" ><b>per DMT NaOH <br/> (shift)</b></font></td>
                         <td width={130} bgcolor="#BFBFBF" colSpan={1} align="center"><font face="Arial" size="2" ><b>per DMT NaOH <br/> (Mtd)</b></font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2"><b>Sp Evaluation</b></font></td>
+                        <td align="center" colSpan={2} rowSpan={11}><font face="Arial" size="2"><b>&nbsp;</b></font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Salt</font></td>
                         <td align="center"><font face="Arial" size="2">1.74</font></td>
                         <td
-                        bgcolor={usagesSection.ac_salt? (usagesSection.ac_salt > 1.74? "#f6685e": "white"):"white"} 
                         colSpan={4} 
                         align="center">
                             <font face="Arial" size="2">{usagesSection.ac_salt} mt</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_salt? (usagesSection.pdn_salt > 1.74? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2">{usagesSection.pdn_salt}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">Plan vol attained</font></td>
-                        <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Soda Ash</font></td>
                         <td align="center"><font face="Arial" size="2">5.6</font></td>
                         <td 
-                        bgcolor={usagesSection.ac_soda_ash? (usagesSection.ac_soda_ash > 5.6? "#f6685e": "white"):"white"} 
                         colSpan={4} 
                         align="center">
                             <font face="Arial" size="2">{usagesSection.ac_soda_ash} kg</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_soda_ash? (usagesSection.pdn_soda_ash > 5.6? "#f6685e": "white"):"white"}>
+                        <font face="Arial" size="2">{usagesSection.pdn_soda_ash}</font></td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">Prodn no off specs</font></td>
-                        <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">NaOH</font></td>
                         <td align="center"><font face="Arial" size="2">0.014</font></td>
                         <td 
-                        bgcolor={usagesSection.ac_naoh? (usagesSection.ac_naoh > 0.014? "#f6685e": "white"):"white"} 
                         colSpan={4} align="center"><font face="Arial" size="2"> {usagesSection.ac_naoh} dmt</font></td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_naoh? (usagesSection.pdn_naoh > 0.014? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{usagesSection.pdn_naoh}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">SP usage {"<"}= Std</font></td>
-                        <td align="center"><font face="Arial" size="2">NO</font></td>
-                    </tr>
+                    </tr>   
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">HCl</font></td>
-                        <td align="center"><font face="Arial" size="2">0.0224</font></td>
+                        <td align="center"><font face="Arial" size="2">0.0244</font></td>
                         <td
-                        bgcolor={usagesSection.ac_hcl? (usagesSection.ac_hcl > 0.0224? "#f6685e": "white"):"white"} 
                         colSpan={4} 
                         align="center">
                             <font face="Arial" size="2"> {usagesSection.ac_hcl} dmt</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_hcl? (usagesSection.pdn_hcl > 0.0244? "#f6685e": "white"):"white"}
+                        ><font face="Arial" size="2">{usagesSection.pdn_hcl}</font></td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">Proc Control w/n range</font></td>
-                        <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">BaCl2</font></td>
                         <td align="center"><font face="Arial" size="2">1.6</font></td>
                         <td 
-                        bgcolor={usagesSection.ac_bacl2? (usagesSection.ac_bacl2 > 1.6? "#f6685e": "white"):"white"} 
                         colSpan={4} 
                         align="center">
                             <font face="Arial" size="2">{usagesSection.ac_bacl2} kg</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_bacl2? (usagesSection.pdn_bacl2 > 1.6? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{usagesSection.pdn_bacl2}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">Manpower no 24 hrs duty</font></td>
-                        <td align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Flocullant</font></td>
                         <td align="center"><font face="Arial" size="2">13.9</font></td>
                         <td 
-                        bgcolor={usagesSection.ac_flocullant? (usagesSection.ac_flocullant > 13.9? "#f6685e": "white"):"white"} 
                         colSpan={4} 
-                        align="center">
+                        align="center"
+                        >
                             <font face="Arial" size="2">{usagesSection.ac_flocullant} grm</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        bgcolor = {usagesSection.ac_flocullant? (usagesSection.ac_flocullant > 13.9? "#f6685e": "white"):"white"}
+                        colSpan={2} 
+                        align="center"
+                        >
+                            <font face="Arial" size="2">{usagesSection.pdn_flocullant}</font>
+                        </td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">SReport Completeness</font></td>
-                        <td width="80" align="center"><font face="Arial" size="2">NO</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Sodium Sulfite</font></td>
                         <td align="center"><font face="Arial" size="2">2.2</font></td>
                         <td
-                        bgcolor={usagesSection.ac_na2so3? (usagesSection.ac_na2so3 > 2.2? "#f6685e": "white"):"white"} 
                         colSpan={4} 
                         align="center">
                             <font face="Arial" size="2"> {usagesSection.ac_na2so3} kg</font>
                         </td>
-                        <td colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_na2so3? (usagesSection.pdn_na2so3 > 2.2? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2">{usagesSection.pdn_na2so3}</font></td>
                         <td align="center"><font face="Arial" size="2"></font></td>
-                        <td align="center"><font face="Arial" size="2">SHIFT RATING</font></td>
-                        <td align="center"><font face="Arial" size="2">FAILURE</font></td>
                     </tr>
                     <tr>
-                        <td  align="center" colSpan={3}><font face="Arial" size="2" >Alpha Cellulose</font></td>
-                        <td  align="center"><font face="Arial" size="2" >30kg/75hrs</font></td>
+                        <td align="center" colSpan={3}><font face="Arial" size="2" >Alpha Cellulose</font></td>
+                        <td align="center"><font face="Arial" size="2" >30kg/75hrs</font></td>
                         <td
-                        bgcolor={usagesSection.ac_alpha_cellulose? (usagesSection.ac_alpha_cellulose > 30? "#f6685e": "white"):"white"} 
                         align="center" 
                         colSpan={4}>
                             <font face="Arial" size="2" >{usagesSection.ac_alpha_cellulose} kg</font>
                         </td>
-                        <td  colSpan={2} align="center"><font face="Arial" size="2" >Kg backwash used to date: </font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        // bgcolor = {usagesSection.pdn_alpha_cellulose? (usagesSection.pdn_alpha_cellulose > 2.2? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{usagesSection.pdn_alpha_cellulose}</font>
+                        </td>
                         <td  align="center"><font face="Arial" size="2" > </font></td>
-                        <td  align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Power</font></td>
                         <td  align="center"><font face="Arial" size="2" >2350</font></td>
                         <td
-                        bgcolor={usagesSection.ac_power? (usagesSection.ac_power > 2350? "#f6685e": "white"):"white"} 
                         align="center" 
-                        colSpan={4}>
+                        colSpan={4}
+                        >
                             <font face="Arial" size="2" >{usagesSection.ac_power} kwhr</font>
                         </td>
-                        <td  colSpan={2} align="center"><font face="Arial" size="2" ></font></td>
-                        <td  align="center"><font face="Arial" size="2" >&nbsp;</font></td>
-                        <td  align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
+                        <td 
+                        colSpan={2} 
+                        align="center"
+                        bgcolor = {usagesSection.pdn_power? (usagesSection.pdn_power > 2350? "#f6685e": "white"):"white"}>
+                            <font face="Arial" size="2" >{usagesSection.pdn_power}</font></td>
+                        <td  align="center"><font face="Arial" size="2" ></font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Steam(Evap / Brine)</font></td>
                         <td align="center"><font face="Arial" size="2" >1.31 / 0.30</font></td>
                         <td
-                        bgcolor={(usagesSection.ac_steam_evap || usagesSection.ac_steam_brine)? ((usagesSection.ac_steam_evap > 1.31 || usagesSection.ac_steam_brine > 0.30)? "#f6685e": "white"):"white"} 
                         align="center" 
                         colSpan={4}>
                             <font face="Arial" size="2" >{usagesSection.ac_steam_evap} / {usagesSection.ac_steam_brine}</font>
                         </td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" > / </font></td>
+                        <td 
+                        align="center" 
+                        colSpan={2}
+                        bgcolor={(usagesSection.pdn_steam_evap || usagesSection.pdn_steam_brine)? (usagesSection.pdn_steam_evap > 1.31 || usagesSection.pdn_steam_brine > 0.30? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" > {usagesSection.pdn_steam_evap} / {usagesSection.pdn_steam_brine}</font></td>
                         <td align="center"><font face="Arial" size="2" > / </font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
                         <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Environment Monitoring</b></font></td>
                         <td align="center" colSpan={2} rowSpan={2}><font face="Arial" size="2" >&nbsp;</font></td>
                     </tr>
                     <tr>
-                        <td align="center" ><font face="Arial" size="2" >CLT: </font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >{usagesSection.clt_ph}</font></td>
-                        <td align="center"><font face="Arial" size="2" >Cold Well: </font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >{usagesSection.cold_well_ph}</font></td>
-                        <td align="center"><font face="Arial" size="2" >Total: </font></td>
-                        <td align="center"><font face="Arial" size="2" >{usagesSection.total_ph}</font></td>
-                        <td align="center" colSpan={2}><font face="Arial" size="2" >After Digester</font></td>
-                        <td align="center"><font face="Arial" size="2" >{usagesSection.after_digester_ph}</font></td>
+                        <td align="center" ><font face="Arial" size="2" ><b> CLT: </b></font></td>
+                        <td 
+                        align="center" 
+                        colSpan={2}
+                        bgcolor = {usagesSection.clt_ph? (usagesSection.clt_ph < 6.5 || usagesSection.clt_ph > 9? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{usagesSection.clt_ph}</font></td>
+                        <td align="center"><font face="Arial" size="2" ><b> Cold Well: </b></font></td>
+                        <td 
+                        align="center" 
+                        colSpan={2}
+                        bgcolor = {usagesSection.cold_well_ph? (usagesSection.cold_well_ph < 6.5 || usagesSection.cold_well_ph > 9? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{usagesSection.cold_well_ph}</font></td>
+                        <td align="center"><font face="Arial" size="2" ><b>Total: </b></font></td>
+                        <td 
+                        align="center"
+                        bgcolor = {usagesSection.total_ph? (usagesSection.total_ph < 6.5 || usagesSection.total_ph > 9? "#f6685e": "white"):"white"}
+                        >
+                            <font face="Arial" size="2" >{usagesSection.total_ph}</font></td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" ><b> After Digester </b></font></td>
+                        <td 
+                        align="center"
+                        bgcolor = {usagesSection.after_digester_ph? (usagesSection.after_digester_ph < 6.5 || usagesSection.after_digester_ph > 9? "#f6685e": "white"):"white"}
+                        ><font face="Arial" size="2" >{usagesSection.after_digester_ph}</font></td>
                     </tr>
-
+                    <tr>
+                        <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Product Transfers</b></font></td>
+                    </tr>
+                    <tr>
+                        <td align="center" ><font face="Arial" size="2" > <b>50% NaOH </b></font></td>
+                        <td align="center" ><font face="Arial" size="2" >{usagesSection.naoh_50}</font></td>
+                        <td align="center" ><font face="Arial" size="2" ><b>32% NaOH </b> </font></td>
+                        <td align="center" ><font face="Arial" size="2" >{usagesSection.naoh_32}</font></td>
+                        <td align="center" ><font face="Arial" size="2" ><b>HCl </b></font></td>
+                        <td align="center" ><font face="Arial" size="2" >{usagesSection.hcl}</font></td>
+                        <td align="center" ><font face="Arial" size="2" ><b>NaOCl </b></font></td>
+                        <td align="center" ><font face="Arial" size="2" >{usagesSection.naocl}</font></td>
+                        <td align="center" colSpan={2}><font face="Arial" size="2" ><b>WTF</b></font></td>
+                        <td align="center" ><font face="Arial" size="2" >{usagesSection.naocl_waste}</font></td>
+                    </tr>
                     {/* Render every first monday */}
                     {monday === 1 &&
                     <>
@@ -942,6 +998,30 @@ const ShiftReportDoc = () => {
                         </tr>
                     </>
                     }
+                     <tr>
+                        <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>SP Evaluation</b></font></td>                      
+                    </tr>
+                    <tr>
+                        <td align="center" colSpan={3}> <font face="Arial" size="2" ><b>Plan vol. attained</b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >YES</font></td>
+                        <td align="center" colSpan={3}> <font face="Arial" size="2" ><b>Prodn No. Offspecs</b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >YES </font></td>
+                        <td align="center" colSpan={2}> <font face="Arial" size="2" ><b>SP usage {'<='} std</b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >NO </font></td>
+                     
+                    </tr>
+                    <tr>
+                        <td align="center" colSpan={3}> <font face="Arial" size="2"> <b>Proc Control w/n range </b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >NO</font> </td>
+                        <td align="center" colSpan={3}> <font face="Arial" size="2" > <b> Manpower no 24 hrs duty </b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >YES</font></td>
+                        <td align="center" colSpan={2}> <font face="Arial" size="2" ><b>SReport Completeness</b></font></td>
+                        <td align="center"> <font face="Arial" size="2" >YES </font></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={11} align="center" bgcolor="yellow"><font face="Arial" size="2" > <b> Shift Performance Rating: SATISFACTORY </b></font></td>
+                    </tr>
+
                     <tr>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>
                         <td align="center" colSpan={4}><font face="Arial" size="2" > &nbsp;</font></td>

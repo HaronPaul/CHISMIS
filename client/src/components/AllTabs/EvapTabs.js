@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Grid, Typography, Select, MenuItem, FormControl, InputLabel, TextField} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvap } from "../../redux/sectionSlice";
+import { addElectro, addEvap } from "../../redux/sectionSlice";
 import ErrorSection from "./ErrorSection";
 
 const EvapTabs = () => {
     const dispatch = useDispatch()
-    const {evapSection} = useSelector((state) => state.section)
+    const {evapSection, electroSection} = useSelector((state) => state.section)
     const {evapErrors} = useSelector((state) => state.error)
 
     const handleChange = (e) => {
@@ -15,6 +15,16 @@ const EvapTabs = () => {
         const value = e.target.value
         dispatch(addEvap({name, value}))
     }   
+
+    useEffect(()=> {
+        if(electroSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
+            var naoh_total = (electroSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
+            var eff = parseFloat((evapSection.naoh_prod * 100) / naoh_total).toFixed(2)
+            dispatch(addEvap({name: 'evap_eff', value: eff}))
+        } else {
+            dispatch(addEvap({name: 'evap_eff', value: eff}))
+        }
+    }, [electroSection.naoh_total_volume, electroSection.naoh_sg, electroSection.naoh_conc, evapSection.naoh_prod])
 
     return(
         <>
@@ -78,7 +88,7 @@ const EvapTabs = () => {
                 <Typography variant="h4" style={{ marginBottom: '1%'}}>Parameters</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={4} xs={4}>
-                        <Typography>HCl Synthesis Efficiency: [Value placeholder]</Typography>
+                        <Typography>Evap Synthesis Efficiency: {evapSection.evap_eff}</Typography>
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField

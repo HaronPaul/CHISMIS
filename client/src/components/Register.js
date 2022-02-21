@@ -54,10 +54,9 @@ const Register = ({handleClick}) => {
       try {
         const response = await axios.post('http://localhost:8000/api/v1/user', credentials)
         console.log(response.data.message)
-
         response.data.success? setAlert(1):setAlert(-1)
         setMessage(response.data.message)
-
+        
       } catch(err) {
         console.log(err.message)
       }
@@ -66,7 +65,7 @@ const Register = ({handleClick}) => {
     return(
       <>
         <Typography variant="h2" style={{margin: '1%', textAlign: 'center'}}>Register</Typography>
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           <Grid item lg={6} sm={12} xs={12}>
             <TextField
             variant="outlined"

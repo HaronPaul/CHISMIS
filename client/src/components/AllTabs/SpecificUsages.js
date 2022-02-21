@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Typography, Grid, TextField} from "@mui/material";
 import {useSelector, useDispatch} from 'react-redux'
-import { addUsages } from "../../redux/sectionSlice";
+import { addUsages, calculatePDN } from "../../redux/sectionSlice";
 import ErrorSection from './ErrorSection'
+let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
 const SpecificUsagesTab = () => {
     const dispatch = useDispatch()
-    const {usagesSection} = useSelector((state) => state.section)
+    const {usagesSection, electroSection, evapSection} = useSelector((state) => state.section)
     const {usagesErrors} = useSelector((state)=>state.error)
+    const [selectedState, setSelectedState] = useState('')
+   
+
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
+        setSelectedState(name)
+
+        //  Change the Actual Consumption value
         dispatch(addUsages({name, value}))
-    }   
+
+        var pdn_value
+        if(actual_consumptions.includes(name) && electroSection.cell_liq_prod) {
+            // console.log(name.slice(3, name.length))
+            pdn_value = value / electroSection.cell_liq_prod
+            // Change the perDMT value
+            dispatch(addUsages({name: `pdn_${name.slice(3, name.length)}`, value: parseFloat(pdn_value).toFixed(2)}))   
+        } else {
+            dispatch(addUsages({name: `pdn_${name.slice(3, name.length)}`, value: ''}))
+        }
+    }
+
+    // Side effect when actual steam evap and naoh production is changed
+    useEffect(() => {
+        if(usagesSection.ac_steam_evap && evapSection.naoh_prod) {
+            var pdn_value = usagesSection.ac_steam_evap / evapSection.naoh_prod
+            dispatch(addUsages({name: `pdn_steam_evap`, value: parseFloat(pdn_value).toFixed(2)}))
+        }
+    }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
 
     return(
         <>
@@ -24,8 +49,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Salt' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_salt'
-                        error={usagesSection.ac_salt? (usagesSection.ac_salt > 1.74? true: false):false}
-                        placeholder="<= 1.74"
                         value={usagesSection.ac_salt || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -33,8 +56,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Soda Ash' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_soda_ash'
-                        placeholder="<= 5.6"
-                        error={usagesSection.ac_soda_ash? (usagesSection.ac_soda_ash > 5.6? true: false):false}
                         value={usagesSection.ac_soda_ash || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -42,8 +63,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='NaOH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_naoh'
-                        placeholder="<= 0.014"
-                        error={usagesSection.ac_naoh? (usagesSection.ac_naoh > 0.014? true: false):false}
                         value={usagesSection.ac_naoh || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -51,8 +70,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='HCl' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_hcl'
-                        placeholder="<= 0.0244"
-                        error={usagesSection.ac_hcl? (usagesSection.ac_hcl > 0.0244? true: false):false}
                         value={usagesSection.ac_hcl || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -60,8 +77,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='BaCl2' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_bacl2'
-                        placeholder="<= 1.6"
-                        error={usagesSection.ac_bacl2? (usagesSection.ac_bacl2 > 1.6? true: false):false}
                         value={usagesSection.ac_bacl2 || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -69,8 +84,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Flocullant' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_flocullant'
-                        placeholder="<= 13.9"
-                        error={usagesSection.ac_flocullant? (usagesSection.ac_flocullant > 13.9? true: false):false}
                         value={usagesSection.ac_flocullant || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -78,8 +91,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Sodium Sulfite' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_na2so3'
-                        placeholder="<= 2.2"
-                        error={usagesSection.ac_na2so3? (usagesSection.ac_na2so3 > 2.2? true: false):false}
                         value={usagesSection.ac_na2so3 || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -87,8 +98,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Alpha Cellulose' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_alpha_cellulose'
-                        placeholder="<= 30"
-                        error={usagesSection.ac_alpha_cellulose? (usagesSection.ac_alpha_cellulose > 30? true: false):false}
                         value={usagesSection.ac_alpha_cellulose || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -96,8 +105,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Power' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_power'
-                        placeholder="<= 2350"
-                        error={usagesSection.ac_power? (usagesSection.ac_power > 2350? true: false):false}
                         value={usagesSection.ac_power || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -105,8 +112,6 @@ const SpecificUsagesTab = () => {
                         <TextField label='Steam Evaporation' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_steam_evap'
-                        placeholder="<= 1.31"
-                        error={usagesSection.ac_steam_evap? (usagesSection.ac_steam_evap > 1.31? true: false):false}
                         value={usagesSection.ac_steam_evap || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -114,96 +119,50 @@ const SpecificUsagesTab = () => {
                         <TextField label='Steam Brine' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='ac_steam_brine'
-                        placeholder="<= 0.30"
-                        error={usagesSection.ac_steam_brine? (usagesSection.ac_steam_brine > 0.30? true: false):false}
                         value={usagesSection.ac_steam_brine || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
             </div>
 
-            {/* <div style={{marginBottom: '3%'}}>
+            <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Specific Usages - per DMT NaOH</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={2} xs={6}>
-                        <TextField label='Salt' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_salt'
-                        value={usagesSection.pdn_salt || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Salt: {usagesSection.pdn_salt} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Soda Ash' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_soda_ash'
-                        value={usagesSection.pdn_soda_ash || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Soda Ash: {usagesSection.pdn_soda_ash} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='NaOH' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_naoh'
-                        value={usagesSection.pdn_naoh || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">NaOH: {usagesSection.pdn_naoh} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='HCl' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_hcl'
-                        value={usagesSection.pdn_hcl || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">HCl: {usagesSection.pdn_hcl} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='BaCl2' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_bacl2'
-                        value={usagesSection.pdn_bacl2 || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">BaCl2: {usagesSection.pdn_bacl2} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Flocullant' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_folcullant'
-                        value={usagesSection.pdn_folcullant || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Flocullant: {usagesSection.pdn_flocullant} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Sodium Sulfite' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_na2so3'
-                        value={usagesSection.pdn_na2so3 || ''}
-                        onChange={handleChange}/>
-                    </Grid>
-                    <Grid item lg={3} sm={2} xs={6}>
-                        <TextField label='Alpha Cellulose' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_alpha_cellulose'
-                        value={usagesSection.pdn_alpha_cellulose || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Na2SO3: {usagesSection.pdn_na2so3} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Power' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_power'
-                        value={usagesSection.pdn_power || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Alpha Cellulose: {usagesSection.pdn_alpha_cellulose} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Steam Evaporation' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_steam_evap'
-                        value={usagesSection.pdn_steam_evap || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Power: {usagesSection.pdn_power} </Typography>
                     </Grid>
                     <Grid item lg={2} sm={2} xs={6}>
-                        <TextField label='Steam Brine' placeholder="" style={{minWidth: '100%'}}
-                        type="number"
-                        name='pdn_steam_brine'
-                        value={usagesSection.pdn_steam_brine || ''}
-                        onChange={handleChange}/>
+                        <Typography variant="h6">Steam Evap: {usagesSection.pdn_steam_evap} </Typography>
+                    </Grid>
+                    <Grid item lg={2} sm={2} xs={6}>
+                        <Typography variant="h6">Steam Brine: {usagesSection.pdn_steam_brine} </Typography>
                     </Grid>
                 </Grid>
-            </div> */}
+            </div>
 
             <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Environment Monitoring</Typography>
@@ -212,6 +171,7 @@ const SpecificUsagesTab = () => {
                         <TextField label='CLT pH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='clt_ph'
+                        error = {usagesSection.clt_ph? (usagesSection.clt_ph < 6.5 || usagesSection.clt_ph > 9? true: false):false}
                         value={usagesSection.clt_ph || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -219,6 +179,7 @@ const SpecificUsagesTab = () => {
                         <TextField label='Cold Well pH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='cold_well_ph'
+                        error = {usagesSection.cold_well_ph? (usagesSection.cold_well_ph < 6.5 || usagesSection.cold_well_ph > 9? true: false):false}
                         value={usagesSection.cold_well_ph || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -226,6 +187,7 @@ const SpecificUsagesTab = () => {
                         <TextField label='Total pH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='total_ph'
+                        error = {usagesSection.total_ph? (usagesSection.total_ph < 6.5 || usagesSection.total_ph > 9? true: false):false}
                         value={usagesSection.total_ph || ''}
                         onChange={handleChange}/>
                     </Grid>
@@ -233,6 +195,7 @@ const SpecificUsagesTab = () => {
                         <TextField label='After Digester pH' placeholder="" style={{minWidth: '100%'}}
                         type="number"
                         name='after_digester_ph'
+                        error = {usagesSection.after_digester_ph? (usagesSection.after_digester_ph < 6.5 || usagesSection.after_digester_ph > 9? true: false):false}
                         value={usagesSection.after_digester_ph || ''}
                         onChange={handleChange}/>
                     </Grid>

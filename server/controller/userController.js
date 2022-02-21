@@ -12,31 +12,29 @@ let schema = Joi.object({
     lastName: Joi.string().required().messages({
         'string.empty': "Last Name is required field"
     }),
-
     username: Joi
-    .string()
-    .min(7)
-    .max(20)
-    .required()
-    .messages({
-        'string.empty': "Username is required field",
-        'string.min': "Username length must be at least 7 characters long"
-    }),
+        .string()
+        .min(7)
+        .max(20)
+        .required()
+        .messages({
+            'string.empty': "Username is required field",
+            'string.min': "Username length must be at least 7 characters long"
+        }),
 
     password: Joi
-    .string()
-    .alphanum()
-    .pattern(new RegExp('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'))
-    .min(8)
-    .max(20)
-    .required()
-    .messages(
-        {'string.empty': "Password is a required field",
-        'string.pattern.base': "Password must have at least one character and at least one number", 
-        'string.min': "Password length must be at least 8 characters long" }),
-
-    role: Joi.string().valid("MANAGER", "SUPERVISOR", "ADMINISTRATOR")
-    .messages({'any.only': 'Role must be either Manager, Supervisor, or Administrator'})
+        .string()
+        .alphanum()
+        .pattern(new RegExp('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'))
+        .min(8)
+        .max(20)
+        .required()
+        .messages(
+            {'string.empty': "Password is a required field",
+            'string.pattern.base': "Password must have at least one character and at least one number", 
+            'string.min': "Password length must be at least 8 characters long" }),
+        role: Joi.string().valid("MANAGER", "SUPERVISOR", "ADMINISTRATOR")
+        .messages({'any.only': 'Role must be either Manager, Supervisor, or Administrator'})
 })
 
 
