@@ -15,18 +15,6 @@ const ElectrolysisTab = () => {
         dispatch(addElectro({name, value}))   
     }
 
-    // Calculating the electrolysis efficiency
-    useEffect(()=> {
-        if(controlRoomSection.hours && controlRoomSection.avg_load && electroSection.cell_liq_prod) {
-            var theoretical = (1.4925 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
-            var eff = parseFloat(((electroSection.cell_liq_prod * 100) / theoretical)).toFixed(2) 
-            dispatch(addElectro({name: 'electro_eff', value: eff}))
-        } else {
-            dispatch(addElectro({name: 'electro_eff', value: ''}))
-        }
-
-    }, [controlRoomSection.hours, controlRoomSection.avg_load, electroSection.cell_liq_prod, controlRoomSection.cells])
-
     return(
         <>
             <div style = {{  marginBottom: '3%'}}>

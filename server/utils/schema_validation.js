@@ -8,6 +8,9 @@ let controlRoomSchema = Joi.object({
     present_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
+    }),
     interlock_engaged:  Joi.string().trim().required().valid("YES", "NO", "PARTIAL").messages({
         'string.empty': 'Interlock Engaged field required',
         'any.only': 'Interlock Engaged Value must be either YES, NO, or PARTIAL'
@@ -61,6 +64,9 @@ let hclSchema = Joi.object({
     }),
     present_operator: Joi.string().required().messages({
         'string.empty': 'Present Operator Field Required'
+    }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
     }),
     hcl: Joi.number().required().messages({
         'string.empty': 'HCL Field Required',
@@ -120,6 +126,9 @@ const evapSchema = Joi.object({
     present_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
     }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
+    }),
     evap_eff: Joi.number().required().messages({
         'string.empty': 'Evaporator Efficiency field required',
         'number.base': 'Evaporator Efficiency must be a number'
@@ -135,6 +144,10 @@ const evapSchema = Joi.object({
     naoh_conc: Joi.number().required().messages({
         'string.empty': 'NaOH Concentration field required',
         'number.base': 'NaOH Concentration must be a number'
+    }),
+    naoh_total_volume: Joi.number().required().messages({
+        'string.empty': 'NaOH Total Volume required',
+        'number.base': 'NaOH Total Volume must be a number'
     }),
     naoh_sg: Joi.number().required().messages({
         'string.empty': 'NaOH Specific Gravity field required',
@@ -161,6 +174,9 @@ const prBrineSchema = Joi.object({
     }),
     present_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
+    }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
     }),
     salt_loaded: Joi.number().required().messages({
         'string.empty': 'Salt Loaded field required',
@@ -190,8 +206,8 @@ const prBrineSchema = Joi.object({
         'string.empty': 'Differential Pressure in Precoat required',
         'number.base': 'Differential Pressure in Precoat must be a number'
     }),
-    brine_overflow: Joi.string().trim().required().valid("RESATURATOR", "MIXING TANKS", "T132", "T1336", "NONE").messages({
-        'any.only': 'Precoat Value must be either RESATURATOR, MIXING TANKS, T132, T1336, or NONE'
+    brine_overflow: Joi.string().trim().required().valid("RESATURATOR", "MIXING TANKS", "T132", "T136", "NONE").messages({
+        'any.only': 'Precoat Value must be either RESATURATOR, MIXING TANKS, T132, T136, or NONE'
     }),
     xcess_na2co3_conc: Joi.number().required().messages({
         'string.empty': 'Excess Na2CO3 required',
@@ -210,6 +226,9 @@ const electroSchema = Joi.object({
     }),
     present_operator: Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
+    }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
     }),
     electro_eff:  Joi.number().required().messages({
         'string.empty': 'Electrolyzer Efficiency required',
@@ -243,10 +262,6 @@ const electroSchema = Joi.object({
         'string.empty': 'NaOH Specific Gravity Field Required',
         'number.base': 'NaOH Specific Gravity must be a number'
     }),
-    naoh_total_volume:  Joi.number().required().messages({
-        'string.empty': 'NaOH Specific Gravity Field Required',
-        'number.base': 'NaOH Specific Gravity must be a number'
-    }),
     naoh_flowrate:  Joi.number().required().messages({
         'string.empty': 'NaOH Flow Rate Field Required',
         'number.base': 'NaOH Flow Rate must be a number'
@@ -254,10 +269,6 @@ const electroSchema = Joi.object({
     db_free_cl_qual: Joi.string().trim().required().valid("POSITIVE", "NEGATIVE").messages({
         'string.empty': 'DB Free Cl2 Field Required',
         'any.only': 'Value must be either POSTIVE or NEGATIVE'
-    }),
-    num_n_cylinders:  Joi.number().required().messages({
-        'string.empty': 'Number of N Cylinders Field Required',
-        'number.base': 'Number of N Cylinders must be a number'
     }),
     decomposer_op_temp:  Joi.number().required().messages({
         'string.empty': 'Decomposer Operating Temperature Field Required',
@@ -284,6 +295,9 @@ const nacloSchema = Joi.object({
     }),
     present_operator: Joi.string().trim().required().messages({
         'string.empty': 'Present Operator Field Required'
+    }),
+    incoming_operator:  Joi.string().trim().required().messages({
+        'string.empty': 'Incoming Operator Field Required'
     }),
     naclo_ct1: Joi.number().required().messages({
         'string.empty': 'NaClO Circulation Tank 1 Field Required',
@@ -492,6 +506,50 @@ const usagesSchema = Joi.object({
     pdn_steam_brine: Joi.number().required().messages({
         'string.empty': 'Steam Brine per DMT NaOH Field Required',
         'number.base': 'Steam Brine per DMT NaOH must be a number'
+    }),
+    mtd_salt: Joi.number().required().messages({
+        'string.empty': 'Salt per DMT NaOH MTD Field Required',
+        'number.base': 'Salt per DMT NaOH MTD must be a number'
+    }),
+    mtd_soda_ash: Joi.number().required().messages({
+        'string.empty': 'Soda Ash per DMT NaOH MTD Field Required',
+        'number.base': 'Soda Ash per DMT NaOH MTD must be a number'
+    }),
+    mtd_naoh: Joi.number().required().messages({
+        'string.empty': 'NaOH per DMT NaOH MTD Field Required',
+        'number.base': 'NaOH per DMT NaOH MTD must be a number'
+    }),
+    mtd_hcl: Joi.number().required().messages({
+        'string.empty': 'HCl per DMT NaOH MTD Field Required',
+        'number.base': 'HCl per DMT NaOH MTD must be a number'
+    }),
+    mtd_bacl2: Joi.number().required().messages({
+        'string.empty': 'BaCl2 per DMT NaOH MTD Field Required',
+        'number.base': 'BaCl2 per DMT NaOH MTD must be a number'
+    }),
+    mtd_flocullant: Joi.number().required().messages({
+        'string.empty': 'Flocullant per DMT NaOH MTD Field Required',
+        'number.base': 'Flocullant per DMT NaOH MTD must be a number'
+    }),
+    mtd_na2so3: Joi.number().required().messages({
+        'string.empty': 'Na2SO3 per DMT NaOH MTD Field Required',
+        'number.base': 'Na2SO3 per DMT NaOH MTD must be a number'
+    }),
+    mtd_alpha_cellulose: Joi.number().required().messages({
+        'string.empty': 'Alpha Cellulose per DMT NaOH MTD Field Required',
+        'number.base': 'Alpha Cellulose per DMT NaOH MTD must be a number'
+    }),
+    mtd_power: Joi.number().required().messages({
+        'string.empty': 'Power per DMT NaOH MTD Field Required',
+        'number.base': 'Power per DMT NaOH MTD must be a number'
+    }),
+    mtd_steam_evap: Joi.number().required().messages({
+        'string.empty': 'Steam Evap per DMT NaOH MTD Field Required',
+        'number.base': 'Steam Evap per DMT NaOH MTD must be a number'
+    }),
+    mtd_steam_brine: Joi.number().required().messages({
+        'string.empty': 'Steam Brine per DMT NaOH MTD Field Required',
+        'number.base': 'Steam Brine per DMT NaOH MTD must be a number'
     }),
     clt_ph: Joi.number().required().messages({
         'string.empty': 'CLT pH Field Required',

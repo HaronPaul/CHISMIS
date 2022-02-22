@@ -16,16 +16,6 @@ const EvapTabs = () => {
         dispatch(addEvap({name, value}))
     }   
 
-    useEffect(()=> {
-        if(evapSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
-            var naoh_total = (evapSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
-            var eff = parseFloat((evapSection.naoh_prod * 100) / naoh_total).toFixed(2)
-            dispatch(addEvap({name: 'evap_eff', value: eff}))
-        } else {
-            dispatch(addEvap({name: 'evap_eff', value: eff}))
-        }
-    }, [evapSection.naoh_total_volume, electroSection.naoh_sg, electroSection.naoh_conc, evapSection.naoh_prod])
-
     return(
         <>
             <div style={{ marginBottom: '3%'}}>

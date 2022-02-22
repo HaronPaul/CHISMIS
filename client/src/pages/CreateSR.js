@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from "react";
 import OSRTabs from "../components/Tabs";
-import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal, Box, autocompleteClasses} from "@mui/material";
+
+// Material UI Imports
+import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal, Box} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
-import { changeDate, changeShift, addUsages} from "../redux/sectionSlice"
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
 import axios from 'axios'
 import ModalReport from "../components/ModalReport";
 import ShiftReportDoc from "../components/ShiftReportDoc";
-import { addErrors } from "../redux/errorSlice";
+
+// Redux Imports
+import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro} from "../redux/sectionSlice"
+import {addErrors} from '../redux/errorSlice'
 let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
 const useStyles = makeStyles({
@@ -27,7 +31,6 @@ const useStyles = makeStyles({
         marginBottom: '1% !important',
         marginLeft: '5% !important',
     },
-
     paperContainerStyle : {
         width: '90%', 
         padding:'1%', 
@@ -55,7 +58,7 @@ const CreateSR = (props) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
-    const {currentSupervisor, date, shift, usagesSection, electroSection} = useSelector((state) => state.section)
+    const {currentSupervisor, date, shift, usagesSection, electroSection, controlRoomSection, hclSection, evapSection} = useSelector((state) => state.section)
     const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3,ac_alpha_cellulose, ac_power, ac_steam_brine} = usagesSection
 
     // Modal states and function
@@ -81,47 +84,7 @@ const CreateSR = (props) => {
         }
     }
 
-    const handleSubmitButton = async () => {
-
-        // This will get the Per DMT NaOH MTD for the specific usages 
-        if(date) {
-            const splitDate = shiftReportData.date.split('/')
-            const day = splitDate[1]
-            
-            // When it is first day of the month and first day
-            if(parseInt(day) === 1 && shift === 1) {
-                // Add the current actual consumption with 0
-                dispatch(addUsages({name: 'mtd_salt', value: usagesSection.ac_salt}))
-                dispatch(addUsages({name: 'mtd_soda_ash', value: usagesSection.ac_soda_ash}))
-                dispatch(addUsages({name: 'mtd_naoh', value: usagesSection.ac_naoh}))
-                dispatch(addUsages({name: 'mtd_hcl', value: usagesSection.ac_hcl}))
-                dispatch(addUsages({name: 'mtd_bacl2', value: usagesSection.ac_bacl2}))
-                dispatch(addUsages({name: 'mtd_flocullant', value: usagesSection.ac_flocullant}))
-                dispatch(addUsages({name: 'mtd_na2so3', value: usagesSection.ac_na2so3}))
-                dispatch(addUsages({name: 'mtd_alpha_cellulose', value: usagesSection.ac_alpha_cellulose}))
-                dispatch(addUsages({name: 'mtd_power', value: usagesSection.ac_power}))
-                dispatch(addUsages({name: 'mtd_steam_evap', value: usagesSection.ac_steam_evap}))
-                dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.ac_steam_brine}))
-            } else {
-                // Get the response from the DB query here
-                
-            }
-        }
-        handleOpen()
-        // try {
-        //     const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-        //     if(response.data.success) {
-        //         // Create a PDF modal containing the data
-        //     } else {
-        //         // Print the errors on the DOM
-        //         dispatch(addErrors(response.data.errors))
-        //     }
-        // } catch(error) {
-        //     console.log(error)
-        // }
-    }
-
-
+    // Calculate each Per DMT from actual consumption and cell liquor PDN
     useEffect(()=> {
         let calculatePDN
         actual_consumptions.forEach((param) => {
@@ -134,6 +97,86 @@ const CreateSR = (props) => {
         })
     }, [electroSection.cell_liq_prod, ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3, ac_alpha_cellulose, ac_power, ac_steam_brine])
 
+    // Calculate the HCl Synthesis Efficiency
+    useEffect(()=> {
+        if(controlRoomSection.hours && controlRoomSection.avg_load && hclSection.hcl) {
+            var theoretical = (1.36 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
+            var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
+            console.log(`Efficiency = ${eff}`)
+            dispatch(addHcl({name: 'hcl_synth_eff', value: eff}))
+        } else {
+            dispatch(addHcl({name: 'hcl_synth_eff', value: ''}))
+        }
+    }, [controlRoomSection.hours, controlRoomSection.avg_load, hclSection.hcl, controlRoomSection.cells])
+
+    // Calculate the Evaporator efficiency
+    useEffect(()=> {
+        if(evapSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
+            var naoh_total = (evapSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
+            var eff = parseFloat((evapSection.naoh_prod * 100) / naoh_total).toFixed(2)
+            dispatch(addEvap({name: 'evap_eff', value: eff}))
+        } else {
+            dispatch(addEvap({name: 'evap_eff', value: eff}))
+        }
+    }, [evapSection.naoh_total_volume, electroSection.naoh_sg, electroSection.naoh_conc, evapSection.naoh_prod])
+
+    // Calculating the electrolysis efficiency
+    useEffect(()=> {
+        if(controlRoomSection.hours && controlRoomSection.avg_load && electroSection.cell_liq_prod) {
+            var theoretical = (1.4925 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
+            var eff = parseFloat(((electroSection.cell_liq_prod * 100) / theoretical)).toFixed(2) 
+            dispatch(addElectro({name: 'electro_eff', value: eff}))
+        } else {
+            dispatch(addElectro({name: 'electro_eff', value: ''}))
+        }
+    }, [controlRoomSection.hours, controlRoomSection.avg_load, electroSection.cell_liq_prod, controlRoomSection.cells])
+
+    // Calculating the Steam Evap actual consumption
+    useEffect(() => {
+        if(usagesSection.ac_steam_evap && evapSection.naoh_prod) {
+            var pdn_value = usagesSection.ac_steam_evap / evapSection.naoh_prod
+            dispatch(addUsages({name: `pdn_steam_evap`, value: parseFloat(pdn_value).toFixed(2)}))
+        }
+    }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
+
+    // Button for viewing the report in tabuler form
+    const handleSubmitButton = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+            if(response.data.success) {
+                 // This will get the Per DMT NaOH MTD for the specific usages 
+                if(date) {
+                    const splitDate = shiftReportData.date.split('/')
+                    const day = splitDate[1]
+                    
+                    // When it is first day of the month and first day
+                    if(parseInt(day) === 1 && shift === 1) {
+                        // Add the current actual consumption with 0
+                        dispatch(addUsages({name: 'mtd_salt', value: usagesSection.ac_salt}))
+                        dispatch(addUsages({name: 'mtd_soda_ash', value: usagesSection.ac_soda_ash}))
+                        dispatch(addUsages({name: 'mtd_naoh', value: usagesSection.ac_naoh}))
+                        dispatch(addUsages({name: 'mtd_hcl', value: usagesSection.ac_hcl}))
+                        dispatch(addUsages({name: 'mtd_bacl2', value: usagesSection.ac_bacl2}))
+                        dispatch(addUsages({name: 'mtd_flocullant', value: usagesSection.ac_flocullant}))
+                        dispatch(addUsages({name: 'mtd_na2so3', value: usagesSection.ac_na2so3}))
+                        dispatch(addUsages({name: 'mtd_alpha_cellulose', value: usagesSection.ac_alpha_cellulose}))
+                        dispatch(addUsages({name: 'mtd_power', value: usagesSection.ac_power}))
+                        dispatch(addUsages({name: 'mtd_steam_evap', value: usagesSection.ac_steam_evap}))
+                        dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.ac_steam_brine}))
+                    } else {
+                        // Get the response from the DB query here
+                        }
+                    }
+                    handleOpen()
+            } else {
+                // Print the errors on the DOM
+                dispatch(addErrors(response.data.errors))
+                console.log(response.data)
+            }
+        } catch(error) {
+            console.log(error)
+        }
+    }
 
     return(
         <>

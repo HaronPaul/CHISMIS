@@ -17,24 +17,7 @@ const SpecificUsagesTab = () => {
 
         //  Change the Actual Consumption value
         dispatch(addUsages({name, value}))
-
-        var pdn_value
-        if(actual_consumptions.includes(name) && electroSection.cell_liq_prod) {
-            pdn_value = value / electroSection.cell_liq_prod
-            // Change the perDMT value
-            dispatch(addUsages({name: `pdn_${name.slice(3, name.length)}`, value: parseFloat(pdn_value).toFixed(2)}))   
-        } else {
-            dispatch(addUsages({name: `pdn_${name.slice(3, name.length)}`, value: ''}))
-        }
     }
-
-    // Calculating the Steam Evap actual consumption
-    useEffect(() => {
-        if(usagesSection.ac_steam_evap && evapSection.naoh_prod) {
-            var pdn_value = usagesSection.ac_steam_evap / evapSection.naoh_prod
-            dispatch(addUsages({name: `pdn_steam_evap`, value: parseFloat(pdn_value).toFixed(2)}))
-        }
-    }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
 
     return(
         <>

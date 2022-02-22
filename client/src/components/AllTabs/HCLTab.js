@@ -16,17 +16,6 @@ const HCLTab = () => {
         dispatch(addHcl({name, value}))
     }   
 
-    useEffect(()=> {
-        if(controlRoomSection.hours && controlRoomSection.avg_load && hclSection.hcl) {
-            var theoretical = (1.36 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
-            var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
-            console.log(`Efficiency = ${eff}`)
-            dispatch(addHcl({name: 'hcl_synth_eff', value: eff}))
-        } else {
-            dispatch(addHcl({name: 'hcl_synth_eff', value: ''}))
-        }
-    }, [controlRoomSection.hours, controlRoomSection.avg_load, hclSection.hcl, controlRoomSection.cells])
-
     return( 
         <>
             <div style={{ marginBottom: '2%'}}>
