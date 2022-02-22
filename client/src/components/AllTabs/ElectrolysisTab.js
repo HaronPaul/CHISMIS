@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addElectro, addUsages } from "../../redux/sectionSlice";
 import ErrorSection from './ErrorSection'
 
-let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_evap', 'ac_steam_brine']
-
 const ElectrolysisTab = () => {
     const dispatch = useDispatch()
     const {electroSection, controlRoomSection, usagesSection} = useSelector((state) => state.section)
@@ -14,19 +12,10 @@ const ElectrolysisTab = () => {
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
-        dispatch(addElectro({name, value}))
-
-        let calculatePDN
-        if(name === 'cell_liq_prod') {
-            actual_consumptions.forEach((param) => {
-                if(usagesSection[param]) {
-                    calculatePDN = usagesSection[param] / value
-                    dispatch(addUsages({name: `pdn_${param.slice(3, param.length)}`, value: parseFloat(calculatePDN).toFixed(2)}))
-                }
-            })
-        }
+        dispatch(addElectro({name, value}))   
     }
 
+    // Calculating the electrolysis efficiency
     useEffect(()=> {
         if(controlRoomSection.hours && controlRoomSection.avg_load && electroSection.cell_liq_prod) {
             var theoretical = (1.4925 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
@@ -35,6 +24,7 @@ const ElectrolysisTab = () => {
         } else {
             dispatch(addElectro({name: 'electro_eff', value: ''}))
         }
+
     }, [controlRoomSection.hours, controlRoomSection.avg_load, electroSection.cell_liq_prod, controlRoomSection.cells])
 
     return(
@@ -116,7 +106,7 @@ const ElectrolysisTab = () => {
                         <TextField
                         type="number"
                         label='SPB Inlet Temperature'
-                        placeholder="60-90"
+                        placeholder="60-70"
                         style = {{minWidth: '100%'}}
                         name='spb_inlet_temp'
                         error={electroSection.spb_inlet_temp? ((electroSection.spb_inlet_temp < 60 ||electroSection.spb_inlet_temp > 70)? true: false):false}

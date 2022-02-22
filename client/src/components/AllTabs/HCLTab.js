@@ -129,6 +129,7 @@ const HCLTab = () => {
                         label='HCL concentration'
                         type="number"
                         style= {{minWidth: '100%'}}
+                        placeholder="32-33.5"
                         name='hcl_conc'
                         error={hclSection.hcl_conc? ((hclSection.hcl_conc < 32 ||hclSection.hcl_conc > 33.5)? true: false):false}
                         value={hclSection.hcl_conc || ''}

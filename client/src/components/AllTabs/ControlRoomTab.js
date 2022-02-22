@@ -151,7 +151,7 @@ const ControlRoomTab = () => {
                         placeholder="<= 13.25"
                         type="number"
                         name='avg_load'
-                        error={controlRoomSection.avg_load? (controlRoomSection.avg_load < 13.25? true:false):false}
+                        error={controlRoomSection.avg_load? (controlRoomSection.avg_load > 13.25? true:false):false}
                         value={controlRoomSection.avg_load || ''}
                         onChange={handleChange} />
                     </Grid>
@@ -159,10 +159,10 @@ const ControlRoomTab = () => {
                         <TextField
                         style={{minWidth: '100%'}}
                         label='End of Shift Load'
-                        placeholder=""
+                        placeholder="<= 13.25"
                         type="number"
                         name='eos_load'
-                        error={controlRoomSection.eos_load? (controlRoomSection.eos_load < 13.25? true:false):false}
+                        error={controlRoomSection.eos_load? (controlRoomSection.eos_load > 13.25? true:false):false}
                         value={controlRoomSection.eos_load || ''}
                         onChange={handleChange} />
                     </Grid>

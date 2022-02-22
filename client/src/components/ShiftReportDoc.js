@@ -193,7 +193,14 @@ const ShiftReportDoc = () => {
                         <td 
                         bgcolor={hclSection.present_operator === ''? "#f6685e":"#BFBFBF"}  
                         align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.present_operator}</font></td>
-                        <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                         <td 
+                        rowSpan={4} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{hclSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td 
@@ -304,7 +311,14 @@ const ShiftReportDoc = () => {
                         <td 
 						bgcolor={evapSection.present_operator === ''? "#f6685e":"#BFBFBF"}
 						align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
-                        <td rowSpan={3} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        rowSpan={3} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{evapSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"><font face="Arial" size="2"><b>NaOH (10.83): </b></font></td>
@@ -374,7 +388,14 @@ const ShiftReportDoc = () => {
                         <td 
                         bgcolor={prBrineSection.present_operator === ''? "#f6685e":"#BFBFBF"}  
                         colSpan={3} align="center"><font face="Arial" size="2" >{prBrineSection.present_operator}</font></td>
-                        <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                         <td 
+                        rowSpan={4} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{prBrineSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td  align="center"><font face="Arial" size="2">Salt load (6-10):</font></td>
@@ -478,7 +499,14 @@ const ShiftReportDoc = () => {
                         bgcolor={electroSection.present_operator.trim() === ''? 'f6685e':"#BFBFBF"}>
                             <font face="Arial" size="2" >{electroSection.present_operator}</font>
                         </td>
-                        <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2"></font></td>
+                        <td 
+                        rowSpan={4} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{electroSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"><font face="Arial" size="2" >Cell Liquor (11.90):</font></td>
@@ -581,7 +609,14 @@ const ShiftReportDoc = () => {
                         colSpan={3}>
                             <font face="Arial" size="2">{nacloSection.present_operator}</font>
                         </td>
-                        <td rowSpan={4} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        <td 
+                        rowSpan={4} 
+                        colSpan={2} 
+                        align="center"
+                        style={tdStyle}
+                        >
+                            <font face="Arial" size="2">{nacloSection.remarks}</font>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Hypo : (7.8±3% NaOCl) / # of batches (60)</font></td>
@@ -757,7 +792,7 @@ const ShiftReportDoc = () => {
                         bgcolor = {usagesSection.pdn_salt? (usagesSection.pdn_salt > 1.74? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{usagesSection.pdn_salt}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_salt}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Soda Ash</font></td>
@@ -772,7 +807,7 @@ const ShiftReportDoc = () => {
                         align="center"
                         bgcolor = {usagesSection.pdn_soda_ash? (usagesSection.pdn_soda_ash > 5.6? "#f6685e": "white"):"white"}>
                         <font face="Arial" size="2">{usagesSection.pdn_soda_ash}</font></td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_soda_ash}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">NaOH</font></td>
@@ -786,7 +821,7 @@ const ShiftReportDoc = () => {
                         >
                             <font face="Arial" size="2">{usagesSection.pdn_naoh}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_naoh}</font></td>
                     </tr>   
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">HCl</font></td>
@@ -801,7 +836,7 @@ const ShiftReportDoc = () => {
                         align="center"
                         bgcolor = {usagesSection.pdn_hcl? (usagesSection.pdn_hcl > 0.0244? "#f6685e": "white"):"white"}
                         ><font face="Arial" size="2">{usagesSection.pdn_hcl}</font></td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_hcl}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">BaCl2</font></td>
@@ -818,7 +853,7 @@ const ShiftReportDoc = () => {
                         >
                             <font face="Arial" size="2">{usagesSection.pdn_bacl2}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_bacl2}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Flocullant</font></td>
@@ -836,7 +871,7 @@ const ShiftReportDoc = () => {
                         >
                             <font face="Arial" size="2">{usagesSection.pdn_flocullant}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_flocullant}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Sodium Sulfite</font></td>
@@ -852,7 +887,7 @@ const ShiftReportDoc = () => {
                         bgcolor = {usagesSection.pdn_na2so3? (usagesSection.pdn_na2so3 > 2.2? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2">{usagesSection.pdn_na2so3}</font></td>
-                        <td align="center"><font face="Arial" size="2"></font></td>
+                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_na2so3}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2" >Alpha Cellulose</font></td>
@@ -869,7 +904,7 @@ const ShiftReportDoc = () => {
                         >
                             <font face="Arial" size="2" >{usagesSection.pdn_alpha_cellulose}</font>
                         </td>
-                        <td  align="center"><font face="Arial" size="2" > </font></td>
+                        <td  align="center"><font face="Arial" size="2" >{usagesSection.mtd_alpha_cellulose}</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Power</font></td>
@@ -885,7 +920,7 @@ const ShiftReportDoc = () => {
                         align="center"
                         bgcolor = {usagesSection.pdn_power? (usagesSection.pdn_power > 2350? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2" >{usagesSection.pdn_power}</font></td>
-                        <td  align="center"><font face="Arial" size="2" ></font></td>
+                        <td  align="center"><font face="Arial" size="2" >{usagesSection.mtd_power}</font></td>
                     </tr>
                     <tr>
                         <td  align="center" colSpan={3}><font face="Arial" size="2" >Steam(Evap / Brine)</font></td>
@@ -901,7 +936,7 @@ const ShiftReportDoc = () => {
                         bgcolor={(usagesSection.pdn_steam_evap || usagesSection.pdn_steam_brine)? (usagesSection.pdn_steam_evap > 1.31 || usagesSection.pdn_steam_brine > 0.30? "#f6685e": "white"):"white"}
                         >
                             <font face="Arial" size="2" > {usagesSection.pdn_steam_evap} / {usagesSection.pdn_steam_brine}</font></td>
-                        <td align="center"><font face="Arial" size="2" > / </font></td>
+                        <td align="center"><font face="Arial" size="2" >{usagesSection.mtd_steam_evap} / {usagesSection.mtd_steam_brine}</font></td>
                     </tr>
                     <tr>
                         <td bgcolor="#BFBFBF" align="left" colSpan={11}><font face="Arial" size="2" ><b>Environment Monitoring</b></font></td>

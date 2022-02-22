@@ -59,18 +59,18 @@ const OSRTabs = (props) => {
                         <Tab label="Primary Brine" wrapped/> 
                         <Tab label="Electrolysis" wrapped /> 
                         <Tab label="Hypochlorite" wrapped/> 
-                        {parseInt(shift) === 2? <Tab label="QC Brine" wrapped/>: <></>} 
+                        {parseInt(shift) === 2 && <Tab label="QC Brine" wrapped/>} 
                         <Tab label="Specific Usages" wrapped/>
                 </Tabs>
             </div>
             <div className={classes.tabPanelContainer}>
-                <TabPanel value={value}></TabPanel>
+                <TabPanel value={value} shift={shift}></TabPanel>
             </div>
         </>
     )
 }
 
-const TabPanel = ({value}) => {
+const TabPanel = ({value, shift}) => {
     switch(value) {
         case 0: return <ControlRoomTab/>
         case 1: return <HCLTab />
@@ -78,7 +78,9 @@ const TabPanel = ({value}) => {
         case 3: return <BrineTab />
         case 4: return <ElectrolysisTab />
         case 5: return <NaCLOTab/>
-        case 6: return <QCBrine />   
+        case 6: 
+            if(parseInt(shift) === 2) return <QCBrine />
+            else return <SpecificUsagesTab/> 
         case 7: return <SpecificUsagesTab/>  
         default: return <ControlRoomTab />
     }

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import {Typography, Grid, TextField} from "@mui/material";
 import {useSelector, useDispatch} from 'react-redux'
-import { addUsages, calculatePDN } from "../../redux/sectionSlice";
+import { addUsages} from "../../redux/sectionSlice";
 import ErrorSection from './ErrorSection'
 let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
@@ -9,7 +9,7 @@ const SpecificUsagesTab = () => {
     const dispatch = useDispatch()
     const {usagesSection, electroSection, evapSection} = useSelector((state) => state.section)
     const {usagesErrors} = useSelector((state)=>state.error)
-   
+
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -20,7 +20,6 @@ const SpecificUsagesTab = () => {
 
         var pdn_value
         if(actual_consumptions.includes(name) && electroSection.cell_liq_prod) {
-            // console.log(name.slice(3, name.length))
             pdn_value = value / electroSection.cell_liq_prod
             // Change the perDMT value
             dispatch(addUsages({name: `pdn_${name.slice(3, name.length)}`, value: parseFloat(pdn_value).toFixed(2)}))   
@@ -29,15 +28,13 @@ const SpecificUsagesTab = () => {
         }
     }
 
-    // Side effect when actual steam evap and naoh production is changed
+    // Calculating the Steam Evap actual consumption
     useEffect(() => {
         if(usagesSection.ac_steam_evap && evapSection.naoh_prod) {
             var pdn_value = usagesSection.ac_steam_evap / evapSection.naoh_prod
             dispatch(addUsages({name: `pdn_steam_evap`, value: parseFloat(pdn_value).toFixed(2)}))
         }
     }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
-
-
 
     return(
         <>
@@ -125,7 +122,8 @@ const SpecificUsagesTab = () => {
                 </Grid>
             </div>
 
-            <div style={{marginBottom: '3%'}}>
+
+            {/* <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Specific Usages - per DMT NaOH</Typography>
                 <Grid container spacing={1}>
                     <Grid item lg= {2} sm={2} xs={6}>
@@ -162,7 +160,7 @@ const SpecificUsagesTab = () => {
                         <Typography variant="h6">Steam Brine: {usagesSection.pdn_steam_brine} </Typography>
                     </Grid>
                 </Grid>
-            </div>
+            </div> */}
 
             <div style={{marginBottom: '3%'}}>
                 <Typography variant="h4" style={{marginBottom: '1%'}}>Environment Monitoring</Typography>

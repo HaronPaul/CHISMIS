@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import OSRTabs from "../components/Tabs";
 import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal, Box, autocompleteClasses} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
-import { changeDate, changeShift } from "../redux/sectionSlice"
+import { changeDate, changeShift, addUsages} from "../redux/sectionSlice"
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
@@ -11,6 +11,7 @@ import axios from 'axios'
 import ModalReport from "../components/ModalReport";
 import ShiftReportDoc from "../components/ShiftReportDoc";
 import { addErrors } from "../redux/errorSlice";
+let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
 const useStyles = makeStyles({
     mainContainerStyle : {
@@ -54,8 +55,9 @@ const CreateSR = (props) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
-    const {currentSupervisor, date, shift} = useSelector((state) => state.section)
-    
+    const {currentSupervisor, date, shift, usagesSection, electroSection} = useSelector((state) => state.section)
+    const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3,ac_alpha_cellulose, ac_power, ac_steam_brine} = usagesSection
+
     // Modal states and function
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -65,12 +67,14 @@ const CreateSR = (props) => {
         try {
             const dateString = date.toString()
             if(dateString !== "Invalid Date") {
-                console.log(dateString)
                 const DD = String(date.getDate()).padStart(2, '0');
                 const MM = String(date.getMonth() + 1).padStart(2, '0');
                 const YYYY = date.getFullYear();
                 const dateCreated = `${MM}/${DD}/${YYYY}`
                 dispatch(changeDate(dateCreated))
+            } else {
+                dispatch(changeDate(''))
+                console.log("Date is invalid")
             }
         } catch(err) {
             console.log('No date inputted')
@@ -78,19 +82,59 @@ const CreateSR = (props) => {
     }
 
     const handleSubmitButton = async () => {
-        try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
-            if(response.data.success) {
-                handleOpen()
-                // Create a PDF modal containing the data
+
+        // This will get the Per DMT NaOH MTD for the specific usages 
+        if(date) {
+            const splitDate = shiftReportData.date.split('/')
+            const day = splitDate[1]
+            
+            // When it is first day of the month and first day
+            if(parseInt(day) === 1 && shift === 1) {
+                // Add the current actual consumption with 0
+                dispatch(addUsages({name: 'mtd_salt', value: usagesSection.ac_salt}))
+                dispatch(addUsages({name: 'mtd_soda_ash', value: usagesSection.ac_soda_ash}))
+                dispatch(addUsages({name: 'mtd_naoh', value: usagesSection.ac_naoh}))
+                dispatch(addUsages({name: 'mtd_hcl', value: usagesSection.ac_hcl}))
+                dispatch(addUsages({name: 'mtd_bacl2', value: usagesSection.ac_bacl2}))
+                dispatch(addUsages({name: 'mtd_flocullant', value: usagesSection.ac_flocullant}))
+                dispatch(addUsages({name: 'mtd_na2so3', value: usagesSection.ac_na2so3}))
+                dispatch(addUsages({name: 'mtd_alpha_cellulose', value: usagesSection.ac_alpha_cellulose}))
+                dispatch(addUsages({name: 'mtd_power', value: usagesSection.ac_power}))
+                dispatch(addUsages({name: 'mtd_steam_evap', value: usagesSection.ac_steam_evap}))
+                dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.ac_steam_brine}))
             } else {
-                // Print the errors on the DOM
-                dispatch(addErrors(response.data.errors))
+                // Get the response from the DB query here
+                
             }
-        } catch(error) {
-            console.log(error)
         }
+        handleOpen()
+        // try {
+        //     const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+        //     if(response.data.success) {
+        //         // Create a PDF modal containing the data
+        //     } else {
+        //         // Print the errors on the DOM
+        //         dispatch(addErrors(response.data.errors))
+        //     }
+        // } catch(error) {
+        //     console.log(error)
+        // }
     }
+
+
+    useEffect(()=> {
+        let calculatePDN
+        actual_consumptions.forEach((param) => {
+            if(usagesSection[param] && electroSection.cell_liq_prod) {  
+                calculatePDN = usagesSection[param] / electroSection.cell_liq_prod
+                dispatch(addUsages({name: `pdn_${param.slice(3, param.length)}`, value: parseFloat(calculatePDN).toFixed(2)}))
+            } else {
+                dispatch(addUsages({name: `pdn_${param.slice(3, param.length)}`, value: ''}))
+            }
+        })
+    }, [electroSection.cell_liq_prod, ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3, ac_alpha_cellulose, ac_power, ac_steam_brine])
+
+
     return(
         <>
         <div className={classes.mainContainerStyle}>
@@ -112,7 +156,7 @@ const CreateSR = (props) => {
                         renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
-                    </Grid>
+                    </Grid> 
                     <Grid item lg={4}>
                     <FormControl style={{minWidth: '100%'}}>
                         <InputLabel labelid="shift">Shift</InputLabel>
@@ -148,7 +192,6 @@ const CreateSR = (props) => {
                     <ShiftReportDoc/>
                     <Button variant="contained" style={{marginTop: '20px'}}>Submit Report</Button>
                 </Box>
-
             </Modal>
         </div>
         
