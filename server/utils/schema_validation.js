@@ -507,47 +507,47 @@ const usagesSchema = Joi.object({
         'string.empty': 'Steam Brine per DMT NaOH Field Required',
         'number.base': 'Steam Brine per DMT NaOH must be a number'
     }),
-    mtd_salt: Joi.number().required().messages({
+    mtd_salt: Joi.number().messages({
         'string.empty': 'Salt per DMT NaOH MTD Field Required',
         'number.base': 'Salt per DMT NaOH MTD must be a number'
     }),
-    mtd_soda_ash: Joi.number().required().messages({
+    mtd_soda_ash: Joi.number().messages({
         'string.empty': 'Soda Ash per DMT NaOH MTD Field Required',
         'number.base': 'Soda Ash per DMT NaOH MTD must be a number'
     }),
-    mtd_naoh: Joi.number().required().messages({
+    mtd_naoh: Joi.number().messages({
         'string.empty': 'NaOH per DMT NaOH MTD Field Required',
         'number.base': 'NaOH per DMT NaOH MTD must be a number'
     }),
-    mtd_hcl: Joi.number().required().messages({
+    mtd_hcl: Joi.number().messages({
         'string.empty': 'HCl per DMT NaOH MTD Field Required',
         'number.base': 'HCl per DMT NaOH MTD must be a number'
     }),
-    mtd_bacl2: Joi.number().required().messages({
+    mtd_bacl2: Joi.number().messages({
         'string.empty': 'BaCl2 per DMT NaOH MTD Field Required',
         'number.base': 'BaCl2 per DMT NaOH MTD must be a number'
     }),
-    mtd_flocullant: Joi.number().required().messages({
+    mtd_flocullant: Joi.number().messages({
         'string.empty': 'Flocullant per DMT NaOH MTD Field Required',
         'number.base': 'Flocullant per DMT NaOH MTD must be a number'
     }),
-    mtd_na2so3: Joi.number().required().messages({
+    mtd_na2so3: Joi.number().messages({
         'string.empty': 'Na2SO3 per DMT NaOH MTD Field Required',
         'number.base': 'Na2SO3 per DMT NaOH MTD must be a number'
     }),
-    mtd_alpha_cellulose: Joi.number().required().messages({
+    mtd_alpha_cellulose: Joi.number().messages({
         'string.empty': 'Alpha Cellulose per DMT NaOH MTD Field Required',
         'number.base': 'Alpha Cellulose per DMT NaOH MTD must be a number'
     }),
-    mtd_power: Joi.number().required().messages({
+    mtd_power: Joi.number().messages({
         'string.empty': 'Power per DMT NaOH MTD Field Required',
         'number.base': 'Power per DMT NaOH MTD must be a number'
     }),
-    mtd_steam_evap: Joi.number().required().messages({
+    mtd_steam_evap: Joi.number().messages({
         'string.empty': 'Steam Evap per DMT NaOH MTD Field Required',
         'number.base': 'Steam Evap per DMT NaOH MTD must be a number'
     }),
-    mtd_steam_brine: Joi.number().required().messages({
+    mtd_steam_brine: Joi.number().messages({
         'string.empty': 'Steam Brine per DMT NaOH MTD Field Required',
         'number.base': 'Steam Brine per DMT NaOH MTD must be a number'
     }),

@@ -21,7 +21,6 @@ let schema = Joi.object({
             'string.empty': "Username is required field",
             'string.min': "Username length must be at least 7 characters long"
         }),
-
     password: Joi
         .string()
         .alphanum()

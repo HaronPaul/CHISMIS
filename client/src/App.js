@@ -8,8 +8,6 @@ import Supervisor from "./pages/Supervisor";
 import Manager from "./pages/Manager"
 import Users from "./pages/Users";
 import { useSelector } from "react-redux"
-import ShiftReportDoc from "./components/ShiftReportDoc";
-import ModalReport from "./components/ModalReport";
 
 const App = (props) => {
   const {currentUser} = useSelector((state) => state.user)

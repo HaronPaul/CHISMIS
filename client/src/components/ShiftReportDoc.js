@@ -52,7 +52,6 @@ const ShiftReportDoc = () => {
     useEffect(() => {
         const day = getDay(date)
         if(day.isMonday) {
-            console.log("Day is Monday")
             setMonday(day.numMonday)
         }
     }, [date])
@@ -697,79 +696,83 @@ const ShiftReportDoc = () => {
                     </tr>
 
                     {/* QC Brine */}
-                    <tr>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2"><b>QC Brine</b></font></td>
-                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>Actual</b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={4} align="center"><font face="Arial" size="2"><b>QC Brine and Product</b></font></td>
-                        <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2"><b>Actual</b></font></td>
-                        <td rowSpan={6} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
-                    </tr>
-                    <tr>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">SPB Ca+Mg (15+5 ppb mx)</font></td>
-                        <td
-                        bgcolor={qcBrineSection.spb_camg? (qcBrineSection.spb_camg > 20? "#f6685e": "white"):"white"}
-                        align="center"
-                        ><font face="Arial" size="2">{qcBrineSection.spb_camg}</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">DB Free Cl2 (negative)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.db_free_cl? (qcBrineSection.db_free_cl === "POSITIVE"? "#f6685e": "white"):"white"}
-                        align="center" 
-                        colSpan={3}>
-                            <font face="Arial" size="2">{qcBrineSection.db_free_cl}</font></td>
-                    </tr>
-                    <tr>
-                        <td colSpan={3} align="center"><font face="Arial" size="2">SPB NaClO3 (20 gpl max)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 > 20? "#f6685e": "white"):"white"}
-                        align="center"
-                        ><font face="Arial" size="2">{qcBrineSection.spb_naclo3}</font></td>
-                        <td colSpan={4} align="center"><font face="Arial" size="2">NaOH 50% on-line (49±1%)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.naoh_conc_50? ((qcBrineSection.naoh_conc_50 < 48 || qcBrineSection.naoh_conc_50 > 50)? "#f6685e": "white"):"white"}
-                        colSpan={3} 
-                        align="center"
-                        ><font face="Arial" size="2">{qcBrineSection.naoh_conc_50}</font></td>
-                    </tr>
-                    <tr>
-                        <td align="center" colSpan={3} ><font face="Arial" size="2">SPB Na2SO4 (7 gpl max)</font></td>
-                        <td
-                        bgcolor={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 > 7? "#f6685e": "white"):"white"}
-                        align="center"
-                        >
-                            <font face="Arial" size="2">{qcBrineSection.spb_na2so4}</font>
-                        </td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">NaOH 32% on-line (31±1%)</font></td>
+                    {shift === 2 && 
+                    <>
+                        <tr>
+                            <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2"><b>QC Brine</b></font></td>
+                            <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2"><b>Actual</b></font></td>
+                            <td bgcolor="#BFBFBF" colSpan={4} align="center"><font face="Arial" size="2"><b>QC Brine and Product</b></font></td>
+                            <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2"><b>Actual</b></font></td>
+                            <td rowSpan={6} colSpan={2} align="center"><font face="Arial" size="2">&nbsp;</font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={3}><font face="Arial" size="2">SPB Ca+Mg (15+5 ppb mx)</font></td>
+                            <td
+                            bgcolor={qcBrineSection.spb_camg? (qcBrineSection.spb_camg > 20? "#f6685e": "white"):"white"}
+                            align="center"
+                            ><font face="Arial" size="2">{qcBrineSection.spb_camg}</font></td>
+                            <td align="center" colSpan={4}><font face="Arial" size="2">DB Free Cl2 (negative)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.db_free_cl? (qcBrineSection.db_free_cl === "POSITIVE"? "#f6685e": "white"):"white"}
+                            align="center" 
+                            colSpan={3}>
+                                <font face="Arial" size="2">{qcBrineSection.db_free_cl}</font></td>
+                        </tr>
+                        <tr>
+                            <td colSpan={3} align="center"><font face="Arial" size="2">SPB NaClO3 (20 gpl max)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.spb_naclo3? (qcBrineSection.spb_naclo3 > 20? "#f6685e": "white"):"white"}
+                            align="center"
+                            ><font face="Arial" size="2">{qcBrineSection.spb_naclo3}</font></td>
+                            <td colSpan={4} align="center"><font face="Arial" size="2">NaOH 50% on-line (49±1%)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.naoh_conc_50? ((qcBrineSection.naoh_conc_50 < 48 || qcBrineSection.naoh_conc_50 > 50)? "#f6685e": "white"):"white"}
+                            colSpan={3} 
+                            align="center"
+                            ><font face="Arial" size="2">{qcBrineSection.naoh_conc_50}</font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={3} ><font face="Arial" size="2">SPB Na2SO4 (7 gpl max)</font></td>
+                            <td
+                            bgcolor={qcBrineSection.spb_na2so4? (qcBrineSection.spb_na2so4 > 7? "#f6685e": "white"):"white"}
+                            align="center"
+                            >
+                                <font face="Arial" size="2">{qcBrineSection.spb_na2so4}</font>
+                            </td>
+                            <td align="center" colSpan={4}><font face="Arial" size="2">NaOH 32% on-line (31±1%)</font></td>
 
-                        <td 
-                        bgcolor={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 31 || qcBrineSection.naoh_conc_32 > 33)? "#f6685e": "white"):"white"}
-                        align="center" 
-                        colSpan={3}><font face="Arial" size="2">{qcBrineSection.naoh_conc_32} %</font></td>
-                    </tr>
-                    <tr>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">DB NaClO3 (20 gpl max)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.db_naclo3? (qcBrineSection.db_naclo3 > 20? "#f6685e": "white"):"white"}
-                        align="center"><font face="Arial" size="2">{qcBrineSection.db_naclo3} gpl</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">NaOH Fe (5ppm max)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.naohfe_conc? (qcBrineSection.naohfe_conc > 5? "#f6685e": "white"):"white"}
-                        align="center" 
-                        colSpan={3}>
-                            <font face="Arial" size="2">{qcBrineSection.naohfe_conc} ppm</font>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" colSpan={3}><font face="Arial" size="2">DB NaCl (180-220 gpl)</font></td>
-                        <td
-                        bgcolor={qcBrineSection.db_nacl? ((qcBrineSection.db_nacl < 180 || qcBrineSection.db_nacl > 220)? "#f6685e": "white"):"white"}
-                        align="center"
-                        ><font face="Arial" size="2">{qcBrineSection.db_nacl} gpl</font></td>
-                        <td align="center" colSpan={4}><font face="Arial" size="2">HCL on-line (32+1.5)</font></td>
-                        <td 
-                        bgcolor={qcBrineSection.hcl_online? ((qcBrineSection.hcl_online < 32 || qcBrineSection.hcl_online > 33.5)? "#f6685e": "white"):"white"}
-                        align="center" 
-                        colSpan={3}><font face="Arial" size="2">{qcBrineSection.hcl_online}</font></td>
-                    </tr>
+                            <td 
+                            bgcolor={qcBrineSection.naoh_conc_32? ((qcBrineSection.naoh_conc_32 < 31 || qcBrineSection.naoh_conc_32 > 33)? "#f6685e": "white"):"white"}
+                            align="center" 
+                            colSpan={3}><font face="Arial" size="2">{qcBrineSection.naoh_conc_32} %</font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={3}><font face="Arial" size="2">DB NaClO3 (20 gpl max)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.db_naclo3? (qcBrineSection.db_naclo3 > 20? "#f6685e": "white"):"white"}
+                            align="center"><font face="Arial" size="2">{qcBrineSection.db_naclo3} gpl</font></td>
+                            <td align="center" colSpan={4}><font face="Arial" size="2">NaOH Fe (5ppm max)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.naohfe_conc? (qcBrineSection.naohfe_conc > 5? "#f6685e": "white"):"white"}
+                            align="center" 
+                            colSpan={3}>
+                                <font face="Arial" size="2">{qcBrineSection.naohfe_conc} ppm</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={3}><font face="Arial" size="2">DB NaCl (180-220 gpl)</font></td>
+                            <td
+                            bgcolor={qcBrineSection.db_nacl? ((qcBrineSection.db_nacl < 180 || qcBrineSection.db_nacl > 220)? "#f6685e": "white"):"white"}
+                            align="center"
+                            ><font face="Arial" size="2">{qcBrineSection.db_nacl} gpl</font></td>
+                            <td align="center" colSpan={4}><font face="Arial" size="2">HCL on-line (32+1.5)</font></td>
+                            <td 
+                            bgcolor={qcBrineSection.hcl_online? ((qcBrineSection.hcl_online < 32 || qcBrineSection.hcl_online > 33.5)? "#f6685e": "white"):"white"}
+                            align="center" 
+                            colSpan={3}><font face="Arial" size="2">{qcBrineSection.hcl_online}</font></td>
+                        </tr>
+                    </>
+                    }
                     <tr>
                         <td bgcolor="#BFBFBF" colSpan={3} align="center"><font face="Arial" size="2" ><b>Specific Usages /</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Std</b></font></td>

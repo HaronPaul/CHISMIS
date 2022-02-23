@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import OSRTabs from "../components/Tabs";
 
+
+import ShiftReportBox from "../components/ShiftReportBox";
 // Material UI Imports
-import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal, Box} from "@mui/material";
+import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
 import axios from 'axios'
-import ModalReport from "../components/ModalReport";
-import ShiftReportDoc from "../components/ShiftReportDoc";
+
 
 // Redux Imports
 import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro} from "../redux/sectionSlice"
@@ -41,18 +42,6 @@ const useStyles = makeStyles({
         alignItems: 'center'
     }
 })
-
-// Style for modal
-const style = {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '70vw',
-    bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    boxShadow: 24,
-    p: 5,
-    overflowY: 'scroll',
-};
 
 const CreateSR = (props) => {
     const classes = useStyles()
@@ -142,7 +131,10 @@ const CreateSR = (props) => {
     // Button for viewing the report in tabuler form
     const handleSubmitButton = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report', shiftReportData)
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report/validate', shiftReportData, {validateStatus: function(status){
+                    return status < 500;
+                }
+            }) 
             if(response.data.success) {
                  // This will get the Per DMT NaOH MTD for the specific usages 
                 if(date) {
@@ -150,7 +142,7 @@ const CreateSR = (props) => {
                     const day = splitDate[1]
                     
                     // When it is first day of the month and first day
-                    if(parseInt(day) === 1 && shift === 1) {
+                    if(parseInt(day) === 1 && parseInt(shift) === 1) {
                         // Add the current actual consumption with 0
                         dispatch(addUsages({name: 'mtd_salt', value: usagesSection.ac_salt}))
                         dispatch(addUsages({name: 'mtd_soda_ash', value: usagesSection.ac_soda_ash}))
@@ -165,8 +157,19 @@ const CreateSR = (props) => {
                         dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.ac_steam_brine}))
                     } else {
                         // Get the response from the DB query here
-                        }
+                        dispatch(addUsages({name: 'mtd_salt', value: 0}))
+                        dispatch(addUsages({name: 'mtd_soda_ash', value: 0}))
+                        dispatch(addUsages({name: 'mtd_naoh', value: 0}))
+                        dispatch(addUsages({name: 'mtd_hcl', value: 0}))
+                        dispatch(addUsages({name: 'mtd_bacl2', value: 0}))
+                        dispatch(addUsages({name: 'mtd_flocullant', value: 0}))
+                        dispatch(addUsages({name: 'mtd_na2so3', value: 0}))
+                        dispatch(addUsages({name: 'mtd_alpha_cellulose', value: 0}))
+                        dispatch(addUsages({name: 'mtd_power', value: 0}))
+                        dispatch(addUsages({name: 'mtd_steam_evap', value: 0}))
+                        dispatch(addUsages({name: 'mtd_steam_brine', value: 0}))
                     }
+                }
                     handleOpen()
             } else {
                 // Print the errors on the DOM
@@ -229,12 +232,15 @@ const CreateSR = (props) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
-            >
-                <Box sx={style}>
+            >   
+                <>
+                    <ShiftReportBox/>
+                </>
+                {/* <Box sx={style}>
                     <Typography variant="h4" textAlign={"center"}>Preview Shift Report</Typography>
                     <ShiftReportDoc/>
                     <Button variant="contained" style={{marginTop: '20px'}}>Submit Report</Button>
-                </Box>
+                </Box> */}
             </Modal>
         </div>
         

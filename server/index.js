@@ -9,7 +9,7 @@ const shiftReport = require('./routes/shiftReport')
 // Load env vars
 dotenv.config({path: './config/config.env'})
 
-// connectDB()
+connectDB()
 const app = express()
 const PORT = process.env.PORT || 8000
 

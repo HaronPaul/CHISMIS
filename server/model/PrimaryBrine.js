@@ -17,4 +17,4 @@ const PrBrineSchema = new mongoose.Schema({
     remarks: {type: Number, required: true}
 })
 
-module.exports = primaryBrine = mongoose.model('primary brine', PrBrineSchema)
+module.exports = PrimaryBrine = mongoose.model('primary brine', PrBrineSchema)
