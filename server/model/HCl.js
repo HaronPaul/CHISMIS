@@ -1,21 +1,23 @@
 const mongoose = require('mongoose')
 
 const HClSchema = new mongoose.Schema({
-    previous_operator: { type: String, required: true },
-    present_operator: { type: String, required: true },
-    incoming_operator: { type: String, required: true },
-    hcl: {type: Number, required: true},
-    hcl_synth_eff: {type: Number, required: true},
-    hcl_prod_temp: { type: Number, required: true },
-    scrubbed_cl_temp: { type: Number, required: true },
-    hcl_conc: { type: Number, required: true },
-    hcl_sg: { type: Number, required: true },
-    sigri_cooling_water: { type: Number, required: true },
-    hcl_space: { type: Number, required: true },
-    clh20_flowrate: { type: Number, required: true },
-    sigri_inlet_pressure_c: { type: Number, required: true },
-    sigri_inlet_pressure_h: { type: Number, required: true },
-    full_n2: {type: Number, required: true},
+    previous_operator: { type: String },
+    present_operator: { type: String },
+    incoming_operator: { type: String },
+    hcl: {type: Number},
+    hcl_synth_eff: {type: Number},
+    hcl_prod_temp: { type: Number },
+    scrubbed_cl_temp: { type: Number },
+    hcl_conc: { type: Number },
+    hcl_sg: { type: Number },
+    sigri_cooling_water: { type: Number },
+    hcl_space: { type: Number },
+    clh20_flowrate: { type: Number },
+    sigri_inlet_pressure_c: { type: Number },
+    sigri_inlet_pressure_h: { type: Number },
+    full_n2: {type: Number},
+    date: {type: Date},
+    shift: {type: Number},
     remarks: {type: String}
 })
 

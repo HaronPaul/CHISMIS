@@ -19,6 +19,10 @@ const HCl = require('../model/HCl')
 const Evaporator = require('../model/Evaporator')
 const PrimaryBrine = require('../model/PrimaryBrine')
 const Electrolysis = require('../model/Electrolysis')
+const NaClO = require('../model/NaClO')
+const SpecificUsages = require('../model/SpecificUsages')
+const QCBrine = require('../model/QCBrine')
+const SPEvaluation = require('../model/SPEvaluation')
 
 // @method:     POST
 // @access:     Private
@@ -89,10 +93,10 @@ const validateData = async (req,res) => {
 // @desc:       This will validate values from the Shift Report
 // @route:      /api/v1/shift_report/create
 const createReport = async (req, res) => {
-    console.log('In create report controller')
-
+    
     // Get all the sections
-    const {currentSupervisor, 
+    const {
+        currentSupervisor, 
         manager, 
         incomingSupervisor, 
         date, 
@@ -110,22 +114,50 @@ const createReport = async (req, res) => {
         evalSection 
     } = req.body
 
+    const jsDate = new Date(date)
+
     try {
-        var ctrlRoom = new ControlRoom(controlRoomSection); 
+        var ctrlRoom = new ControlRoom({...controlRoomSection, date: jsDate, shift}); 
         await ctrlRoom.save()
-        
-        var hcl = new HCl(hclSection); 
-        console.log(hcl)    
+        var hcl = new HCl({...hclSection, date: jsDate, shift});
         await hcl.save()
-        
-        var evap = new Evaporator(evapSection);
+        var evap = new Evaporator({...evapSection, date: jsDate, shift});
         await evap.save()
+        var prBrine = new PrimaryBrine({...prBrineSection, date: jsDate, shift}); 
+        await prBrine.save()
+        var electro = new Electrolysis({...electroSection, date: jsDate, shift}); 
+        await electro.save()
+        var naclo = new NaClO({...nacloSection, date: jsDate, shift})
+        await naclo.save()
+        var usages = new SpecificUsages({...usagesSection, date: jsDate, shift})
+        await usages.save()
+        var speval = new SPEvaluation({...evalSection, date: jsDate, shift})
+        await speval.save()
 
-        var prBrine = new PrimaryBrine(prBrineSection); 
-        // await prBrine.save()
+        if(shift == 2) {
+            var qcbrine = new QCBrine({...qcBrineSection, date: jsDate, shift})
+            await qcbrine.save()
+        }
 
-        var electro = new Electrolysis(electroSection); 
-        // await electro.save()
+        var newShiftReport = new ShiftReport({
+            currentSupervisor, 
+            manager, 
+            incomingSupervisor, 
+            date, 
+            shift, 
+            signCount, 
+            isComplete,
+            controlRoomSection: ctrlRoom._id,
+            hclSection: hcl._id,
+            evapSection: evap._id,
+            prBrineSection: prBrine._id,
+            electroSection: electro._id,
+            nacloSection: naclo._id,
+            qcBrineSection: qcbrine._id,
+            usagesSection: usages._id,
+            evalSection: speval._id,
+        })
+        await newShiftReport.save()
     } catch(err) {
         console.log(err)
     }

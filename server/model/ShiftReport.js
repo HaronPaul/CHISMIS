@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const ShiftReportSchema = new mongoose.Schema({
-    currentSupervisor: {type: String, required: true},
-    incomingSupervisor: {type: String, required: true},
-    manager: {type: String, required: true},
-    date: {type: Date, required: true},
-    shift: {type: Number, min: 0, max: 3, required: true},
-    signCount: {type: Number, min: 0, max: 3, required: true},  
-    isComplete: {type: Boolean, required: true},
+    currentSupervisor: {type: String},
+    incomingSupervisor: {type: String},
+    manager: {type: String},
+    date: {type: Date},
+    shift: {type: Number, min: 0, max: 3},
+    signCount: {type: Number, min: 0, max: 3},  
+    isComplete: {type: Boolean},
     controlRoomSection: {type: mongoose.Schema.Types.ObjectId, ref: 'control room'},
     hclSection: {type: mongoose.Schema.Types.ObjectId, ref: 'hcl'},
     evapSection: {type: mongoose.Schema.Types.ObjectId, ref: 'evaporator'},

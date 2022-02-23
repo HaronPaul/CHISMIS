@@ -22,6 +22,8 @@ const NaClOSchema = new mongoose.Schema({
     storage4: {type: Number, required: true},
     space: {type: Number, required: true},
     production: {type: Number, required: true},
+    date: {type: Date, required: true},
+    shift: {type: Number, required: true},
     remarks: ''
 })
 

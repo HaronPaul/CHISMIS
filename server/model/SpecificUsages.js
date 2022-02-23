@@ -42,8 +42,10 @@ const SpecUsages = new mongoose.Schema({
     naoh_32: {type: Number, required: true},
     hcl: {type: Number, required: true},
     naocl: {type: Number, required: true},
-    naocl_waste: {type: Number, required: true}
+    naocl_waste: {type: Number, required: true},
+    date: {type: Date, required: true},
+    shift: {type: Number, required: true},
 })
 
 
-module.exports = specificUsages = mongoose.model('specific usages', SpecUsages)
+module.exports = SpecificUsages = mongoose.model('specific usages', SpecUsages)

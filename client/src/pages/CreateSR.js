@@ -236,11 +236,6 @@ const CreateSR = (props) => {
                 <>
                     <ShiftReportBox/>
                 </>
-                {/* <Box sx={style}>
-                    <Typography variant="h4" textAlign={"center"}>Preview Shift Report</Typography>
-                    <ShiftReportDoc/>
-                    <Button variant="contained" style={{marginTop: '20px'}}>Submit Report</Button>
-                </Box> */}
             </Modal>
         </div>
         

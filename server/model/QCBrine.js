@@ -11,6 +11,8 @@ const QCBrineSchema = new mongoose.Schema({
     naoh_conc_32: {type: Number, required: true},
     naohfe_conc: {type: Number, required: true},
     hcl_online: {type: Number, required: true},
+    date: {type: Date, required: true},
+    shift: {type: Number, required: true},
     remarks: ''
 })
 
