@@ -1,8 +1,12 @@
-import React from "react";
-import { Typography, Button, Box } from "@mui/material";
+import React, {useState} from "react";
+import { Typography, Button, Box, Paper, CircularProgress  } from "@mui/material";
 import ShiftReportDoc from "./ShiftReportDoc";
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import { Modal } from "@mui/material";
 import axios from 'axios'
+
+// Redux imports
+import { resetState } from "../redux/sectionSlice";
 
 const style = {
     display: 'flex',
@@ -15,19 +19,90 @@ const style = {
     overflowY: 'scroll',
 };
 
+const loadingBoxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '500px',
+    p: '2%',
+    height: '10%'
+  };
+
 const ShiftReportBox = () => {
     const shiftReportData = useSelector((state) => state.section)
+    const dispatch = useDispatch()
 
-    const handleSubmit = () => {
-        axios.post('http://localhost:8000/api/v1/shift_report/create', shiftReportData)
+    const [open, setOpen] = useState(false);
+    const [isSubmitted, setSubmitted] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [message, setMessage] = useState('')
+    
+    // Modal functions
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const handleSubmit = async() => {
+        handleOpen()
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report/create', shiftReportData)
+            setMessage(response.data.message)
+            if(response.data) {
+                setSubmitted(true)
+                setSuccess(true)
+            } else {
+                setSubmitted(true)
+                setSuccess(false)
+            }
+        } catch(err) {
+            setSubmitted(false)
+            console.log(err)
+        } 
+    }
+
+    const closeSubmitModal = () => {
+        if(success) {
+            dispatch(resetState())
+        }
+    
+        setMessage('')
+        setSuccess(false)
+        setSubmitted(false)
+        handleClose()
     }
 
     return(
+        <>
         <Box sx={style}>
             <Typography variant="h4" textAlign={"center"}>Preview Shift Report</Typography>
             <ShiftReportDoc/>
             <Button variant="contained" style={{marginTop: '20px'}} onClick={handleSubmit}>Submit Report</Button>
         </Box>
+        <Modal
+            open={open}
+            // onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}
+        >
+            <Paper sx={loadingBoxStyle} elevation={5}>
+                { !isSubmitted && 
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem '}}>
+                        <CircularProgress style={{marginRight: '20px'}} />
+                        <Typography id="modal-modal-title" variant="h5" component="h2">
+                            Submitting Report.. 
+                        </Typography>
+                    </div>
+                }
+                { isSubmitted &&
+                    <div style={{marginBottom: '5%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                        <Typography variant="h5"> {message} </Typography>
+                        <Button variant="outlined" onClick={closeSubmitModal}> Close </Button>
+                    </div>
+                }
+            </Paper>
+        </Modal>
+       </>
     )
 }
 

@@ -42,8 +42,18 @@ const validateData = async (req,res) => {
         usagesErrors: [],
         evalErrors: [],
     }
-
+    
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
+    
+    var dateSplit = date.split('/')
+    var month = parseInt(dateSplit[0])
+    var day = parseInt(dateSplit[1])
+    var year = parseInt(dateSplit[2])
+    // console.log(new Date(year, month-1, day+1))
+    const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift})
+    console.log(reportExist)
+    if(reportExist) errors.shiftReportErrors.push('Shift Report for this day and shift already exists', {_id: 1})
+
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
@@ -118,21 +128,21 @@ const createReport = async (req, res) => {
 
     try {
         var ctrlRoom = new ControlRoom({...controlRoomSection, date: jsDate, shift}); 
-        await ctrlRoom.save()
+        if(ctrlRoom) await ctrlRoom.save()
         var hcl = new HCl({...hclSection, date: jsDate, shift});
-        await hcl.save()
+        if(hcl) await hcl.save()
         var evap = new Evaporator({...evapSection, date: jsDate, shift});
-        await evap.save()
+        if(evap) await evap.save()
         var prBrine = new PrimaryBrine({...prBrineSection, date: jsDate, shift}); 
-        await prBrine.save()
+        if(prBrine) await prBrine.save()
         var electro = new Electrolysis({...electroSection, date: jsDate, shift}); 
-        await electro.save()
+        if(electro) electro.save()
         var naclo = new NaClO({...nacloSection, date: jsDate, shift})
-        await naclo.save()
+        if(naclo) naclo.save()
         var usages = new SpecificUsages({...usagesSection, date: jsDate, shift})
-        await usages.save()
+        if(usages) usages.save()
         var speval = new SPEvaluation({...evalSection, date: jsDate, shift})
-        await speval.save()
+        if(speval) speval.save()
 
         if(shift == 2) {
             var qcbrine = new QCBrine({...qcBrineSection, date: jsDate, shift})
@@ -147,20 +157,33 @@ const createReport = async (req, res) => {
             shift, 
             signCount, 
             isComplete,
-            controlRoomSection: ctrlRoom._id,
-            hclSection: hcl._id,
-            evapSection: evap._id,
-            prBrineSection: prBrine._id,
-            electroSection: electro._id,
-            nacloSection: naclo._id,
-            qcBrineSection: qcbrine._id,
-            usagesSection: usages._id,
-            evalSection: speval._id,
+            controlRoomSection: ctrlRoom.id,
+            hclSection: hcl.id,
+            evapSection: evap.id,
+            prBrineSection: prBrine.id,
+            electroSection: electro.id,
+            nacloSection: naclo.id,
+            qcBrineSection: shift == 2? qcbrine.id:null,
+            usagesSection: usages.id,
+            evalSection: speval.id,
         })
         await newShiftReport.save()
+        res.json({
+            success: true,
+            message: 'Successfully added report'
+        })
     } catch(err) {
-        console.log(err)
+        console.error(err)
+        res.json({
+            success: false,
+            message: 'An error occured in storing the report'
+        })
     }
 }
 
-module.exports = {validateData, createReport}
+const getMTD = (req,res) => {
+
+
+}
+
+module.exports = {validateData, createReport, getMTD}

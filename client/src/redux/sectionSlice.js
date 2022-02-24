@@ -3,6 +3,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values,
     qcbrine_values, usages_values, eval_values} from "./randomTabStates";
 
+const originalState = {
+    currentSupervisor: 'Angielle Schnaider',
+    manager: null,
+    incomingSupervisor: null,
+    date: null,
+    shift: 1,
+    signCount: 0,
+    isComplete: false,
+    controlRoomSection: controlRoom_values,
+    hclSection: hcl_values,
+    evapSection: evap_values,
+    prBrineSection: prBrine_values,
+    electroSection: electro_values,
+    nacloSection: naclo_values,
+    qcBrineSection: qcbrine_values,
+    usagesSection: usages_values,
+    evalSection: eval_values,
+}
+
 
 const sectionSlice = createSlice({
     name: "section",
@@ -40,9 +59,7 @@ const sectionSlice = createSlice({
             state.signCount += 1
             state.isComplete = state.signCount === 3? true: false
         },
-        changeCellLiquor: (state, action) => {
-            
-        }
+        resetState: () => originalState
     }
 })
 
@@ -57,5 +74,6 @@ export const {
     addUsages, 
     addEval, 
     changeShift, 
-    changeDate } = sectionSlice.actions
+    changeDate,
+    resetState } = sectionSlice.actions
 export default sectionSlice.reducer

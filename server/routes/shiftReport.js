@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const { validateData, createReport } = require('../controller/shiftReportController')
+const { validateData, createReport, getMTD } = require('../controller/shiftReportController')
+const checkConnection = require('../middleware/connectionCheck')
 
 router.post('/validate', validateData)
-router.post('/create', createReport)
+router.post('/create', checkConnection, createReport)
+router.get('/getMTD', getMTD)
 
 module.exports = router

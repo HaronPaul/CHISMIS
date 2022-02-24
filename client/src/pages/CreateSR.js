@@ -1,7 +1,5 @@
 import React, {useEffect} from "react";
 import OSRTabs from "../components/Tabs";
-
-
 import ShiftReportBox from "../components/ShiftReportBox";
 // Material UI Imports
 import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal} from "@mui/material";
