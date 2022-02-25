@@ -45,17 +45,24 @@ const validateData = async (req,res) => {
     
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
     
-    var dateSplit = date.split('/')
-    var month = parseInt(dateSplit[0])
-    var day = parseInt(dateSplit[1])
-    var year = parseInt(dateSplit[2])
-    // console.log(new Date(year, month-1, day+1))
-    const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift})
-    console.log(reportExist)
-    if(reportExist) errors.shiftReportErrors.push('Shift Report for this day and shift already exists', {_id: 1})
-
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
+
+    if(date) {
+        var dateSplit = date.split('/')
+        var month = parseInt(dateSplit[0])
+        var day = parseInt(dateSplit[1])
+        var year = parseInt(dateSplit[2])
+        console.log(new Date(year, month-1, day+1))
+        const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift}, {_id: 1})
+        console.log(reportExist)
+        if(reportExist) {
+            errors.shiftReportErrors.push('Shift Report for this day and shift already exists')
+            errors.numErrors += errors.shiftReportErrors.length
+        }
+    }
+
+
 
     const controlRoomResponse = await validate(req.body.controlRoomSection, controlRoomSchema)
     if(!controlRoomResponse.success) errors.controlRoomErrors.push(...controlRoomResponse.error); errors.numErrors += errors.controlRoomErrors.length
@@ -124,8 +131,13 @@ const createReport = async (req, res) => {
         evalSection 
     } = req.body
 
-    const jsDate = new Date(date)
+    var dateSplit = date.split('/')
+    var month = parseInt(dateSplit[0])
+    var day = parseInt(dateSplit[1])
+    var year = parseInt(dateSplit[2])
 
+    const jsDate = new Date(year, month-1, day+1)
+    console.log(`jsdate is ${jsDate}`)
     try {
         var ctrlRoom = new ControlRoom({...controlRoomSection, date: jsDate, shift}); 
         if(ctrlRoom) await ctrlRoom.save()
@@ -153,7 +165,7 @@ const createReport = async (req, res) => {
             currentSupervisor, 
             manager, 
             incomingSupervisor, 
-            date, 
+            date: jsDate, 
             shift, 
             signCount, 
             isComplete,
@@ -161,7 +173,7 @@ const createReport = async (req, res) => {
             hclSection: hcl.id,
             evapSection: evap.id,
             prBrineSection: prBrine.id,
-            electroSection: electro.id,
+            electroSection: electro.id, 
             nacloSection: naclo.id,
             qcBrineSection: shift == 2? qcbrine.id:null,
             usagesSection: usages.id,

@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import OSRTabs from "../components/Tabs";
 import ShiftReportBox from "../components/ShiftReportBox";
+import ErrorSection from '../components/AllTabs/ErrorSection'
+
 // Material UI Imports
 import { Typography, Paper, Grid, FormControl, InputLabel, MenuItem, Select, Button, TextField, Modal} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +40,9 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    errorContainer: {
+        height: '150px',
     }
 })
 
@@ -47,6 +52,7 @@ const CreateSR = (props) => {
     const shiftReportData = useSelector((state) => state.section)
     const {currentSupervisor, date, shift, usagesSection, electroSection, controlRoomSection, hclSection, evapSection} = useSelector((state) => state.section)
     const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3,ac_alpha_cellulose, ac_power, ac_steam_brine} = usagesSection
+    const {shiftReportErrors} = useSelector((state) => state.error)
 
     // Modal states and function
     const [open, setOpen] = React.useState(false);
@@ -172,8 +178,16 @@ const CreateSR = (props) => {
             } else {
                 // Print the errors on the DOM
                 dispatch(addErrors(response.data.errors))
-                console.log(response.data)
             }
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const handleValidateButton = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/shift_report/validate', shiftReportData)
+            dispatch(addErrors(response.data.errors)) 
         } catch(error) {
             console.log(error)
         }
@@ -219,11 +233,22 @@ const CreateSR = (props) => {
                     </Grid>
                 </Grid>
             </Paper>  
+            <div style={{width: '90%' }}>
+                {shiftReportErrors.length === 0? <></>:<ErrorSection errors={shiftReportErrors} type="shiftreport"/>}
+            </div>
             <OSRTabs> </OSRTabs>
-            <Button 
-            variant="contained" 
-            style={{alignSelf: 'flex-end', marginRight: '5%', marginTop: '1%', marginBottom: '1%'}}
-            onClick={handleSubmitButton}>Submit</Button> 
+            <div style={{display: 'flex', width: '90%', justifyContent: 'flex-end'}}>
+                <Button 
+                variant="contained" 
+                style={{marginRight: '2%', marginTop: '1%', marginBottom: '1%', width: '10%'}}
+                onClick={handleSubmitButton}>Submit</Button>
+                <Button 
+                style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}
+                variant="contained"
+                onClick={handleValidateButton}>
+                    Validate
+                </Button>
+            </div> 
              <Modal
                 open={open}
                 onClose={handleClose}

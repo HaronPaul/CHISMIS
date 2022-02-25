@@ -12,6 +12,7 @@ const errorSlice = createSlice({
         qcBrineErrors: [],
         usagesErrors: [],
         evalErrors: [],
+        shiftReportErrors: []
     },
     reducers: {
         addErrors: (state, action) => {
@@ -24,6 +25,7 @@ const errorSlice = createSlice({
             state.qcBrineErrors = [...action.payload.qcBrineErrors]
             state.usagesErrors = [...action.payload.usagesErrors]
             state.evalErrors = [...action.payload.evalErrors]
+            state.shiftReportErrors = [...action.payload.shiftReportErrors]
         },
     }
 })
