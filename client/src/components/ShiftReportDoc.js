@@ -795,7 +795,7 @@ const ShiftReportDoc = () => {
                         bgcolor = {usagesSection.pdn_salt? (usagesSection.pdn_salt > 1.74? "#f6685e": "white"):"white"}>
                             <font face="Arial" size="2">{usagesSection.pdn_salt}</font>
                         </td>
-                        <td align="center"><font face="Arial" size="2">{usagesSection.mtd_salt}</font></td>
+                        <td align="center"><font face="Arial" size="2">{parseFloat(usagesSection.mtd_salt).toFixed(2)}</font></td>
                     </tr>
                     <tr>
                         <td align="center" colSpan={3}><font face="Arial" size="2">Soda Ash</font></td>

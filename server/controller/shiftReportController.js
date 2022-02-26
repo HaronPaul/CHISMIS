@@ -42,14 +42,14 @@ const validateData = async (req,res) => {
         usagesErrors: [],
         evalErrors: [],
     }
-    
+    console.log('In validation route')
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
     
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
     if(date) {
-        var dateSplit = date.split('/')
+        var dateSplit = date.split('-')
         var month = parseInt(dateSplit[0])
         var day = parseInt(dateSplit[1])
         var year = parseInt(dateSplit[2])
@@ -57,12 +57,11 @@ const validateData = async (req,res) => {
         const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift}, {_id: 1})
         console.log(reportExist)
         if(reportExist) {
+            console.log('Report already exists')
             errors.shiftReportErrors.push('Shift Report for this day and shift already exists')
             errors.numErrors += errors.shiftReportErrors.length
         }
     }
-
-
 
     const controlRoomResponse = await validate(req.body.controlRoomSection, controlRoomSchema)
     if(!controlRoomResponse.success) errors.controlRoomErrors.push(...controlRoomResponse.error); errors.numErrors += errors.controlRoomErrors.length
@@ -98,6 +97,7 @@ const validateData = async (req,res) => {
         errors
     }
 
+    console.log('--- END ----')
     if(response.success) {
         return res.status(200).json(response)
     } else {
@@ -131,13 +131,13 @@ const createReport = async (req, res) => {
         evalSection 
     } = req.body
 
-    var dateSplit = date.split('/')
+    var dateSplit = date.split('-')
     var month = parseInt(dateSplit[0])
     var day = parseInt(dateSplit[1])
     var year = parseInt(dateSplit[2])
 
     const jsDate = new Date(year, month-1, day+1)
-    console.log(`jsdate is ${jsDate}`)
+
     try {
         var ctrlRoom = new ControlRoom({...controlRoomSection, date: jsDate, shift}); 
         if(ctrlRoom) await ctrlRoom.save()
@@ -193,9 +193,85 @@ const createReport = async (req, res) => {
     }
 }
 
-const getMTD = (req,res) => {
 
+const getMTD = async (req,res) => {
+    const selectedDate = req.params.date
+    const selectedShift = parseInt(req.params.shift)
+    const dateSplit = selectedDate.split('-')
+    var year = parseInt(dateSplit[2])
+    var month = parseInt(dateSplit[0])
+    var day = parseInt(dateSplit[1])
 
-}
+    var startDate = new Date(year, month-1, 2)
+    var jsDate = new Date(year, month-1, day+1)
+
+    console.log(startDate)
+    console.log(jsDate)
+    // const usages = await SpecificUsages.find({$or: [{date: {$lt: jsDate}}, {date: jsDate, shift: {$lt: selectedShift}}]}).select('ac_salt ac_soda_ash ac_naoh ac_hcl ac_bacl2 ac_flocullant ac_na2so3 ac_alpha_cellulose ac_power ac_steam_evap ac_steam_brine')
+    try {
+
+        // Get the Month to Date of each usage
+        const acSum = await SpecificUsages.aggregate([
+            {$match: {$or: [ {date: {$gte: startDate, $lt: jsDate}}, {$and: [{date: jsDate}, {shift: {$lt: selectedShift}}]} ]}},
+            // {$match: {$or: [ {date: {$lt: jsDate}}, {$and: [{date: jsDate}, {shift: {$lt: selectedShift}}]} ]}},
+            {$group: {
+                _id: null, 
+                ac_salt: {$sum: '$ac_salt'},
+                ac_soda_ash: {$sum: '$ac_soda_ash'},
+                ac_naoh: {$sum: '$ac_naoh'},
+                ac_hcl: {$sum: '$ac_hcl'},
+                ac_bacl2: {$sum: '$ac_bacl2'},
+                ac_flocullant: {$sum: '$ac_flocullant'},
+                ac_na2so3: {$sum: '$ac_na2so3'},
+                ac_alpha_cellulose: {$sum: '$ac_alpha_cellulose'},
+                ac_power: {$sum: '$ac_power'},
+                ac_steam_evap: {$sum: '$ac_steam_evap'},
+                ac_steam_brine: {$sum: '$ac_steam_brine'},
+            }}])
+
+        const cellLiquorSum = await Electrolysis.aggregate([
+            {$match: {$or: [ {date: {$gte: startDate, $lt: jsDate}}, {$and: [{date: jsDate}, {shift: {$lt: selectedShift}}]} ]}},
+            {$group: {
+                _id: null,
+                cell_liq_prod: {$sum: '$cell_liq_prod'}
+                }
+            }
+        ])
+
+        let mtdAcSum = {}
+        let mtdCellLiquorSum
+        
+        if(acSum.length === 0) {
+            mtdAcSum =  {
+                    ac_salt: 0,
+                    ac_soda_ash: 0,
+                    ac_naoh: 0,
+                    ac_hcl: 0,
+                    ac_bacl2: 0,
+                    ac_flocullant: 0,
+                    ac_na2so3: 0,
+                    ac_alpha_cellulose: 0,
+                    ac_power: 0,
+                    ac_steam_evap: 0,
+                    ac_steam_brine: 0
+            }
+        } else {
+            mtdAcSum = {...(acSum[0])}
+        }
+
+        cellLiquorSum.length === 0? mtdCellLiquorSum = 0:mtdCellLiquorSum = cellLiquorSum[0].cell_liq_prod
+
+        res.json({
+            success: true,
+            mtdAcSum,
+            mtdCellLiquorSum
+        })
+    } catch(err) {
+        res.json({
+            success: false,
+            err: err
+        })
+    }
+}   
 
 module.exports = {validateData, createReport, getMTD}

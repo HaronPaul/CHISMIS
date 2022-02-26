@@ -29,7 +29,7 @@ const loadingBoxStyle = {
     height: '10%'
   };
 
-const ShiftReportBox = () => {
+const ShiftReportBox = ({closeDocModal}) => {
     const shiftReportData = useSelector((state) => state.section)
     const dispatch = useDispatch()
 
@@ -63,8 +63,9 @@ const ShiftReportBox = () => {
     const closeSubmitModal = () => {
         if(success) {
             dispatch(resetState())
+            closeDocModal()
         }
-    
+
         setMessage('')
         setSuccess(false)
         setSubmitted(false)
@@ -83,8 +84,7 @@ const ShiftReportBox = () => {
             // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}
-        >
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}>
             <Paper sx={loadingBoxStyle} elevation={5}>
                 { !isSubmitted && 
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem '}}>
