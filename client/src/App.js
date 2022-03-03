@@ -9,6 +9,8 @@ import Manager from "./pages/Manager"
 import Users from "./pages/Users";
 import { useSelector } from "react-redux"
 import WeeklyReportDoc from "./components/WeeklyReportDoc";
+import WeeklyReport from "./pages/WeeklyReport";
+import ViewReport from "./pages/ViewReport";
 
 const App = (props) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -25,26 +27,28 @@ const App = (props) => {
 
   return (
       // <WeeklyReportDoc/>
-      <Switch>
-          <Route path='/admin' exact>
-            <Admin/>
-          </Route>
-          <Route path='/admin/users' exact>
-            <Users/>
-          </Route>
-          <Route path='/' exact>
-            {currentUser? <Redirect to={roleRoute}/>:<Home/>}
-          </Route>
-          <Route path='/supervisor' exact>
-            <Supervisor/>
-          </Route>
-          <Route path='/supervisor/create'>
-            <CreateSR/>
-          </Route>
-          <Route path='/manager'>
-            <Manager/>
-          </Route>
-      </Switch>
+      
+      <WeeklyReport/>
+      // <Switch>
+      //     <Route path='/admin' exact>
+      //       <Admin/>
+      //     </Route>
+      //     <Route path='/admin/users' exact>
+      //       <Users/>
+      //     </Route>
+      //     <Route path='/' exact>
+      //       {currentUser? <Redirect to={roleRoute}/>:<Home/>}
+      //     </Route>
+      //     <Route path='/supervisor' exact>
+      //       <Supervisor/>
+      //     </Route>
+      //     <Route path='/supervisor/create'>
+      //       <CreateSR/>
+      //     </Route>
+      //     <Route path='/manager'>
+      //       <Manager/>
+      //     </Route>
+      // </Switch>
   );  
 }
 

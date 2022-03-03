@@ -11,11 +11,11 @@ const ShiftReportSchema = new mongoose.Schema({
     controlRoomSection: {type: mongoose.Schema.Types.ObjectId, ref: 'control room'},
     hclSection: {type: mongoose.Schema.Types.ObjectId, ref: 'hcl'},
     evapSection: {type: mongoose.Schema.Types.ObjectId, ref: 'evaporator'},
-    prBrineSection: {type: mongoose.Schema.Types.ObjectId, ref: 'primary'},
+    prBrineSection: {type: mongoose.Schema.Types.ObjectId, ref: 'primary brine'},
     electroSection: {type: mongoose.Schema.Types.ObjectId, ref: 'electrolysis'},
     nacloSection: {type: mongoose.Schema.Types.ObjectId, ref: 'naclo'},
     qcBrineSection: {type: mongoose.Schema.Types.ObjectId, ref: 'qc brine'},
-    usagesSection: {type: mongoose.Schema.Types.ObjectId, ref: 'specific usage'},
+    usagesSection: {type: mongoose.Schema.Types.ObjectId, ref: 'specific usages'},
     evalSection: {type: mongoose.Schema.Types.ObjectId, ref: 'sp evaluation'},
 })
 

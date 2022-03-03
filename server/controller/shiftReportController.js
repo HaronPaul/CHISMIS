@@ -12,6 +12,10 @@ const {
 } = require('../utils/schema_validation')
 const validate = require('../utils/validator')
 
+// Mongoose Imports
+const ObjectId = require('mongoose').Types.ObjectId
+
+
 // Import models
 const ShiftReport = require('../model/ShiftReport')
 const ControlRoom = require('../model/ControlRoom')
@@ -274,4 +278,67 @@ const getMTD = async (req,res) => {
     }
 }   
 
-module.exports = {validateData, createReport, getMTD}
+// @method:     GET
+// @access:     PUBLIC
+// @desc:       This will get the shift reports with the specified date
+// @route:      /api/v1/shift_report/get/:date
+const getShiftReports = async (req,res) => {
+
+    const selectedDate = req.params.date
+    const dateSplit = selectedDate.split('-')
+    var year = parseInt(dateSplit[2])
+    var month = parseInt(dateSplit[0])
+    var day = parseInt(dateSplit[1])
+    const jsDate = new Date(year, month-1, day+1)
+
+    try {
+        const shiftReports = await ShiftReport.find({date: jsDate}, {_id: 1, shift: 1, currentSupervisor: 1, date: 1})
+        res.status(200).json({
+            success: true,
+            shiftReports
+        })
+    }catch(err) {
+        res.status(400).json({
+            success: false,
+            err
+        })
+    }
+}
+
+
+// @method:     GET
+// @access:     PUBLIC
+// @desc:       This will get the shift reports with the specified date
+// @route:      /api/v1/shift_report/get/:id
+const getSingleReport = async (req,res) => {
+    const reportID = req.params.id
+    console.log(reportID)   
+    
+    try { 
+        const shiftReport = await ShiftReport
+            .findOne({_id: ObjectId(reportID) })
+            .populate('controlRoomSection')
+            .populate('hclSection')
+            .populate('evapSection')
+            .populate('prBrineSection')
+            .populate('electroSection')
+            .populate('nacloSection')
+            .populate('qcBrineSection')
+            .populate('usagesSection')
+            .populate('evalSection')
+
+        res.status(200).json({
+            success: true,
+            shiftReport
+        })
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({
+            success: false,
+            err
+        })
+    }
+}
+
+
+module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport}

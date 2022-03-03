@@ -115,7 +115,7 @@ const ShiftReportDoc = () => {
                         align="center"
                         style={tdStyle}
                         >
-                            <font face="Arial" size="2">{controlRoomSection.remarks}</font>
+                            <font face="Arial" size="2">{controlRoomSection.remarks || ''}</font>
                         </td>
                     </tr>
                     <tr>
@@ -186,19 +186,19 @@ const ShiftReportDoc = () => {
                         align="center" 
                         colSpan={3}
                         >
-                            <font face="Arial" size="2" >{hclSection.previous_operator}</font>
+                            <font face="Arial" size="2" >{hclSection.previous_operator || ''}</font>
                         </td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
                         <td 
                         bgcolor={hclSection.present_operator === ''? "#f6685e":"#BFBFBF"}  
-                        align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.present_operator}</font></td>
+                        align="center" colSpan={3}><font face="Arial" size="2" >{hclSection.present_operator || ''}</font></td>
                          <td 
                         rowSpan={4} 
                         colSpan={2} 
                         align="center"
                         style={tdStyle}
                         >
-                            <font face="Arial" size="2">{hclSection.remarks}</font>
+                            <font face="Arial" size="2">{hclSection.remarks || ''}</font>
                         </td>
                     </tr>
                     <tr>
@@ -258,7 +258,7 @@ const ShiftReportDoc = () => {
                         align="center" 
                         colSpan={3}
                         bgcolor={hclSection.sigri_cooling_water? (hclSection.sigri_cooling_water != 3? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2" >{hclSection.sigri_cooling_water} ksc</font>
+                            <font face="Arial" size="2" >{hclSection.sigri_cooling_water || ''} ksc</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>Sigri in pres(Cl2/H2):</b></font></td>
                         <td 
@@ -279,21 +279,21 @@ const ShiftReportDoc = () => {
                         align="center" colSpan={2}
                         bgcolor={hclSection.hcl_prod? (hclSection.hcl_prod_temp > 50? "#f6685e": "white"):"white"}
                         >
-                            <font face="Arial" size="2">{hclSection.hcl_prod_temp} &deg;C</font>
+                            <font face="Arial" size="2">{hclSection.hcl_prod_temp || ''} &deg;C</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>HCL Space (378)</b></font></td>
                         <td 
                         align="center" 
                         colSpan={3}
                         bgcolor={hclSection.hcl_space? (hclSection.hcl_space < 200? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2" >{hclSection.hcl_space} m³</font>
+                            <font face="Arial" size="2" >{hclSection.hcl_space || ''} m³</font>
                         </td>
                         <td align="center" ><font face="Arial" size="2"><b>Full N2 on site (10 min)</b></font></td>
                         <td 
                         align="center" 
                         colSpan={3}
                         bgcolor={hclSection.full_n2? (hclSection.full_n2 <10? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2" >{hclSection.full_n2} cyl</font>
+                            <font face="Arial" size="2" >{hclSection.full_n2 || ''} cyl</font>
                         </td>
                     </tr>
 
@@ -301,22 +301,22 @@ const ShiftReportDoc = () => {
                     <tr>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Evap</b></font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2">Eff%</font></td>
-                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >{evapSection.evap_eff}</font></td>
+                        <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" >{evapSection.evap_eff || ''}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Prev Optr</b></font></td>
                         <td 
 						bgcolor={evapSection.previous_operator === ''? "#f6685e":"#BFBFBF"}
-						align="center" colSpan={3}><font face="Arial" size="2" >{evapSection.previous_operator}</font></td>
+						align="center" colSpan={3}><font face="Arial" size="2" >{evapSection.previous_operator || ''}</font></td>
                         <td bgcolor="#BFBFBF" align="center"><font face="Arial" size="2" ><b>Pres Optr</b></font></td>
                         <td 
 						bgcolor={evapSection.present_operator === ''? "#f6685e":"#BFBFBF"}
-						align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator}</font></td>
+						align="center" colSpan={3} ><font face="Arial" size="2" >{evapSection.present_operator || ''}</font></td>
                         <td 
                         rowSpan={3} 
                         colSpan={2} 
                         align="center"
                         style={tdStyle}
                         >
-                            <font face="Arial" size="2">{evapSection.remarks}</font>
+                            <font face="Arial" size="2">{evapSection.remarks || ''}</font>
                         </td>
                     </tr>
                     <tr>
@@ -325,25 +325,25 @@ const ShiftReportDoc = () => {
                         align="center" 
                         colSpan={2}
                         bgcolor={evapSection.naoh_prod? (evapSection.naoh_prod< 10.83? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2">{evapSection.naoh_prod} dmt</font>
+                            <font face="Arial" size="2">{evapSection.naoh_prod || ''} dmt</font>
                         </td>
                         <td align="center"><font face="Arial" size="2"><b>Conc (49±1%)</b></font></td>
                         <td 
                         align="center"
                         bgcolor={evapSection.naoh_conc? ((evapSection.naoh_conc< 48 || evapSection.naoh_conc > 50)? "#f6685e": "white"):"white"}
                         >
-                            <font face="Arial" size="2">{evapSection.naoh_conc}</font>
+                            <font face="Arial" size="2">{evapSection.naoh_conc || ''}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2"><b>SG</b></font></td>
                         <td align="center">
-                            <font face="Arial" size="2">{evapSection.naoh_sg}</font>
+                            <font face="Arial" size="2">{evapSection.naoh_sg || ''}</font>
                         </td>
                         <td align="center"><font face="Arial" size="2"><b>Vac Press (400-600)</b></font></td>
                         <td 
                         align="center" 
                         colSpan={3}
                         bgcolor={evapSection.vacuum_pressure? ((evapSection.vacuum_pressure< 400 || evapSection.vacuum_pressure > 600)? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2">{evapSection.vacuum_pressure} mmHg</font>
+                            <font face="Arial" size="2">{evapSection.vacuum_pressure || ''} mmHg</font>
                         </td>
                     </tr>
                     <tr>
@@ -353,7 +353,7 @@ const ShiftReportDoc = () => {
                         colSpan={2}
                         bgcolor={evapSection.evap_feed_flowrate? ((evapSection.evap_feed_flowrate < 3|| evapSection.evap_feed_flowrate > 5)? "#f6685e": "white"):"white"}
                         >
-                            <font face="Arial" size="2">{evapSection.evap_feed_flowrate} m³/hr</font>
+                            <font face="Arial" size="2">{evapSection.evap_feed_flowrate || ''} m³/hr</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>TK9 Level (688)</b></font></td>
                         <td 
@@ -361,14 +361,14 @@ const ShiftReportDoc = () => {
                         colSpan={3}
                         bgcolor={evapSection.t9_level? (evapSection.t9_level < 300? "#f6685e": "white"):"white"}
                         >
-                            <font face="Arial" size="2" >{evapSection.t9_level} %/m³</font>
+                            <font face="Arial" size="2" >{evapSection.t9_level || ''} %/m³</font>
                         </td>
                         <td align="center"><font face="Arial" size="2" ><b>TK8 Level (688)</b></font></td>
                         <td 
                         align="center" 
                         colSpan={3}
                         bgcolor={evapSection.t8_level? (evapSection.t8_level < 300? "#f6685e": "white"):"white"}>
-                            <font face="Arial" size="2" >{evapSection.t8_level} %/m³</font>
+                            <font face="Arial" size="2" >{evapSection.t8_level || ''} %/m³</font>
                         </td>
                     </tr>
 

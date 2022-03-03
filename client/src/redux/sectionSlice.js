@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values, qcbrine_values, usages_values, eval_values} from "./tabStates";
 import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values,
-    qcbrine_values, usages_values, eval_values} from "./randomTabStates";
+    qcbrine_values, usages_values, eval_values} from "./tabStates";
 
 const originalState = {
     currentSupervisor: 'Angielle Schnaider',
@@ -59,7 +59,8 @@ const sectionSlice = createSlice({
             state.signCount += 1
             state.isComplete = state.signCount === 3? true: false
         },
-        resetState: () => originalState
+        resetState: () => originalState,
+        retrieveState: (state, action) => action.payload
     }
 })
 
@@ -75,5 +76,6 @@ export const {
     addEval, 
     changeShift, 
     changeDate,
-    resetState } = sectionSlice.actions
+    resetState,
+    retrieveState } = sectionSlice.actions
 export default sectionSlice.reducer
