@@ -25,7 +25,7 @@ let controlRoomSchema = Joi.object({
     }),
     hours: Joi.number().required().messages({
         'string.empty': 'Hours field required',
-        'number.base': 'Number of cells must be a number'
+        'number.base': 'Number of hours must be a number'
     }),
     cells: Joi.number().required().messages({
         'string.empty': 'Cells field required',
@@ -67,6 +67,14 @@ let hclSchema = Joi.object({
     }),
     incoming_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Incoming Operator Field Required'
+    }),
+    hcl_hours: Joi.number().required().messages({
+        'string.empty': 'HCl Hours field required',
+        'number.base': 'Number of HCl hours must be a number'
+    }),
+    lcp_hours: Joi.number().required().messages({
+        'string.empty': 'LCP Hours field required',
+        'number.base': 'Number of LCP hours must be a number'
     }),
     hcl: Joi.number().required().messages({
         'string.empty': 'HCL Field Required',
@@ -129,6 +137,10 @@ const evapSchema = Joi.object({
     incoming_operator:  Joi.string().trim().required().messages({
         'string.empty': 'Incoming Operator Field Required'
     }),
+    hours: Joi.number().required().messages({
+        'string.empty': 'Hours field required',
+        'number.base': 'Number of hours must be a number'
+    }),
     evap_eff: Joi.number().required().messages({
         'string.empty': 'Evaporator Efficiency field required',
         'number.base': 'Evaporator Efficiency must be a number'
@@ -165,6 +177,7 @@ const evapSchema = Joi.object({
         'string.empty': 'Vacuum Pressure field required',
         'number.base': 'Vacuum Pressure must be a number'
     }),
+    theoretical: Joi.number().optional(),
     remarks: Joi.string().optional().allow('')
 })
 

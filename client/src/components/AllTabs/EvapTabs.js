@@ -82,10 +82,18 @@ const EvapTabs = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
-                        label='NaOH Production'
-                        placeholder=""
+                        label='Hours'
                         type="number"
+                        style = {{minWidth: '100%'}}
+                        name='hours'
+                        value={evapSection.hours || ''}
+                        onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
+                        label='NaOH Production'
                         placeholder=">= 10.83"
+                        type="number"
                         style = {{minWidth: '100%'}}
                         name='naoh_prod'
                         error={evapSection.naoh_prod? (evapSection.naoh_prod < 10.83? true:false): false}

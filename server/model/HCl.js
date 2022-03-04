@@ -4,6 +4,8 @@ const HClSchema = new mongoose.Schema({
     previous_operator: { type: String },
     present_operator: { type: String },
     incoming_operator: { type: String },
+    hcl_hours: {type: Number},
+    lcp_hours: {type: Number},
     hcl: {type: Number},
     hcl_synth_eff: {type: Number},
     hcl_prod_temp: { type: Number },

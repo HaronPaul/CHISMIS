@@ -28,6 +28,8 @@ export const hcl_values = {
     previous_operator: names[Math.floor(Math.random() * names.length)],
     present_operator: names[Math.floor(Math.random() * names.length)],
     incoming_operator: names[Math.floor(Math.random() * names.length)],
+    hcl_hours: Math.floor((Math.random() * 10) + 1),
+    lcp_hours: Math.floor((Math.random() * 10) + 1),
     hcl_synth_eff: '',
     hcl_prod_temp: parseFloat((Math.random() * 5) + 45).toFixed(1),
     scrubbed_cl_temp: parseFloat((Math.random() * 5) + 35).toFixed(1),
@@ -48,6 +50,7 @@ export const evap_values = {
     previous_operator: names[Math.floor(Math.random() * names.length)],
     present_operator: names[Math.floor(Math.random() * names.length)],
     incoming_operator: names[Math.floor(Math.random() * names.length)],
+    hours: Math.floor((Math.random() * 10) + 1),
     evap_eff: '',
     naoh_prod: parseFloat((Math.random() * 3) + 10.83).toFixed(2),
     evap_feed_flowrate: parseFloat((Math.random() * 2) + 3).toFixed(2),
@@ -57,6 +60,7 @@ export const evap_values = {
     t8_level: parseFloat((Math.random() * 5) + 300).toFixed(2),
     t9_level: parseFloat((Math.random() * 5) + 300).toFixed(2),
     vacuum_pressure: parseFloat((Math.random() * 200) + 400).toFixed(2),
+    theoretical: '',
     remarks: 'This is a remark from Evaporator'
 }
 
@@ -105,6 +109,7 @@ export const naclo_values = {
     previous_operator: names[Math.floor(Math.random() * names.length)],
     present_operator: names[Math.floor(Math.random() * names.length)],
     incoming_operator: names[Math.floor(Math.random() * names.length)],
+    hours: Math.floor((Math.random() * 10) + 1),
     naclo_ct1: parseFloat(Math.random() * (8.1 - 7.5) + 7.5).toFixed(2),
     naclo_ct2: parseFloat(Math.random() * (8.1 - 7.5) + 7.5).toFixed(2),
     naclo_ct3: parseFloat(Math.random() * (8.1 - 7.5) + 7.5).toFixed(2),

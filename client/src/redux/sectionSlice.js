@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values, qcbrine_values, usages_values, eval_values} from "./tabStates";
 import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_values, naclo_values,
-    qcbrine_values, usages_values, eval_values} from "./tabStates";
+    qcbrine_values, usages_values, eval_values} from "./randomTabStates";
 
 const originalState = {
     currentSupervisor: 'Angielle Schnaider',

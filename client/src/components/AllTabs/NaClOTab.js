@@ -271,8 +271,21 @@ const NaCLOTab = () => {
             </div>
 
             <div style = {{marginBottom: '3%'}}>
-                <Typography variant="h4" style = {{marginBottom: '1%'}}>Production and Space</Typography>
+                <Typography variant="h4" style = {{marginBottom: '1%'}}>Production, Space, and Hours</Typography>
                 <Grid container spacing={1}>
+                    <Grid item lg={6} sm={4} xs={6}>
+                        <TextField
+                            variant="outlined"
+                            label="Hours"
+                            type="number"
+                            multiline
+                            maxRows={4}
+                            style = {{minWidth: '100%'}}
+                            name='hours'    
+                            value={nacloSection.hours || ''}
+                            onChange={handleChange}
+                        />
+                    </Grid>
                     <Grid item lg={6} sm={4} xs={6}>
                         <TextField
                             variant="outlined"

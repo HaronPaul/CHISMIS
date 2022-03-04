@@ -26,6 +26,8 @@ export const hcl_values = {
     previous_operator: '',
     present_operator: '',
     incoming_operator: '',
+    hcl_hours: '',
+    lcp_hours: '',
     hcl_synth_eff: '',
     hcl_prod_temp: '',
     scrubbed_cl_temp: '',
@@ -45,6 +47,7 @@ export const evap_values = {
     previous_operator: '',
     present_operator: '',
     incoming_operator: '',
+    hours: '',
     evap_eff: '',
     naoh_prod: '',
     evap_feed_flowrate: '',
@@ -54,6 +57,7 @@ export const evap_values = {
     t8_level: '',
     t9_level: '',
     vacuum_pressure: '',
+    theoretical: '',
     remarks: ''
 }
 
@@ -99,6 +103,7 @@ export const naclo_values = {
     previous_operator: '',
     present_operator: '',
     incoming_operator: '',
+    hours: '',
     naclo_ct1: '',
     naclo_ct2: '',
     naclo_ct3: '',

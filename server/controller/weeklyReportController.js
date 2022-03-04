@@ -1,6 +1,9 @@
 const Evaporator = require('../model/Evaporator')
 const Electrolysis = require('../model/Electrolysis')
 const HCl = require('../model/HCl')
+const NaClO = require('../model/NaClO')
+const ControlRoom = require('../model/ControlRoom')
+const SpecificUsages = require('../model/SpecificUsages')
 
 // Utility function for converting string date
 function convertToJSDate(dateString) {
@@ -29,7 +32,7 @@ const getWeeklyReport = async (req, res) => {
         }}
     ])
 
-    // Gets the sum of the cell liq prod from startDate to endDate
+    // Gets the Actual Caustic Soda 50%
     const electro_sums = await Electrolysis.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
@@ -38,10 +41,10 @@ const getWeeklyReport = async (req, res) => {
         }}
     ])
 
-    // Calculate the ac_caustic_32
+    // Calculate the Actual Caustic Soda 32%
     const ac_caustic_32 = electro_sums[0].cell_liq_prod_sum - ac_caustic_50[0].naoh_sum
 
-    // Gets the sum of the hcl prod from startDate to endDate
+    // Calculate the Actual HCl
     const ac_hcl = await HCl.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
@@ -50,10 +53,51 @@ const getWeeklyReport = async (req, res) => {
         }}
     ])
 
+    // Calculate the Actual Sodium Hypo
+    const ac_naclo = await NaClO.aggregate([
+        {$match: {date: {$gte: startDate, $lte: endDate}}},
+        {$group: {
+            _id: null,
+            naclo_sum: {$sum: '$production'}
+        }}
+    ])
+
+    // Calculate Average Current Load
+    const load = await ControlRoom.aggregate([
+        {$match: {date: {$gte: startDate, $lte: endDate}}},
+        {$group: {
+            _id: null,
+            avg_load: {$sum: {$multiply: ['$hours', '$avg_load']}},
+            avg_op_cells: {$sum: {$multiply: ['$hours', '$cells']}},
+            total_hours: {$sum: '$hours'}
+        }}
+    ])
+
+    // Getting the load values 
+    const average_current_load =  load[0].avg_load / load[0].total_hours
+    const average_op_cells =  load[0].avg_op_cells / load[0].total_hours
+
+    // Getting actual consumption values and products to distribution
+    const usagesSum = await SpecificUsages.aggregate([
+        {$match: {date: {$gte: startDate, $lte: endDate}}},
+        {$group: {
+            _id: null,
+            naoh_32_sum: {$sum: '$naoh_32'},
+            naoh_50_sum: {$sum: '$naoh_50'},
+            hcl_sum: {$sum: '$hcl'},
+            naocl_sum: {$sum: '$naocl'},
+            naocl_waste_sum: {$sum: '$naocl_waste'},
+        }}
+    ])
+
     res.json({
-        ac_caustic_50: ac_caustic_50[0].naoh_sum,
-        ac_caustic_32: ac_caustic_32.toFixed(2), 
-        ac_hcl: ac_hcl[0].hcl_sum
+        ac_caustic_50: ac_caustic_50[0].naoh_sum,                 
+        ac_caustic_32: parseFloat(ac_caustic_32.toFixed(2)), 
+        ac_hcl: ac_hcl[0].hcl_sum,
+        ac_naclo: ac_naclo[0].naclo_sum,
+        average_current_load,
+        average_op_cells,
+        products_dist: usagesSum[0]
     })
 }
 

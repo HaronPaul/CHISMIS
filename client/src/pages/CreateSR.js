@@ -110,7 +110,7 @@ const CreateSR = (props) => {
             var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
             console.log(`Efficiency = ${eff}`)
             dispatch(addHcl({name: 'hcl_synth_eff', value: eff}))
-        } else {
+        } else {  
             dispatch(addHcl({name: 'hcl_synth_eff', value: ''}))
         }
     }, [controlRoomSection.hours, controlRoomSection.avg_load, hclSection.hcl, controlRoomSection.cells])
@@ -119,6 +119,8 @@ const CreateSR = (props) => {
     useEffect(()=> {
         if(evapSection.naoh_total_volume && electroSection.naoh_sg && electroSection.naoh_conc && evapSection.naoh_prod) {
             var naoh_total = (evapSection.naoh_total_volume * electroSection.naoh_sg * electroSection.naoh_conc) / 100
+            dispatch(addEvap({name: 'theoretical', value: naoh_total}))
+
             var eff = parseFloat((evapSection.naoh_prod * 100) / naoh_total).toFixed(2)
             dispatch(addEvap({name: 'evap_eff', value: eff}))
         } else {

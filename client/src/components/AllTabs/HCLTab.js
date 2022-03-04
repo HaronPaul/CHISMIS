@@ -82,6 +82,24 @@ const HCLTab = () => {
                     </Grid>
                     <Grid item lg={2} sm={4} xs={4}>
                         <TextField
+                        label='HCL Hours'
+                        type="number"
+                        style= {{minWidth: '100%'}}
+                        name='hcl_hours'
+                        value={hclSection.hcl_hours|| ''}
+                        onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
+                        label='LCP Hours'
+                        type="number"
+                        style= {{minWidth: '100%'}}
+                        name='lcp_hours'
+                        value={hclSection.lcp_hours|| ''}
+                        onChange={handleChange}/>
+                    </Grid>
+                    <Grid item lg={2} sm={4} xs={4}>
+                        <TextField
                         label='HCL Production'
                         type="number"
                         placeholder=">= 11.01"
