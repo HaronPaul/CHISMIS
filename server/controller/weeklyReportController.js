@@ -24,36 +24,40 @@ const getWeeklyReport = async (req, res) => {
     const endDate = convertToJSDate(req.params.endDate)
 
     // Query sums of data from Evap 
-    const ac_caustic_50 = await Evaporator.aggregate([
+    const evap_sums = await Evaporator.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
             _id: null,
-            naoh_sum: {$sum: '$naoh_prod'}
+            naoh_sum: {$sum: '$naoh_prod'},
+            hours_sum: {$sum: '$hours'}
         }}
     ])
 
-    // Gets the Actual Caustic Soda 50%
+    // Query sums of data from Electrolysis
     const electro_sums = await Electrolysis.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
             _id: null,
-            cell_liq_prod_sum: {$sum: '$cell_liq_prod'}
+            cell_liq_prod_sum: {$sum: '$cell_liq_prod'},
+            hours_sum: {$sum: '$hours'}
         }}
     ])
 
     // Calculate the Actual Caustic Soda 32%
-    const ac_caustic_32 = electro_sums[0].cell_liq_prod_sum - ac_caustic_50[0].naoh_sum
+    const ac_caustic_32 = electro_sums[0].cell_liq_prod_sum - evap_sums[0].naoh_sum
 
-    // Calculate the Actual HCl
-    const ac_hcl = await HCl.aggregate([
+    // Query sums of data from HCl
+    const hcl_sums = await HCl.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
             _id: null,
-            hcl_sum: {$sum: '$hcl'}
+            hcl_sum: {$sum: '$hcl'},
+            hcl_hours_sum: {$sum: '$hcl_hours'},
+            lcp_hours_sum: {$sum: '$lcp_hours'},
         }}
     ])
 
-    // Calculate the Actual Sodium Hypo
+    // Query sums of data from NaCLO
     const ac_naclo = await NaClO.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
@@ -62,7 +66,7 @@ const getWeeklyReport = async (req, res) => {
         }}
     ])
 
-    // Calculate Average Current Load
+    // Query sums of data from Control Room
     const load = await ControlRoom.aggregate([
         {$match: {date: {$gte: startDate, $lte: endDate}}},
         {$group: {
@@ -91,12 +95,15 @@ const getWeeklyReport = async (req, res) => {
     ])
 
     res.json({
-        ac_caustic_50: ac_caustic_50[0].naoh_sum,                 
+        ac_caustic_50: evap_sums[0].naoh_sum,                 
         ac_caustic_32: parseFloat(ac_caustic_32.toFixed(2)), 
-        ac_hcl: ac_hcl[0].hcl_sum,
+        ac_hcl: hcl_sums[0].hcl_sum,
         ac_naclo: ac_naclo[0].naclo_sum,
         average_current_load,
         average_op_cells,
+        evap_hours: evap_sums[0].hours_sum,
+        hcl_hours: hcl_sums[0].hcl_hours_sum,
+        lcp_hours: hcl_sums[0].lcp_hours_sum,
         products_dist: usagesSum[0]
     })
 }

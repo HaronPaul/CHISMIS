@@ -384,6 +384,10 @@ const nacloSchema = Joi.object({
         'string.empty': 'Production Field Required',
         'number.base': 'Production must be a number'
     }),
+    hours: Joi.number().required().messages({
+        'string.empty': 'Hours Field Required',
+        'number.base': 'Hours must be a number'
+    }),
     remarks: Joi.string().optional().allow('')
 })
 
