@@ -65,7 +65,7 @@ const loadingModalStyle = {
     width: '500px',
     p: '2%',
     height: '10%'
-  };
+};
 
 const reportModalStyle = {
     display: 'flex',

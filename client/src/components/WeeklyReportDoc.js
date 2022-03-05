@@ -9,7 +9,7 @@ const TableContainer = styled.div`
 `
 
 
-const WeeklyReportDoc = () => {
+const WeeklyReportDoc = ({data}) => {
     return(
         <div>
             <TableContainer>
@@ -33,7 +33,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 32% </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_32 || ''} </font></td>
                             <td align="center" rowSpan={2}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -43,7 +43,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 50% </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_50|| ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -51,7 +51,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Hydrochloric Acid </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.production?.ac_hcl || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -61,7 +61,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypo </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.production?.ac_naclo || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -70,7 +70,7 @@ const WeeklyReportDoc = () => {
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                         </tr>
                         <tr>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}}><font face="Arial" size="2"> <b> Load & No. Of Cells </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}}><font face="Arial" size="2"> <b> Load {'&'} No. Of Cells </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '50px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -82,7 +82,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Ave. Current Load </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.load?.average_current_load || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -92,7 +92,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Ave. Operating Cells </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.load?.average_op_cells || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -113,7 +113,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Electrolysis </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.operating_time?.electro_hours || ''}  </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -123,7 +123,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Evaporator </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.operating_time?.evap_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -133,7 +133,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> HCl Synthesis </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.operating_time?.hcl_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -143,7 +143,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> LCP Operation </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.operating_time?.lcp_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -153,7 +153,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypochlorite </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.operating_time?.naclo_hours || ''}</font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -170,10 +170,50 @@ const WeeklyReportDoc = () => {
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Electrolysis </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.efficiency?.electro_eff || ''} </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>   
+                        <tr>
+                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Evaporator </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.efficiency?.evap_eff || ''} </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> HCl Synthesis </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.efficiency?.hcl_eff || ''} </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Usages </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                         </tr>   
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Power, kWH </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_power || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -183,7 +223,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Salt, MT </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_salt || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -193,7 +233,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Steam (Brine) MT  </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_steam_brine || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -203,7 +243,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Steam (Evap) MT</b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_steam_evap || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -213,8 +253,8 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Barium Chloride, kg </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> {data?.usages?.ac_bacl2 || ''} </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>    
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -223,7 +263,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Soda Ash, kg </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_soda_ash || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -233,7 +273,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Flocullant, grams </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> {data?.usages?.ac_flocullant || ''} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -243,7 +283,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> NaOH, kg </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_naoh || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -253,7 +293,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Hcl, kg </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_hcl || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -263,7 +303,7 @@ const WeeklyReportDoc = () => {
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Sulfite, kg </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_na2so3 || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>

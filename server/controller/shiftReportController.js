@@ -46,7 +46,6 @@ const validateData = async (req,res) => {
         usagesErrors: [],
         evalErrors: [],
     }
-    console.log('In validation route')
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
     
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
@@ -209,11 +208,11 @@ const getMTD = async (req,res) => {
     var startDate = new Date(year, month-1, 2)
     var jsDate = new Date(year, month-1, day+1)
 
-    console.log(startDate)
-    console.log(jsDate)
+    console.log(`Start date is: ${startDate}`)
+    console.log(`Start date is: ${jsDate}`)
+
     // const usages = await SpecificUsages.find({$or: [{date: {$lt: jsDate}}, {date: jsDate, shift: {$lt: selectedShift}}]}).select('ac_salt ac_soda_ash ac_naoh ac_hcl ac_bacl2 ac_flocullant ac_na2so3 ac_alpha_cellulose ac_power ac_steam_evap ac_steam_brine')
     try {
-
         // Get the Month to Date of each usage
         const acSum = await SpecificUsages.aggregate([
             {$match: {$or: [ {date: {$gte: startDate, $lt: jsDate}}, {$and: [{date: jsDate}, {shift: {$lt: selectedShift}}]} ]}},
@@ -244,7 +243,6 @@ const getMTD = async (req,res) => {
 
         let mtdAcSum = {}
         let mtdCellLiquorSum
-        
         if(acSum.length === 0) {
             mtdAcSum =  {
                     ac_salt: 0,
@@ -304,7 +302,6 @@ const getShiftReports = async (req,res) => {
         })
     }
 }
-
 
 // @method:     GET
 // @access:     PUBLIC
