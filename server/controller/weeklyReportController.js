@@ -187,7 +187,13 @@ const getWeeklyReport = async (req, res) => {
                 },
     
                 // Products to Dist
-                products_dist: usagesSum[0]
+                products_dist: {
+                    naoh_32_sum: usagesSum[0].naoh_32_sum,
+                    naoh_50_sum: usagesSum[0].naoh_50_sum,
+                    hcl_sum: usagesSum[0].hcl_sum,
+                    naocl_sum: usagesSum[0].naocl_sum,
+                    naocl_waste_sum: usagesSum[0].naocl_waste_sum
+                }
             }
         })
     } catch(err) {

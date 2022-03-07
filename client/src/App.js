@@ -10,7 +10,9 @@ import Users from "./pages/Users";
 import { useSelector } from "react-redux"
 import WeeklyReportDoc from "./components/WeeklyReportDoc";
 import WeeklyReport from "./pages/WeeklyReport";
+import MonthlyReport from "./components/AllTabs/MonthlyReport";
 import ViewReport from "./pages/ViewReport";
+import Inventory from "./pages/Inventory";
 
 const App = (props) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -26,8 +28,9 @@ const App = (props) => {
   }
 
   return (
-      // <WeeklyReportDoc/>   
-      <WeeklyReport/>
+    // <WeeklyReport/>
+    //   <WeeklyReportDoc/>
+    <Inventory></Inventory>
       // <Switch>
       //     <Route path='/admin' exact>
       //       <Admin/>

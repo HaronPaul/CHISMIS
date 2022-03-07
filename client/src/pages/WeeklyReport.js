@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {Typography, TextField, Button, Modal, Box, CircularProgress, Paper, Alert} from '@mui/material'
+import {Typography, TextField, Button, Modal, Box, CircularProgress, Paper, Alert, FormControl, InputLabel, Select, MenuItem} from '@mui/material'
 import WeeklyReportDoc from '../components/WeeklyReportDoc'
 import axios from 'axios'
 
@@ -40,6 +40,7 @@ const WeeklyReport = () => {
     const [endDate, changeEndDate] = useState('') 
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [isWeekly, setIsWeekly] = useState(true)
     
     // State for showing weekly report document
     const [showReport, setShowReport] = useState(false)
@@ -88,6 +89,11 @@ const WeeklyReport = () => {
         }
     }
 
+    const handleWeeklyChange = (e) => {
+        const value = e.target.value
+        setIsWeekly(value)
+    }
+
     useEffect(() => {
         (startDate && endDate)? setError(false):setError(true)
         setErrorMessage('Date range not valid')
@@ -117,10 +123,24 @@ const WeeklyReport = () => {
                             renderInput={(params) => <TextField {...params} style={{marginRight: '20px'}} />}
                             />
                     </LocalizationProvider>
+                    <FormControl style={{width: '250px', marginRight: '20px'}}>
+                            <InputLabel id="weekly">Weekly/Daily Option</InputLabel>
+                            <Select 
+                            labelId="weekly"
+                            label="Weekly/Daily Option "
+                            defaultValue = {true}
+                            // name='previous_operator'
+                            value={isWeekly}
+                            onChange={handleWeeklyChange}
+                            >
+                                <MenuItem value={true}> Weekly</MenuItem>
+                                <MenuItem value={false}>Monthly</MenuItem>
+                            </Select>
+                    </FormControl>
                     <Button variant="contained" size="large" onClick={handleSubmitButton} disabled={error? true:false}> View Weekly Report</Button>
                 </div>
                 {error && <Alert severity='error' style={{marginTop: '2%'}}> {errorMessage} </Alert>}
-                {showReport && <WeeklyReportDoc data={weeklyData}/>}
+                {showReport && <WeeklyReportDoc data={weeklyData} isWeekly={isWeekly}/>}
             </Container>
         </MainContainer>
         <Modal
