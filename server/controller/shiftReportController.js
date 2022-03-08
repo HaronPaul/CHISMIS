@@ -11,6 +11,7 @@ const {
     shiftReportSchema
 } = require('../utils/schema_validation')
 const validate = require('../utils/validator')
+const updateInventory = require('../utils/inventoryHelpers')
 
 // Mongoose Imports
 const ObjectId = require('mongoose').Types.ObjectId
@@ -163,6 +164,9 @@ const createReport = async (req, res) => {
             var qcbrine = new QCBrine({...qcBrineSection, date: jsDate, shift})
             await qcbrine.save()
         }
+
+        // Update the inventory
+        updateInventory(usages)
 
         var newShiftReport = new ShiftReport({
             currentSupervisor, 

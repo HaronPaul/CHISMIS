@@ -30,7 +30,7 @@ const App = (props) => {
   return (
     // <WeeklyReport/>
     //   <WeeklyReportDoc/>
-    <Inventory></Inventory>
+    <Inventory/>
       // <Switch>
       //     <Route path='/admin' exact>
       //       <Admin/>
