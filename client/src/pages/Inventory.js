@@ -1,8 +1,9 @@
 import React, { useEffect, useState }  from "react";
 import styled from "styled-components";
 import axios from 'axios'
+import UpdateModal from "../components/UpdateModal";
 
-import { Typography, Paper, Button } from "@mui/material";
+import { Typography, Paper, Button, Modal, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import inventory from '../assets/icons/inventory.svg'
 
@@ -50,9 +51,21 @@ const initState = {
     ac_na2so3: null
 }
 
+const style = {
+    width: 600,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
 const Inventory = () => {
     const classes = useStyle()
     const [currentInventory, setInventory] = useState(initState)
+    const [open ,setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
 
     useEffect(() => {
         const getData = async () => {
@@ -64,14 +77,14 @@ const Inventory = () => {
         }
 
         getData().catch(console.error)
-
     }, [])
 
     const handleUpdateButton = () => {
-        console.log('Button is clicked')
+        handleOpen()
     }
         
     return(
+        <>
         <MainContainer>
             <Container>
                 <div className={classes.headerStyle}>
@@ -108,9 +121,21 @@ const Inventory = () => {
                         <Typography variant='h4'>Sodium Sulfite</Typography>
                     </Paper>
                 </div>
-                <Button variant="contained" onClick={handleUpdateButton} style={{marginTop: '30px', width: '20%', alignSelf: 'flex-end'}}>Update Inventory</Button>
+                <Button variant="contained" onClick={handleUpdateButton} style={{marginTop: '30px', width: '20%', alignSelf: 'flex-end'}}>Edit Inventory</Button>
             </Container>
         </MainContainer>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+        >
+            <Paper sx={style}>
+                <UpdateModal inventory={currentInventory}></UpdateModal>
+            </Paper>
+        </Modal>
+        </>
     )
 }   
 

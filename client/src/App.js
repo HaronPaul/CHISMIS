@@ -30,27 +30,30 @@ const App = (props) => {
   return (
     // <WeeklyReport/>
     //   <WeeklyReportDoc/>
-    <Inventory/>
-      // <Switch>
-      //     <Route path='/admin' exact>
-      //       <Admin/>
-      //     </Route>
-      //     <Route path='/admin/users' exact>
-      //       <Users/>
-      //     </Route>
-      //     <Route path='/' exact>
-      //       {currentUser? <Redirect to={roleRoute}/>:<Home/>}
-      //     </Route>
-      //     <Route path='/supervisor' exact>
-      //       <Supervisor/>
-      //     </Route>
-      //     <Route path='/supervisor/create'>
-      //       <CreateSR/>
-      //     </Route>
-      //     <Route path='/manager'>
-      //       <Manager/>
-      //     </Route>
-      // </Switch>
+    
+      <Switch>
+          <Route path='/admin' exact>
+            <Admin/>
+          </Route>
+          <Route path='/admin/users' exact>
+            <Users/>
+          </Route>
+          <Route path='/' exact>
+            {currentUser? <Redirect to={roleRoute}/>:<Home/>}
+          </Route>
+          <Route path='/supervisor' exact>
+            <Supervisor/>
+          </Route>
+          <Route path='/supervisor/create'>
+            <CreateSR/>
+          </Route>
+          <Route path='/manager'>
+            <Manager/>
+          </Route>
+          <Route path='/inventory'>
+            <Inventory/>
+          </Route>
+      </Switch>
   );  
 }
 

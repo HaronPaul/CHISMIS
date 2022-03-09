@@ -11,7 +11,7 @@ const {
     shiftReportSchema
 } = require('../utils/schema_validation')
 const validate = require('../utils/validator')
-const updateInventory = require('../utils/inventoryHelpers')
+const {updateInventory} = require('../utils/inventoryHelpers')
 
 // Mongoose Imports
 const ObjectId = require('mongoose').Types.ObjectId
@@ -166,8 +166,6 @@ const createReport = async (req, res) => {
         }
 
         // Update the inventory
-        updateInventory(usages)
-
         var newShiftReport = new ShiftReport({
             currentSupervisor, 
             manager, 
@@ -187,6 +185,7 @@ const createReport = async (req, res) => {
             evalSection: speval.id,
         })
         await newShiftReport.save()
+        updateInventory(usages, 'SUBTRACT')
         res.json({
             success: true,
             message: 'Successfully added report'

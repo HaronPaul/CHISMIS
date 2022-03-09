@@ -4,21 +4,20 @@ const {promisify} = require('util')
 const readFileAsync = promisify(fs.readFile)
 const writeFileAsync = promisify(fs.writeFile)
 
-const updateInventory = async (ac) => {
-    console.log(`ac is ${ac}`)
+const updateInventory = async (ac, action) => {
     try {
         const file = await readFileAsync(`${__dirname}/inventory.json`)
         const inventory = JSON.parse(file)
 
         const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2,ac_flocullant, ac_na2so3} = ac
-        inventory.ac_salt = inventory.ac_salt - ac_salt
-        inventory.ac_soda_ash = inventory.ac_soda_ash - ac_soda_ash
-        inventory.ac_naoh = inventory.ac_naoh - ac_naoh
-        inventory.ac_hcl = inventory.ac_hcl - ac_hcl
-        inventory.ac_bacl2 = inventory.ac_bacl2 - ac_bacl2
-        inventory.ac_flocullant = inventory.ac_flocullant - ac_flocullant
-        inventory.ac_na2so3 = inventory.ac_na2so3 - ac_na2so3
-    
+        action === 'SUBTRACT'? inventory.ac_salt = parseFloat((inventory.ac_salt - ac_salt).toFixed(2)) : inventory.ac_salt = parseFloat(ac_salt.toFixed(2)) 
+        action === 'SUBTRACT'? inventory.ac_soda_ash = parseFloat((inventory.ac_soda_ash - ac_soda_ash).toFixed(2)) : inventory.ac_soda_ash = parseFloat(ac_soda_ash.toFixed(2))
+        action === 'SUBTRACT'? inventory.ac_naoh = parseFloat((inventory.ac_naoh - ac_naoh).toFixed(2)) : inventory.ac_naoh = parseFloat(ac_naoh.toFixed(2))
+        action === 'SUBTRACT'? inventory.ac_hcl = parseFloat((inventory.ac_hcl - ac_hcl).toFixed(2)) : inventory.ac_hcl = parseFloat(ac_hcl.toFixed(2) )
+        action === 'SUBTRACT'? inventory.ac_bacl2 = parseFloat((inventory.ac_bacl2 - ac_bacl2).toFixed(2)) : inventory.ac_bacl2 = parseFloat(ac_bacl2.toFixed(2))
+        action === 'SUBTRACT'? inventory.ac_flocullant = parseFloat((inventory.ac_flocullant - ac_flocullant).toFixed(2)) : inventory.ac_flocullant = parseFloat(ac_flocullant.toFixed(2))
+        action === 'SUBTRACT'? inventory.ac_na2so3 = parseFloat((inventory.ac_na2so3 - ac_na2so3).toFixed(2)) : inventory.ac_na2so3 = parseFloat(ac_na2so3.toFixed(2))
+
         await writeFileAsync(`${__dirname}/inventory.json`, JSON.stringify(inventory))
         return true
     } catch(err) {
@@ -36,5 +35,6 @@ const getInventory = async () => {
         console.log(err)
     }
 }
+
 
 module.exports = {updateInventory, getInventory}
