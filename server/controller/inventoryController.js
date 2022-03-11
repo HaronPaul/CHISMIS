@@ -30,7 +30,7 @@ const updateCurrentInventory = async (req,res) => {
         if(updateSuccess) {
             res.status(200).json({
                 success: true,
-                message: 'Successfully updated inventory'
+                message: 'Successfuslly updated inventory'
             })
         } else {
             res.status(400).json({
@@ -72,8 +72,5 @@ const resetInventory = async (req,res) => {
         console.log(err)
     }
 }
-
-
-
 
 module.exports = {getCurrentInventory, updateCurrentInventory, resetInventory}

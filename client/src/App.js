@@ -13,6 +13,7 @@ import WeeklyReport from "./pages/WeeklyReport";
 import MonthlyReport from "./components/AllTabs/MonthlyReport";
 import ViewReport from "./pages/ViewReport";
 import Inventory from "./pages/Inventory";
+import Attendance from "./pages/Attendance";
 
 const App = (props) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -28,9 +29,6 @@ const App = (props) => {
   }
 
   return (
-    // <WeeklyReport/>
-    //   <WeeklyReportDoc/>
-    
       <Switch>
           <Route path='/admin' exact>
             <Admin/>
@@ -52,6 +50,12 @@ const App = (props) => {
           </Route>
           <Route path='/inventory'>
             <Inventory/>
+          </Route>
+          <Route path='/weekly'>
+            <WeeklyReport/>
+          </Route>
+          <Route path='/attendance'>
+            <Attendance/>
           </Route>
       </Switch>
   );  

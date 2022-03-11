@@ -8,11 +8,12 @@ const user = require('./routes/user')
 const shiftReport = require('./routes/shiftReport')
 const weeklyReport = require('./routes/weeklyReport')
 const inventory = require('./routes/inventory')
+const attendance = require('./routes/atttendance')
 
 // Load env vars
 dotenv.config({path: './config/config.env'})
 
-// connectDB()
+connectDB()
 const app = express()
 const PORT = process.env.PORT || 8000
 
@@ -30,6 +31,7 @@ app.use('/api/v1/user', user)
 app.use('/api/v1/shift_report', shiftReport)
 app.use('/api/v1/weekly_report', weeklyReport)
 app.use('/api/v1/inventory', inventory)
+app.use('/api/v1/attendance', attendance)
 
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} listening to Port ${PORT}`)
