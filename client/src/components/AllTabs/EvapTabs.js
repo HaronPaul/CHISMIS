@@ -33,9 +33,10 @@ const EvapTabs = () => {
                             value={evapSection.previous_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Akimoto Manatsu'}> Akimoto Manatsu</MenuItem>
+                                <MenuItem value={'Matsumura Sayuri'}>Matsumura Sayuri</MenuItem>
+                                <MenuItem value={'Eto Misa'}>Eto Misa</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -49,9 +50,10 @@ const EvapTabs = () => {
                             name='present_operator'
                             value={evapSection.present_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                 <MenuItem value={'Akimoto Manatsu'}> Akimoto Manatsu</MenuItem>
+                                <MenuItem value={'Matsumura Sayuri'}>Matsumura Sayuri</MenuItem>
+                                <MenuItem value={'Eto Misa'}>Eto Misa</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -66,9 +68,10 @@ const EvapTabs = () => {
                             value={evapSection.incoming_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Akimoto Manatsu'}> Akimoto Manatsu</MenuItem>
+                                <MenuItem value={'Matsumura Sayuri'}>Matsumura Sayuri</MenuItem>
+                                <MenuItem value={'Eto Misa'}>Eto Misa</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

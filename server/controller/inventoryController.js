@@ -53,14 +53,13 @@ const resetInventory = async (req,res) => {
     const newValues = req.body
     console.log(newValues)
 
-    const keys = Object.keys(newValues)
-
     try {
         const updateSuccess = await updateInventory(newValues, 'RESET')
         if(updateSuccess) {
             res.status(200).json({
                 success: true,
-                message: 'Successfully updated inventory'
+                message: 'Successfully updated inventory',
+                data: updateSuccess
             })
         } else {
             res.json({

@@ -15,7 +15,7 @@ const useStyle = makeStyles({
     }
 })
 
-const UpdateModal = ({inventory}) => {
+const UpdateModal = ({inventory, setInventory, handleClose}) => {
     const classes = useStyle()
     const [newInventory, setNewInventory] = useState({...inventory})
     const formRef = useRef()
@@ -30,8 +30,17 @@ const UpdateModal = ({inventory}) => {
     const handleUpdateButton = async () => {
         const validity = formRef.current.reportValidity()
         if(validity) {
-            const response = await axios.put('http://localhost:8000/api/v1/inventory/resetInventory', newInventory)
-            console.log(response)
+            try {
+                const response = await axios.put('http://localhost:8000/api/v1/inventory/resetInventory', newInventory)
+                console.log(response.data)
+                if(response.data?.success) {
+                    setInventory(response.data.data)
+                    handleClose()
+                } else 
+                    handleClose()
+            } catch(err) {
+                console.log(err)
+            }
         }
     }
 
@@ -49,11 +58,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         required
                         name='ac_salt'
-                        value={newInventory.ac_salt || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
@@ -67,11 +75,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         required
                         name='ac_bacl2'
-                        value={newInventory.ac_bacl2 || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
@@ -85,11 +92,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         name='ac_soda_ash'
                         required
-                        value={newInventory.ac_soda_ash || ''}
                         onChange={handleChange}
                         />
                     </Grid>
@@ -104,7 +110,7 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         name='ac_flocullant'
                         required
@@ -122,11 +128,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         name='ac_naoh'
                         required
-                        value={newInventory.ac_naoh || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
@@ -140,11 +145,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         name='ac_hcl'
                         required
-                        value={newInventory.ac_hcl || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
@@ -158,11 +162,10 @@ const UpdateModal = ({inventory}) => {
                     <Grid item lg={8}>
                         <TextField 
                         className={classes.textField}
-                        placeholder='New value'
+                        placeholder='Add value'
                         type="number"
                         name='ac_na2so3'
                         required
-                        value={newInventory.ac_na2so3 || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>

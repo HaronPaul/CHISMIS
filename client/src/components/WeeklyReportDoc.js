@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import MonthlyReport from './AllTabs/MonthlyReport'
 
@@ -10,8 +10,20 @@ const TableContainer = styled.div`
     gap: 0.5px;
 `
 
+const CellInput = styled.input`
+    width: 100%;
+    border: none;
+`
 
-const WeeklyReportDoc = ({data, isWeekly}) => {
+
+const WeeklyReportDoc = ({data, isWeekly, mtdData}) => {
+    const [remarks, setRemarks] = useState(new Array(31).fill(''))
+
+    const handleRemarksChange = (e, index) => {
+        const value = e.target.value
+        remarks[index] = value
+    }
+
     return(
         <div>
             <TableContainer>
@@ -20,7 +32,7 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Description </b> </font></td>
                             <td align="center" style={{minWidth: '200px'}} colSpan={3}><font face="Arial" size="2"> <b> For the Week </b></font></td>
-                            <td align="center" style={{minWidth: '200px'}}><font face="Arial" size="2"> <b> Remarks </b></font></td>
+                            <td align="center" style={{minWidth: '300px'}}><font face="Arial" size="2"> <b> Remarks </b></font></td>
                         </tr>
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Production, MT </b> </font></td>
@@ -34,28 +46,38 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_32 || ''} </font></td>
                             <td align="center" rowSpan={2}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,0)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 50% </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_50|| ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,1)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Hydrochloric Acid </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_hcl || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,2)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypo </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_naclo || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,3)}/>
+                            </td>
                         </tr>
+
+                        {/* Load and Number of Cells */}
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}}><font face="Arial" size="2"> <b> Load {'&'} No. Of Cells </b> </font></td>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '50px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -69,7 +91,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.load?.average_current_load || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,4)}/>
+                            </td>
                            
                         </tr>
                         <tr>
@@ -77,7 +101,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.load?.average_op_cells || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,5)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}}><font face="Arial" size="2"> <b> Operating Time, H </b> </font></td>
@@ -93,14 +119,18 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.operating_time?.electro_hours || ''}  </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,6)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Evaporator </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.operating_time?.evap_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,7)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -108,7 +138,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.operating_time?.hcl_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,8)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -116,14 +148,18 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.operating_time?.lcp_hours || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,9)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypochlorite </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.operating_time?.naclo_hours || ''}</font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>  
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,10)}/>
+                            </td>  
                         </tr>
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Efficiency </b> </font></td>
@@ -137,21 +173,27 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.efficiency?.electro_eff || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,11)}/>
+                            </td>
                         </tr>   
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Evaporator </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.efficiency?.evap_eff || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,12)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> HCl Synthesis </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.efficiency?.hcl_eff || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,13)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Usages </b> </font></td>
@@ -165,42 +207,54 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_power || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,14)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Salt, MT </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_salt || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,15)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Steam (Brine) MT  </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_steam_brine || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,16)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Steam (Evap) MT</b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_steam_evap || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,17)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Barium Chloride, kg </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> {data?.usages?.ac_bacl2 || ''} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>    
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,18)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Soda Ash, kg </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_soda_ash || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,19)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -208,7 +262,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> <b> {data?.usages?.ac_flocullant || ''} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,20)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -216,21 +272,27 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_naoh || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,21)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Hcl, kg </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_hcl || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,22)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Sulfite, kg </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.usages?.ac_na2so3 || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,23)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -238,7 +300,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,24)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -246,7 +310,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,25)}/>
+                            </td>
                             
                         </tr>
                         <tr>    
@@ -261,7 +327,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.products_dist?.naoh_32_sum || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,26)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -269,7 +337,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.products_dist?.naoh_50_sum || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,27)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -277,14 +347,18 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.products_dist?.hcl_sum || ''}</font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,28)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> NaOCL, MT </b> </font></td>
                             <td align="center"><font face="Arial" size="2">{data?.products_dist?.naocl_sum || ''}</font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,29)}/>
+                            </td>
                             
                         </tr>
                         <tr>
@@ -292,7 +366,9 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td align="center"><font face="Arial" size="2"> {data?.products_dist?.naocl_waste_sum || ''} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center">
+                                <CellInput type='text' onChange={(e) => handleRemarksChange(e,30)}/>
+                            </td>
                         </tr>
                         <tr>
                             <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={6}><font face="Arial" size="2"> <b> OVERALL EQUIPMENT EFFECTIVENESS ( OEE) </b> </font></td>
@@ -303,9 +379,27 @@ const WeeklyReportDoc = ({data, isWeekly}) => {
                             <td bgcolor="BFBFBF" align="center"><font face="Arial" size="2"> <b> AVAILABILITY </b> </font></td>
                             <td bgcolor="BFBFBF" align="center"><font face="Arial" size="2"> <b> QUALITY </b> </font></td>
                         </tr>
+                        <tr>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda (NaOH) </b> </font></td>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> Hydrochloric acid ( HCl) </b> </font></td>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
+                        <tr>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypochlorite (NaOCl) </b> </font></td>
+                            <td align="center" colSpan={2}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                        </tr>
                     </tbody>
                 </table>
-                {isWeekly && <MonthlyReport/>}
+                {isWeekly && <MonthlyReport mtdData={mtdData}/>}
             </TableContainer>
         </div>
 

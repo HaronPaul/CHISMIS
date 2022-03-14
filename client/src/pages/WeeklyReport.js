@@ -36,6 +36,8 @@ const loadingModalStyle = {
 
 const WeeklyReport = () => {
     const [weeklyData, setWeeklyData] = useState(null)
+    const [mtdData, setMtdData] = useState(null)
+
     const [startDate, changeStartDate] = useState('')
     const [endDate, changeEndDate] = useState('') 
     const [error, setError] = useState(false)
@@ -49,16 +51,27 @@ const WeeklyReport = () => {
     const [openLoadingModal, setOpenLoadingModal] = useState(false)
 
     const handleSubmitButton = async () => {
+        const beginningDate = '03-01-2022'
+
         setShowReport(false)
         setOpenLoadingModal(true)
         setError(false)
-        try {
+
+        try {        
+            let mtdResponse
             const response = await axios.get(`http://localhost:8000/api/v1/weekly_report/get/${startDate}/${endDate}`)
-            if(response.data.success) {
+            if(startDate !== beginningDate) {
+                mtdResponse = await axios.get(`http://localhost:8000/api/v1/weekly_report/get/${beginningDate}/${endDate}`)
+                setMtdData(mtdResponse.data.data)
+            }
+            else {
+                setMtdData(response.data.data)
+            }
+
+            if(response.data?.success) {
                 setOpenLoadingModal(false)
                 setShowReport(true)
                 setWeeklyData(response.data.data)
-                console.log(response.data.data)
             } else {
                 setOpenLoadingModal(false)
                 setError(true)
@@ -88,7 +101,7 @@ const WeeklyReport = () => {
             console.log('No date inputted')
         }
     }
-
+    
     const handleWeeklyChange = (e) => {
         const value = e.target.value
         setIsWeekly(value)
@@ -140,7 +153,7 @@ const WeeklyReport = () => {
                     <Button variant="contained" size="large" onClick={handleSubmitButton} disabled={error? true:false}> View Weekly Report</Button>
                 </div>
                 {error && <Alert severity='error' style={{marginTop: '2%'}}> {errorMessage} </Alert>}
-                {showReport && <WeeklyReportDoc data={weeklyData} isWeekly={isWeekly}/>}
+                {showReport && <WeeklyReportDoc data={weeklyData} isWeekly={isWeekly} mtdData={mtdData}/>}
             </Container>
         </MainContainer>
         <Modal

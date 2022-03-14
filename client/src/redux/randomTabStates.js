@@ -1,13 +1,19 @@
-let names = ['Haron Paul Lorente', 'Hannah Patriz Lorente', 'Jazon Troy Jaralve']
+let ctrlNames = ['Haron Paul Lorente', 'Hannah Patriz Lorente', 'Jazon Troy Jaralve']
+let hclNames = ['Shiraishi Mai', 'Saito Asuka', 'Ikuta Erika']
+let evapNames = ['Akimoto Manatsu', 'Matsumura Sayuri', 'Eto Misa']
+let prBrineNames = ['Hoshino Minami', 'Hashimoto Nanami', 'Nishino Nanase']
+let electroNames = ['Hori Miona', 'Shinuchi Mai', 'Terada Ranze']
+let nacloNames = ['Endo Sakura', 'Kakki Haruka', 'Tsutsui Ayame']
+
 let inters = ['YES', 'NO', 'PARTIAL']
 let cellsvolt = ['B143', 'B231', 'B43', 'B34', 'B10', 'B124', 'None']
 let brineoverflow = ['RESATURATOR', 'MIXING TANKS', 'T132', 'T136', 'NONE']
 
 export const controlRoom_values = {
     // Random Values
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: ctrlNames[Math.floor(Math.random() * ctrlNames.length)],
+    present_operator: ctrlNames[Math.floor(Math.random() * ctrlNames.length)],
+    incoming_operator: ctrlNames[Math.floor(Math.random() * ctrlNames.length)],
     hours: Math.floor((Math.random() * 10) + 1),
     interlock_engaged: inters[Math.floor(Math.random() * inters.length)],
     daq_operational: inters[Math.floor(Math.random() * inters.length)],
@@ -25,9 +31,9 @@ export const controlRoom_values = {
 export const hcl_values = {
     // Random values
     hcl: parseFloat((Math.random() * 3) + 10.83).toFixed(2),
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: hclNames[Math.floor(Math.random() * hclNames.length)],
+    present_operator: hclNames[Math.floor(Math.random() * hclNames.length)],
+    incoming_operator: hclNames[Math.floor(Math.random() * hclNames.length)],
     hcl_hours: Math.floor((Math.random() * 10) + 1),
     lcp_hours: Math.floor((Math.random() * 10) + 1),
     hcl_synth_eff: '',
@@ -47,9 +53,9 @@ export const hcl_values = {
 
 export const evap_values = {
     // Random Values
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: evapNames[Math.floor(Math.random() * evapNames.length)],
+    present_operator: evapNames[Math.floor(Math.random() * evapNames.length)],
+    incoming_operator: evapNames[Math.floor(Math.random() * evapNames.length)],
     hours: Math.floor((Math.random() * 10) + 1),
     evap_eff: '',
     naoh_prod: parseFloat((Math.random() * 3) + 10.83).toFixed(2),
@@ -66,9 +72,9 @@ export const evap_values = {
 
 export const prBrine_values = {
     // Random Values
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: prBrineNames[Math.floor(Math.random() * prBrineNames.length)],
+    present_operator: prBrineNames[Math.floor(Math.random() * prBrineNames.length)],
+    incoming_operator: prBrineNames[Math.floor(Math.random() * prBrineNames.length)],
     salt_loaded: parseFloat((Math.random() * 4) + 6).toFixed(2),
     pbrine_conc: parseFloat((Math.random() * 40) + 280).toFixed(2),
     precoat: 'B',
@@ -84,9 +90,9 @@ export const prBrine_values = {
 
 export const electro_values = {
     // Random values
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: electroNames[Math.floor(Math.random() * electroNames.length)],
+    present_operator: electroNames[Math.floor(Math.random() * electroNames.length)],
+    incoming_operator: electroNames[Math.floor(Math.random() * electroNames.length)],
     electro_eff: '',
     cell_liq_prod: parseFloat(Math.random() * (15 - 11.9 + 1) + 11.9).toFixed(2),
     spb_inlet_temp: parseFloat(Math.random() * (70 - 60 + 1) + 60).toFixed(2),
@@ -106,9 +112,9 @@ export const electro_values = {
 
 export const naclo_values = {
     // Random values
-    previous_operator: names[Math.floor(Math.random() * names.length)],
-    present_operator: names[Math.floor(Math.random() * names.length)],
-    incoming_operator: names[Math.floor(Math.random() * names.length)],
+    previous_operator: nacloNames[Math.floor(Math.random() * nacloNames.length)],
+    present_operator: nacloNames[Math.floor(Math.random() * nacloNames.length)],
+    incoming_operator: nacloNames[Math.floor(Math.random() * nacloNames.length)],
     hours: Math.floor((Math.random() * 10) + 1),
     naclo_ct1: parseFloat(Math.random() * (8.1 - 7.5) + 7.5).toFixed(2),
     naclo_ct2: parseFloat(Math.random() * (8.1 - 7.5) + 7.5).toFixed(2),

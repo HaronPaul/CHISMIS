@@ -97,27 +97,27 @@ const Inventory = () => {
                         <Typography variant='h4'>Salt</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_bacl2 || ''} MT </Typography>
+                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_bacl2 || ''} kg </Typography>
                         <Typography variant='h4'>Barium Chloride</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_soda_ash || ''} MT </Typography>
+                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_soda_ash || ''} kg </Typography>
                         <Typography variant='h4'>Soda Ash</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_flocullant || ''} MT </Typography>
+                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_flocullant || ''} g </Typography>
                         <Typography variant='h4'>Flocullant</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                       <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_naoh || ''} MT </Typography>
+                       <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_naoh || ''} kg </Typography>
                         <Typography variant='h4'>NaOH</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                      <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_hcl || ''} MT </Typography>
+                      <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_hcl || ''} kg </Typography>
                         <Typography variant='h4'>HCl</Typography>
                     </Paper>
                     <Paper elevation={5} className={classes.paperStyle}>
-                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_na2so3 || ''} MT </Typography>
+                        <Typography variant='h3' style={{fontWeight: '600'}}> {currentInventory?.ac_na2so3 || ''} kg </Typography>
                         <Typography variant='h4'>Sodium Sulfite</Typography>
                     </Paper>
                 </div>
@@ -132,7 +132,7 @@ const Inventory = () => {
         style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
         >
             <Paper sx={style}>
-                <UpdateModal inventory={currentInventory}></UpdateModal>
+                <UpdateModal inventory={currentInventory} setInventory={setInventory} handleClose={handleClose}></UpdateModal>
             </Paper>
         </Modal>
         </>

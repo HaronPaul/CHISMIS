@@ -1,12 +1,10 @@
 const _ = require('lodash')
-
 const ControlRoom = require('../model/ControlRoom')
 const HCl = require('../model/HCl')
 const Evaporator = require('../model/Evaporator')
 const PrimaryBrine = require('../model/PrimaryBrine')
 const Electrolysis = require('../model/Electrolysis')
 const NaClO = require('../model/NaClO')
-const data = require('./tempData')
 
 // Function helper for retrieving attendance of each operator
 // Parameters: Model, month in int, and year in int
@@ -93,6 +91,7 @@ const getOperators = async (req,res) => {
     const year = parseInt(req.params.year)
 
     let sections = []
+    let sectionNames = []
     let section1
     let section2
     let operators1
@@ -103,14 +102,19 @@ const getOperators = async (req,res) => {
         switch(selectedSection) {
             case 1: 
                 sections = [...[ControlRoom, HCl]]
+                sectionNames = [...['Control Room', 'HCl']]
                 break
             case 2: 
                 sections = [...[PrimaryBrine, Electrolysis]]
+                sectionNames = [...['Primary Brine', 'Electrolysis']]
                 break
             case 3: 
                 sections = [...[NaClO, Evaporator]]
+                sectionNames = [...['NaClO', 'Evaporator']]
                 break
-            default: sections = [...[ControlRoom, HCl]]
+            default: 
+                sections = [...[ControlRoom, HCl]]
+                sectionNames = [...['Control Room', 'HCl']]
         }
 
         section1 = await retrieveOperatorsShift(sections[0], month, year)
@@ -122,27 +126,37 @@ const getOperators = async (req,res) => {
             operators2 = await retrieveOperators(sections[1], month, year)
 
             // Map's keys are the name of the operators. Value of each key is an array containing (n days of months) elements  
-            var attendanceMap = new Map()
-            const sectionOperators = _.union(operators1[0].operators, operators2[0].operators)
-            // const sectionOperators = ['Haron Paul Lorente', 'Hannah Patriz Lorente', 'Jazon Troy Jaralve']
+            var attendance1Map = new Map()
+            var attendance2Map = new Map()
+            // const sectionOperators = _.union(operators1[0].operators, operators2[0].operators)
             
             // Get the number of days. This will be used for the size of the array
             const numOfDays = new Date(year, month, 0).getDate()
-            sectionOperators.forEach((op)=> {
-                attendanceMap.set(op, new Array(numOfDays).fill(''))
+           
+            operators1[0].operators.forEach((op)=> {
+                attendance1Map.set(op, new Array(numOfDays).fill(''))
+            })
+            operators2[0].operators.forEach((op)=> {
+                attendance2Map.set(op, new Array(numOfDays).fill(''))
             })
 
             // Set the attendance from the first section
             // Loop through each item in the array. ID is the date
-            markAttendanceMap(attendanceMap, section1)
-            markAttendanceMap(attendanceMap, section2)
+            markAttendanceMap(attendance1Map, section1)
+            markAttendanceMap(attendance2Map, section2)
 
-            console.log(attendanceMap) 
-
+            console.log(attendance1Map)
+            
             res.json({
                 success: true,
                 message: 'Successfully retrieved operators',
-                data: Object.fromEntries(attendanceMap) 
+                data: {
+                    section1: sectionNames[0],
+                    section2: sectionNames[1],
+                    attendance1: Object.fromEntries(attendance1Map),
+                    attendance2: Object.fromEntries(attendance2Map)
+                },
+            
             })
         } else {
             return res.json({

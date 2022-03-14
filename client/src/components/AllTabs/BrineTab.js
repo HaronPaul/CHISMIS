@@ -34,9 +34,10 @@ const BrineTab = () => {
                             name='previous_operator'
                             value={prBrineSection.previous_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hoshino Minami'}> Hoshino Minami</MenuItem>
+                                <MenuItem value={'Hashimoto Nanami'}>Hashimoto Nanami</MenuItem>
+                                <MenuItem value={'Nishino Nanase'}>Nishino Nanase</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -50,9 +51,10 @@ const BrineTab = () => {
                             name='present_operator'
                             value={prBrineSection.present_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hoshino Minami'}> Hoshino Minami</MenuItem>
+                                <MenuItem value={'Hashimoto Nanami'}>Hashimoto Nanami</MenuItem>
+                                <MenuItem value={'Nishino Nanase'}>Nishino Nanase</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -67,9 +69,10 @@ const BrineTab = () => {
                             value={prBrineSection.incoming_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hoshino Minami'}> Hoshino Minami</MenuItem>
+                                <MenuItem value={'Hashimoto Nanami'}>Hashimoto Nanami</MenuItem>
+                                <MenuItem value={'Nishino Nanase'}>Nishino Nanase</MenuItem>
+                                <MenuItem value={'Sakurai Reika'}>Sakurai Reika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

@@ -32,9 +32,9 @@ const HCLTab = () => {
                             name='previous_operator'
                             value={hclSection.previous_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
+                                <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
+                                <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -48,9 +48,9 @@ const HCLTab = () => {
                             name='present_operator'
                             value={hclSection.present_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
+                                <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
+                                <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -65,9 +65,9 @@ const HCLTab = () => {
                             value={hclSection.incoming_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
+                                <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
+                                <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

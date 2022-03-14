@@ -31,9 +31,10 @@ const ElectrolysisTab = () => {
                             name='previous_operator'
                             value={electroSection.previous_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hori Miona'}> Hori Miona</MenuItem>
+                                <MenuItem value={'Shinuchi Mai'}>Shinuchi Mai</MenuItem>
+                                <MenuItem value={'Terada Ranze'}>Terada Ranze</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -47,9 +48,10 @@ const ElectrolysisTab = () => {
                             name='present_operator'
                             value={electroSection.present_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hori Miona'}> Hori Miona</MenuItem>
+                                <MenuItem value={'Shinuchi Mai'}>Shinuchi Mai</MenuItem>
+                                <MenuItem value={'Terada Ranze'}>Terada Ranze</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -64,9 +66,10 @@ const ElectrolysisTab = () => {
                             value={electroSection.incoming_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Hori Miona'}> Hori Miona</MenuItem>
+                                <MenuItem value={'Shinuchi Mai'}>Shinuchi Mai</MenuItem>
+                                <MenuItem value={'Terada Ranze'}>Terada Ranze</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

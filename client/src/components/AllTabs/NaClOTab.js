@@ -32,9 +32,10 @@ const NaCLOTab = () => {
                             value={nacloSection.previous_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Endo Sakura'}> Endo Sakura</MenuItem>
+                                <MenuItem value={'Kakki Haruka'}>Kakki Haruka</MenuItem>
+                                <MenuItem value={'Tsutsui Ayame'}>Tsutsui Ayame</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -48,9 +49,10 @@ const NaCLOTab = () => {
                             name='present_operator'
                             value={nacloSection.present_operator || ''}
                             onChange={handleChange}>
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Endo Sakura'}> Endo Sakura</MenuItem>
+                                <MenuItem value={'Kakki Haruka'}>Kakki Haruka</MenuItem>
+                                <MenuItem value={'Tsutsui Ayame'}>Tsutsui Ayame</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -65,9 +67,10 @@ const NaCLOTab = () => {
                             value={nacloSection.incoming_operator || ''}
                             onChange={handleChange}
                             >
-                                <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
-                                <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
-                                <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Endo Sakura'}> Endo Sakura</MenuItem>
+                                <MenuItem value={'Kakki Haruka'}>Kakki Haruka</MenuItem>
+                                <MenuItem value={'Tsutsui Ayame'}>Tsutsui Ayame</MenuItem>
+                                <MenuItem value={'Kitano Hinako'}>Kitano Hinako</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

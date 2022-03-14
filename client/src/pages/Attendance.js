@@ -1,8 +1,9 @@
-import { Typography,FormControl, InputLabel, Select, MenuItem, Button, TextField} from '@mui/material'
+import { Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Paper, Modal, CircularProgress, Alert} from '@mui/material'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import AttendanceDoc from '../components/AttendanceDoc'
+import attendanceIcon from '../assets/icons/attendance.svg'
 
 const MainContainer = styled.div`
     display: flex;
@@ -18,10 +19,38 @@ const Container = styled.div`
     flex-direction: column;
 `
 
+const HeaderStyle = styled.div`
+    display: flex; 
+    width: auto; 
+    height: 150px; 
+    align-items: center;
+    gap: 25px; 
+    margin-bottom: 2%;
+`
+
+const loadingModalStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '500px',
+    p: '2%',
+    height: '10%'
+};
+
 const Attendance = () => {
     const [selectedMonth, setSelectedMonth] = useState(1)
     const [selectedSection, setSelectedSection] = useState(1)
     const [selectedYear, setSelectedYear] = useState('')
+    const [section1, setSection1] = useState('')
+    const [section2, setSection2] = useState('')
+    const [attendance1, setAttendance1] = useState(null)
+    const [attendance2, setAttendance2] = useState(null)
+
+    // Modals and Error States
+    const [openLoadingModal, setOpenLoadingModal] = useState(false)
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleChange = (e, changed) => {
         if(changed === 'date') {
@@ -34,16 +63,43 @@ const Attendance = () => {
     const handleGenerateButton = async () => {
         console.log(`Button is clicked with month ${selectedMonth}`)
         // Request for the report here using axios
-        const response = await axios.get(`http://localhost:8000/api/v1/attendance/${selectedYear}/${selectedMonth}/${selectedSection}`)
-        if(response.data.success) {
-            console.log(response.data.section1)
+        
+        setAttendance1(null)
+        setAttendance2(null)
+        setOpenLoadingModal(true)
+        setErrorMessage('')
+
+        try {
+            const response = await axios.get(`http://localhost:8000/api/v1/attendance/${selectedYear}/${selectedMonth}/${selectedSection}`)
+            if(response.data?.success) {
+                setOpenLoadingModal(false)
+                setError(false)
+                console.log(response.data.data)
+                setSection1(response.data.data.section1)
+                setSection2(response.data.data.section2)
+                setAttendance1(response.data.data.attendance1)
+                setAttendance2(response.data.data.attendance2)
+            } else {
+                setOpenLoadingModal(false)
+                setError(true)
+                setErrorMessage(response.data?.message)
+                console.log(response)
+            }
+        } catch(err) {
+            setError(true)
+            console.log(err)
         }
     }
 
+
     return(
+        <>
         <MainContainer>
             <Container>
-            <Typography variant='h2' style={{marginBottom: '1.5%'}}> Attendance Report </Typography>
+            <HeaderStyle>
+                <img src={attendanceIcon} style={{objectFit: 'contain', height: '100%'}} alt="inventory icon"/>
+                <Typography variant='h2' style={{marginBottom: '1.5%'}}> Attendance Report </Typography>
+            </HeaderStyle>
                 <div style={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
                     <FormControl style={{width: '20%'}}>
                         <InputLabel id="month">Month</InputLabel>
@@ -90,11 +146,31 @@ const Attendance = () => {
                     onChange={(e) => setSelectedYear(e.target.value)}
                     autoComplete='off'
                     />
-                    <Button style={{marginLeft: '1.5%'}} variant='contained' onClick={handleGenerateButton}>Generate Report</Button>
+                    <Button 
+                        style={{marginLeft: '1.5%'}} 
+                        variant='contained' 
+                        disabled={selectedYear.trim() === ''? true: false}
+                        onClick={handleGenerateButton}>Generate Report</Button>
                 </div>
-            <AttendanceDoc />
+            {(attendance1 && attendance2) && <AttendanceDoc attendance1={attendance1} section1={section1} attendance2={attendance2} section2={section2} month={selectedMonth}/> }
+            {error && <Alert severity='error' style={{marginTop: '2%'}}> {errorMessage || ''}</Alert>}
             </Container>
         </MainContainer>
+        <Modal
+            open={openLoadingModal}
+            // onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}
+        >
+            <Paper sx={loadingModalStyle} elevation={5}>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <CircularProgress style={{marginRight: '20px'}} />
+                    <Typography variant="h5"> Generating attendance report </Typography>
+                </div>
+            </Paper>
+        </Modal>
+        </>
     )
 }
 
