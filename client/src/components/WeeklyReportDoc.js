@@ -1,6 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import styled from 'styled-components'
 import MonthlyReport from './AllTabs/MonthlyReport'
+import {Button} from '@mui/material'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 const TableContainer = styled.div`
     display: flex;
@@ -15,9 +17,19 @@ const CellInput = styled.input`
     border: none;
 `
 
+const OutputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const spanStyle = {
+    backgroundColor: '#BFBFBF',
+}
+
 
 const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => {
     const [remarks, setRemarks] = useState(new Array(31).fill(''))
+    const tableRef = useRef(null)
 
     const handleRemarksChange = (e, index) => {
         const value = e.target.value
@@ -25,24 +37,26 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
     }
 
     return(
-        <div>
+        <OutputContainer>
             <TableContainer>
-                <table border="1" align="center" cellPadding={2} cellSpacing="0" style={{ tableLayout: 'fixed'}}>
+                <table border="1" align="center" cellPadding={2} cellSpacing="0" style={{ tableLayout: 'fixed'}} id='weeklyTable'>
                     <tbody>
                         <tr>
-                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Description </b> </font></td>
-                            <td align="center" style={{minWidth: '200px'}} colSpan={3}><font face="Arial" size="2"> <b> For the Week </b></font></td>
-                            <td align="center" style={{minWidth: '300px'}}><font face="Arial" size="2"> <b> Remarks </b></font></td>
+                            <th align="center" style={{minWidth: '200px'}} colSpan={2}>
+                                 <font face="Arial" size="2"> <b> Description </b> </font>
+                            </th>
+                            <th align="center" style={{minWidth: '200px'}} colSpan={3}><font face="Arial" size="2"> <b> For the Week </b></font></th>
+                            <th align="center" style={{minWidth: '300px'}}><font face="Arial" size="2"> <b> Remarks </b></font></th>
                         </tr>
                         <tr>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Production, MT </b> </font></td>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> Actual </b> </font></td>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> Planned </b> </font></td>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> %Var </b> </font></td>
-                            <td bgcolor="BFBFBF" align="center" style={{minWidth: '100px'}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <th align="center" style={{minWidth: '200px', backgroundColor: "#BFBFBF"}} colSpan={2}><font face="Arial" size="2"> <b> Production, MT </b> </font></th>
+                            <th align="center" style={{minWidth: '100px', backgroundColor: "#BFBFBF"}}><font face="Arial" size="2"> <b> Actual </b> </font></th>
+                            <th align="center" style={{minWidth: '100px', backgroundColor: "#BFBFBF"}}><font face="Arial" size="2"> <b> Planned </b> </font></th>
+                            <th align="center" style={{minWidth: '100px', backgroundColor: "#BFBFBF"}}><font face="Arial" size="2"> <b> %Var </b> </font></th>
+                            <th align="center" style={{minWidth: '100px', backgroundColor: "#BFBFBF"}}><font face="Arial" size="2"> <b> &nbsp; </b> </font></th>
                         </tr>
                         <tr>
-                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 32% </b> </font></td>
+                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> {'Caustic Soda 32%'} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_32 || ''} </font></td>
                             <td align="center" rowSpan={2}><font face="Arial" size="2"> {numOfDays * 60} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
@@ -51,7 +65,7 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                             </td>
                         </tr>
                         <tr>
-                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 50% </b> </font></td>
+                            <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 50{'%'} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_50|| ''} </font></td>
                             <td align="center"><font face="Arial" size="2">  </font></td>
                             <td align="center">
@@ -70,7 +84,7 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Sodium Hypo </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_naclo || ''} </font></td>
-                            <td align="center"><font face="Arial" size="2"> {numOfDays * 70} </font></td>
+                            <td align="center"><font face="Arial" size="2"> {   numOfDays * 70} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center">
                                 <CellInput type='text' onChange={(e) => handleRemarksChange(e,3)}/>
@@ -171,7 +185,7 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Electrolysis </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.efficiency?.electro_eff || ''} </font></td>
-                            <td align="center"><font face="Arial" size="2"> 95% </font></td>
+                            <td align="center"><font face="Arial" size="2"> 95{'%'} </font></td>
                             <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
                             <td align="center">
                                 <CellInput type='text' onChange={(e) => handleRemarksChange(e,11)}/>
@@ -400,7 +414,14 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                 </table>
                 {isWeekly && <MonthlyReport mtdData={mtdData} mtdNumOfDays={mtdNumOfDays}/>}
             </TableContainer>
-        </div>
+            <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="weeklyTable"
+                    filename="tablexls"
+                    sheet="Weekly Table"
+                    buttonText="Save Report"/>
+        </OutputContainer>
 
     )
 }
