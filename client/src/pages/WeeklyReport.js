@@ -43,6 +43,8 @@ const WeeklyReport = () => {
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [isWeekly, setIsWeekly] = useState(true)
+    const [numOfDays, setNumOfDays] = useState(0)
+    const [mtdNumOfDays, setMtdNumOfDays] = useState(0)
     
     // State for showing weekly report document
     const [showReport, setShowReport] = useState(false)
@@ -51,7 +53,14 @@ const WeeklyReport = () => {
     const [openLoadingModal, setOpenLoadingModal] = useState(false)
 
     const handleSubmitButton = async () => {
-        const beginningDate = '03-01-2022'
+        const startDateSplit = startDate.split('-')
+        const endDateSplit = endDate.split('-')
+
+        const startDay = parseInt(startDateSplit[1])
+        const endDay = parseInt(endDateSplit[1])
+
+        startDateSplit[1] = '01'
+        const beginningDate = startDateSplit.join('-')
 
         setShowReport(false)
         setOpenLoadingModal(true)
@@ -72,6 +81,8 @@ const WeeklyReport = () => {
                 setOpenLoadingModal(false)
                 setShowReport(true)
                 setWeeklyData(response.data.data)
+                setNumOfDays((endDay - startDay) + 1)
+                setMtdNumOfDays((endDay - 1) + 1)
             } else {
                 setOpenLoadingModal(false)
                 setError(true)
@@ -153,7 +164,7 @@ const WeeklyReport = () => {
                     <Button variant="contained" size="large" onClick={handleSubmitButton} disabled={error? true:false}> View Weekly Report</Button>
                 </div>
                 {error && <Alert severity='error' style={{marginTop: '2%'}}> {errorMessage} </Alert>}
-                {showReport && <WeeklyReportDoc data={weeklyData} isWeekly={isWeekly} mtdData={mtdData}/>}
+                {showReport && <WeeklyReportDoc data={weeklyData} isWeekly={isWeekly} mtdData={mtdData} numOfDays={numOfDays} mtdNumOfDays={mtdNumOfDays}/>}
             </Container>
         </MainContainer>
         <Modal
