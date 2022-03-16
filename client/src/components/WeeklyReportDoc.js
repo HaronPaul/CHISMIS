@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import MonthlyReport from './AllTabs/MonthlyReport'
 import {Button} from '@mui/material'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import { makeStyles } from '@mui/styles'
 
 const TableContainer = styled.div`
     display: flex;
@@ -16,20 +17,35 @@ const CellInput = styled.input`
     width: 100%;
     border: none;
 `
-
 const OutputContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
 
-const spanStyle = {
-    backgroundColor: '#BFBFBF',
-}
+const useStyle = makeStyles({
+    saveButtonStyle: {
+        width: '20%',
+        marginTop: '20px',
+        backgroundColor: '#1976d2',
+        padding: '10px',
+        borderRadius: '7px',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+        alignSelf: 'flex-end',
+        '&:hover': {
+            backgroundColor: '#1769aa'
+        }
+    },
+})
 
 
 const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => {
     const [remarks, setRemarks] = useState(new Array(31).fill(''))
     const tableRef = useRef(null)
+    const classes = useStyle()
 
     const handleRemarksChange = (e, index) => {
         const value = e.target.value
@@ -415,12 +431,13 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                 {isWeekly && <MonthlyReport mtdData={mtdData} mtdNumOfDays={mtdNumOfDays}/>}
             </TableContainer>
             <ReactHTMLTableToExcel
-                    id="test-table-xls-button"
-                    className="download-table-xls-button"
-                    table="weeklyTable"
-                    filename="tablexls"
-                    sheet="Weekly Table"
-                    buttonText="Save Report"/>
+                id="test-table-xls-button"
+                className={classes.saveButtonStyle}
+                table="weeklyTable"
+                filename="tablexls"
+                sheet="Weekly Table"
+                buttonText="Save Report"/>
+
         </OutputContainer>
 
     )

@@ -209,7 +209,7 @@ const ViewReport = () => {
             style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
         >
             <Box sx={reportModalStyle}>
-                <ShiftReportDoc></ShiftReportDoc>
+                <ShiftReportDoc download={true}></ShiftReportDoc>
             </Box>
         </Modal>
         <Modal

@@ -57,6 +57,9 @@ const App = (props) => {
           <Route path='/attendance'>
             <Attendance/>
           </Route>
+          <Route path='/view'>
+            <ViewReport />
+          </Route>
       </Switch>
   );  
 }

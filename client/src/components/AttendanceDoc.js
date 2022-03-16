@@ -1,13 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
+import { makeStyles } from '@mui/styles'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 const TableContainer  = styled.div`
     width: 100%;
+    overflow: scroll;
 `
 
 const TableStyle = styled.table`
     width: 100%;
-    font-family: 'Arial'
+    font-family: 'Arial';
+`
+
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
 `
 
 const TableColumn = styled.td`
@@ -25,83 +33,136 @@ const Cell = styled.td`
 `
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
+
+const useStyle = makeStyles({
+    saveButtonStyle: {
+        width: '20%',
+        marginTop: '20px',
+        backgroundColor: '#1976d2',
+        padding: '10px',
+        borderRadius: '7px',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+        alignSelf: 'flex-end',
+        '&:hover': {
+            backgroundColor: '#1769aa',
+            
+        }
+    },
+    
+    tableColumnStyle: {
+        backgroundColor: '#eeeeee',
+        padding: '10px',
+        maxWidth: '3px'
+    }
+})
+
+
 const AttendanceDoc = ({attendance1, attendance2, section1, section2, month}) => {
+    const classes = useStyle()
+
     return(
+        <MainContainer>
         <TableContainer>
-        <TableStyle>
-            <thead>
+            <TableStyle id="attendanceTable">
                 <tr>
-                    <TableColumn colSpan={32}>{monthNames[month - 1]}</TableColumn>
+                    <th className={classes.tableColumnStyle} colSpan={32} bgColor="#EEEEEE">{monthNames[month - 1]}</th>
                 </tr>
                 <tr>
                     <TableColumn style={{maxWidth: '40px'}}> <b>Name</b></TableColumn>
-                    <TableColumn> 1 </TableColumn>
-                    <TableColumn> 2 </TableColumn>
-                    <TableColumn> 3 </TableColumn>
-                    <TableColumn> 4 </TableColumn>
-                    <TableColumn> 5 </TableColumn>
-                    <TableColumn> 6 </TableColumn>
-                    <TableColumn> 7 </TableColumn>
-                    <TableColumn> 8 </TableColumn>
-                    <TableColumn> 9 </TableColumn>
-                    <TableColumn> 10 </TableColumn>
-                    <TableColumn> 11 </TableColumn>
-                    <TableColumn> 12 </TableColumn>
-                    <TableColumn> 13 </TableColumn>
-                    <TableColumn> 14 </TableColumn>
-                    <TableColumn> 15 </TableColumn>
-                    <TableColumn> 16 </TableColumn>
-                    <TableColumn> 17 </TableColumn>
-                    <TableColumn> 18 </TableColumn>
-                    <TableColumn> 19 </TableColumn>
-                    <TableColumn> 20 </TableColumn>
-                    <TableColumn> 21 </TableColumn>
-                    <TableColumn> 22 </TableColumn>
-                    <TableColumn> 23 </TableColumn>
-                    <TableColumn> 24 </TableColumn>
-                    <TableColumn> 25 </TableColumn>
-                    <TableColumn> 26 </TableColumn>
-                    <TableColumn> 27 </TableColumn>
-                    <TableColumn> 28 </TableColumn>
-                    <TableColumn> 29 </TableColumn>
-                    <TableColumn> 30 </TableColumn>
-                    <TableColumn> 31 </TableColumn>
+                    <th bgColor="#EEEEEE"> 1 </th>
+                    <th bgColor="#EEEEEE"> 2 </th>
+                    <th bgColor="#EEEEEE"> 3 </th>
+                    <th bgColor="#EEEEEE"> 4 </th>
+                    <th bgColor="#EEEEEE"> 5 </th>
+                    <th bgColor="#EEEEEE"> 6 </th>
+                    <th bgColor="#EEEEEE"> 7 </th>
+                    <th bgColor="#EEEEEE"> 8 </th>
+                    <th bgColor="#EEEEEE"> 9 </th>
+                    <th bgColor="#EEEEEE"> 10 </th>
+                    <th bgColor="#EEEEEE"> 11 </th>
+                    <th bgColor="#EEEEEE"> 12 </th>
+                    <th bgColor="#EEEEEE"> 13 </th>
+                    <th bgColor="#EEEEEE"> 14 </th>
+                    <th bgColor="#EEEEEE"> 15 </th>
+                    <th bgColor="#EEEEEE"> 16 </th>
+                    <th bgColor="#EEEEEE"> 17 </th>
+                    <th bgColor="#EEEEEE"> 18 </th>
+                    <th bgColor="#EEEEEE"> 19 </th>
+                    <th bgColor="#EEEEEE"> 20 </th>
+                    <th bgColor="#EEEEEE"> 21 </th>
+                    <th bgColor="#EEEEEE"> 22 </th>
+                    <th bgColor="#EEEEEE"> 23 </th>
+                    <th bgColor="#EEEEEE"> 24 </th>
+                    <th bgColor="#EEEEEE"> 25 </th>
+                    <th bgColor="#EEEEEE"> 26 </th>
+                    <th bgColor="#EEEEEE"> 27 </th>
+                    <th bgColor="#EEEEEE"> 28 </th>
+                    <th bgColor="#EEEEEE"> 29 </th>
+                    <th bgColor="#EEEEEE"> 30 </th>
+                    <th bgColor="#EEEEEE"> 31 </th>
                 </tr>
                 <tr>
-                    <TableColumn colSpan={32} bg={1}>{section1 || ''}</TableColumn>
+                    <th colSpan={32} bgColor="#64b5f6">{section1 || ''}</th>
                 </tr>
                 {attendance1 && Object.keys(attendance1).map((k, i) => {
                     return (
                     <tr key={k}>
-                        <TableColumn> {k} </TableColumn>
+                        <th
+                        bgColor="#EEEEEE"
+                        style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}> 
+                            {k} 
+                        </th>
                         {attendance1[k]?.map((a, i) => {
                             return(
-                                <Cell key={i} bg={a.split('/').length}> {a.trim() === ''? '-':a} </Cell>
-                            )
-                        })}
-                    </tr>)
-                    })
-                }
-                <tr>
-                    <TableColumn colSpan={32} bg={1}>{section2 || ''}</TableColumn>
-                </tr>
-                {attendance2 && Object.keys(attendance2).map((k, i) => {
-                    return (
-                    <tr key={k}>
-                        <TableColumn> {k} </TableColumn>
-                        {attendance2[k]?.map((a, i) => {
-                            return(
-                                <Cell key={i} bg={a.split('/').length}> {a.trim() === ''? '-':a} </Cell>
-                            )
+                                <td 
+                                key={i} 
+                                bgColor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
+                                style={{ textAlign: 'center',  textOverflow: 'ellipsis', width: 'auto'}}>
+                                    {a.trim() === ''? '-':a}
+                                </td>
+                            ) 
                         })}
                     </tr>)
                     })
                 }
 
-                
-            </thead>
-        </TableStyle>
+                <tr>
+                    <th colSpan={32} bgColor="#64b5f6">{section2 || ''}</th>
+                </tr>
+                {attendance2 && Object.keys(attendance2).map((k, i) => {
+                    return (
+                    <tr key={k}>
+                        <th
+                        bgColor="#EEEEEE"
+                        style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}> 
+                            {k} 
+                        </th>
+                        {attendance2[k]?.map((a, i) => {
+                            return(
+                                <td 
+                                key={i} 
+                                bgColor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
+                                style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}>
+                                    {a.trim() === ''? '-':a}
+                                </td>
+                            )
+                        })}
+                    </tr>)
+                    })
+                }
+            </TableStyle>
         </TableContainer>
+        <ReactHTMLTableToExcel
+            className={classes.saveButtonStyle}
+            table="attendanceTable"
+            filename="attendance"
+            sheet="Attendance Sheet"
+            buttonText="Save Attendance Report"/>
+        </MainContainer>
     )
 }
 

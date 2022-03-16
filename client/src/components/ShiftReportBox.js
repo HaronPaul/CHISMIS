@@ -76,7 +76,7 @@ const ShiftReportBox = ({closeDocModal}) => {
         <>
         <Box sx={style}>
             <Typography variant="h4" textAlign={"center"}>Preview Shift Report</Typography>
-            <ShiftReportDoc/>
+            <ShiftReportDoc download={false}/>
             <Button variant="contained" style={{marginTop: '20px'}} onClick={handleSubmit}>Submit Report</Button>
         </Box>
         <Modal

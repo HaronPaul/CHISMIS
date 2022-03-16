@@ -79,7 +79,7 @@ const markAttendanceMap = (attendanceMap, section) => {
             if(attendanceMap.get(op.present_operator)[day-1] === '') {
                 attendanceMap.get(op.present_operator)[day-1] = (op.shift).toString()
             } else {
-                attendanceMap.get(op.present_operator)[day-1] = attendanceMap.get(op.present_operator)[day-1] + "/" + (op.shift).toString()
+                attendanceMap.get(op.present_operator)[day-1] = attendanceMap.get(op.present_operator)[day-1] + "\\" + (op.shift).toString()
             }
         })
     })
@@ -125,6 +125,9 @@ const getOperators = async (req,res) => {
             operators1 = await retrieveOperators(sections[0], month, year)
             operators2 = await retrieveOperators(sections[1], month, year)
 
+            console.log(operators1[0].operators)
+            console.log(operators2[0].operators)
+
             // Map's keys are the name of the operators. Value of each key is an array containing (n days of months) elements  
             var attendance1Map = new Map()
             var attendance2Map = new Map()
@@ -144,8 +147,6 @@ const getOperators = async (req,res) => {
             // Loop through each item in the array. ID is the date
             markAttendanceMap(attendance1Map, section1)
             markAttendanceMap(attendance2Map, section2)
-
-            console.log(attendance1Map)
             
             res.json({
                 success: true,
