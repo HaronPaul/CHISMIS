@@ -55,6 +55,7 @@ const ControlRoomTab = () => {
                                 <MenuItem value={'Haron Paul Lorente'}> Haron Paul Lorente</MenuItem>
                                 <MenuItem value={'Hannah Patriz Lorente'}>Hannah Patriz Lorente</MenuItem>
                                 <MenuItem value={'Jazon Troy Jaralve'}>Jazon Troy Jaralve</MenuItem>
+                                <MenuItem value={'Angielle Schnaider'}>Angielle Schnaider</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

@@ -35,6 +35,7 @@ const HCLTab = () => {
                                 <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
                                 <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
                                 <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
+                                <MenuItem value={'Angielle Schnaider'}>Angielle Schnaider</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -51,6 +52,7 @@ const HCLTab = () => {
                                 <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
                                 <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
                                 <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
+                                <MenuItem value={'Angielle Schnaider'}>Angielle Schnaider</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -68,6 +70,7 @@ const HCLTab = () => {
                                 <MenuItem value={'Shiraishi Mai'}> Shiraishi Mai</MenuItem>
                                 <MenuItem value={'Saito Asuka'}>Saito Asuka</MenuItem>
                                 <MenuItem value={'Ikuta Erika'}>Ikuta Erika</MenuItem>
+                                <MenuItem value={'Angielle Schnaider'}>Angielle Schnaider</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
