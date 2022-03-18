@@ -46,6 +46,9 @@ const Attendance = () => {
     const [section2, setSection2] = useState('')
     const [attendance1, setAttendance1] = useState(null)
     const [attendance2, setAttendance2] = useState(null)
+    
+    const [reliever, setReliever] = useState('')
+    const [relieverShift, setRelieverShift] = useState(null)
 
     // Modals and Error States
     const [openLoadingModal, setOpenLoadingModal] = useState(false)
@@ -79,6 +82,8 @@ const Attendance = () => {
                 setSection2(response.data.data.section2)
                 setAttendance1(response.data.data.attendance1)
                 setAttendance2(response.data.data.attendance2)
+                setReliever(response.data.data.reliever)
+                setRelieverShift(response.data.data.relieverShift)
             } else {
                 setOpenLoadingModal(false)
                 setError(true)
@@ -152,7 +157,15 @@ const Attendance = () => {
                         disabled={selectedYear.trim() === ''? true: false}
                         onClick={handleGenerateButton}>Generate Report</Button>
                 </div>
-            {(attendance1 && attendance2) && <AttendanceDoc attendance1={attendance1} section1={section1} attendance2={attendance2} section2={section2} month={selectedMonth}/> }
+            {(attendance1 && attendance2) && 
+            <AttendanceDoc 
+            attendance1={attendance1} 
+            section1={section1} 
+            attendance2={attendance2} 
+            section2={section2} 
+            month={selectedMonth}
+            reliever={reliever}
+            relieverShift={relieverShift}/> }
             {error && <Alert severity='error' style={{marginTop: '2%'}}> {errorMessage || ''}</Alert>}
             </Container>
         </MainContainer>

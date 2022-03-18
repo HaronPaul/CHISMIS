@@ -61,7 +61,7 @@ const useStyle = makeStyles({
 })
 
 
-const AttendanceDoc = ({attendance1, attendance2, section1, section2, month}) => {
+const AttendanceDoc = ({attendance1, attendance2, section1, section2, month, reliever, relieverShift}) => {
     const classes = useStyle()
 
     return(
@@ -69,58 +69,61 @@ const AttendanceDoc = ({attendance1, attendance2, section1, section2, month}) =>
         <TableContainer>
             <TableStyle id="attendanceTable">
                 <tr>
-                    <th className={classes.tableColumnStyle} colSpan={32} bgColor="#EEEEEE">{monthNames[month - 1]}</th>
+                    <th className={classes.tableColumnStyle} colSpan={32} bgcolor="#EEEEEE">{monthNames[month - 1]}</th>
                 </tr>
                 <tr>
                     <TableColumn style={{maxWidth: '40px'}}> <b>Name</b></TableColumn>
-                    <th bgColor="#EEEEEE"> 1 </th>
-                    <th bgColor="#EEEEEE"> 2 </th>
-                    <th bgColor="#EEEEEE"> 3 </th>
-                    <th bgColor="#EEEEEE"> 4 </th>
-                    <th bgColor="#EEEEEE"> 5 </th>
-                    <th bgColor="#EEEEEE"> 6 </th>
-                    <th bgColor="#EEEEEE"> 7 </th>
-                    <th bgColor="#EEEEEE"> 8 </th>
-                    <th bgColor="#EEEEEE"> 9 </th>
-                    <th bgColor="#EEEEEE"> 10 </th>
-                    <th bgColor="#EEEEEE"> 11 </th>
-                    <th bgColor="#EEEEEE"> 12 </th>
-                    <th bgColor="#EEEEEE"> 13 </th>
-                    <th bgColor="#EEEEEE"> 14 </th>
-                    <th bgColor="#EEEEEE"> 15 </th>
-                    <th bgColor="#EEEEEE"> 16 </th>
-                    <th bgColor="#EEEEEE"> 17 </th>
-                    <th bgColor="#EEEEEE"> 18 </th>
-                    <th bgColor="#EEEEEE"> 19 </th>
-                    <th bgColor="#EEEEEE"> 20 </th>
-                    <th bgColor="#EEEEEE"> 21 </th>
-                    <th bgColor="#EEEEEE"> 22 </th>
-                    <th bgColor="#EEEEEE"> 23 </th>
-                    <th bgColor="#EEEEEE"> 24 </th>
-                    <th bgColor="#EEEEEE"> 25 </th>
-                    <th bgColor="#EEEEEE"> 26 </th>
-                    <th bgColor="#EEEEEE"> 27 </th>
-                    <th bgColor="#EEEEEE"> 28 </th>
-                    <th bgColor="#EEEEEE"> 29 </th>
-                    <th bgColor="#EEEEEE"> 30 </th>
-                    <th bgColor="#EEEEEE"> 31 </th>
+                    <th bgcolor="#EEEEEE"> 1 </th>
+                    <th bgcolor="#EEEEEE"> 2 </th>
+                    <th bgcolor="#EEEEEE"> 3 </th>
+                    <th bgcolor="#EEEEEE"> 4 </th>
+                    <th bgcolor="#EEEEEE"> 5 </th>
+                    <th bgcolor="#EEEEEE"> 6 </th>
+                    <th bgcolor="#EEEEEE"> 7 </th>
+                    <th bgcolor="#EEEEEE"> 8 </th>
+                    <th bgcolor="#EEEEEE"> 9 </th>
+                    <th bgcolor="#EEEEEE"> 10 </th>
+                    <th bgcolor="#EEEEEE"> 11 </th>
+                    <th bgcolor="#EEEEEE"> 12 </th>
+                    <th bgcolor="#EEEEEE"> 13 </th>
+                    <th bgcolor="#EEEEEE"> 14 </th>
+                    <th bgcolor="#EEEEEE"> 15 </th>
+                    <th bgcolor="#EEEEEE"> 16 </th>
+                    <th bgcolor="#EEEEEE"> 17 </th>
+                    <th bgcolor="#EEEEEE"> 18 </th>
+                    <th bgcolor="#EEEEEE"> 19 </th>
+                    <th bgcolor="#EEEEEE"> 20 </th>
+                    <th bgcolor="#EEEEEE"> 21 </th>
+                    <th bgcolor="#EEEEEE"> 22 </th>
+                    <th bgcolor="#EEEEEE"> 23 </th>
+                    <th bgcolor="#EEEEEE"> 24 </th>
+                    <th bgcolor="#EEEEEE"> 25 </th>
+                    <th bgcolor="#EEEEEE"> 26 </th>
+                    <th bgcolor="#EEEEEE"> 27 </th>
+                    <th bgcolor="#EEEEEE"> 28 </th>
+                    <th bgcolor="#EEEEEE"> 29 </th>
+                    <th bgcolor="#EEEEEE"> 30 </th>
+                    <th bgcolor="#EEEEEE"> 31 </th>
                 </tr>
                 <tr>
-                    <th colSpan={32} bgColor="#64b5f6">{section1 || ''}</th>
+                    <th colSpan={32} bgcolor="#64b5f6">{section1 || ''}</th>
                 </tr>
                 {attendance1 && Object.keys(attendance1).map((k, i) => {
                     return (
                     <tr key={k}>
+                        {/* Name of the Section */}
                         <th
-                        bgColor="#EEEEEE"
+                        bgcolor="#EEEEEE"
                         style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}> 
                             {k} 
                         </th>
+
+                        {/* Map the values of the array. These are the shifts */}
                         {attendance1[k]?.map((a, i) => {
                             return(
                                 <td 
                                 key={i} 
-                                bgColor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
+                                bgcolor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
                                 style={{ textAlign: 'center',  textOverflow: 'ellipsis', width: 'auto'}}>
                                     {a.trim() === ''? '-':a}
                                 </td>
@@ -129,15 +132,37 @@ const AttendanceDoc = ({attendance1, attendance2, section1, section2, month}) =>
                     </tr>)
                     })
                 }
-
+                {/* Reliever Section */}
                 <tr>
-                    <th colSpan={32} bgColor="#64b5f6">{section2 || ''}</th>
+                    <th colSpan={32} bgcolor="#EEEEEE">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th bgcolor="#EEEEEE" style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}> 
+                        {reliever || ''} 
+                    </th>
+                    { relieverShift && relieverShift.map((a,i) => {
+                        return(
+                            <td 
+                            key={i} 
+                            bgcolor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
+                            style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}>
+                                {a.trim() === ''? '-':a}
+                            </td>
+                        )
+                    })
+                    }
+                </tr>
+                <tr>
+                    <th colSpan={32} bgcolor="#EEEEEE">&nbsp;</th>
+                </tr>
+                <tr>
+                    <th colSpan={32} bgcolor="#64b5f6">{section2 || ''}</th>
                 </tr>
                 {attendance2 && Object.keys(attendance2).map((k, i) => {
                     return (
                     <tr key={k}>
                         <th
-                        bgColor="#EEEEEE"
+                        bgcolor="#EEEEEE"
                         style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}> 
                             {k} 
                         </th>
@@ -145,7 +170,7 @@ const AttendanceDoc = ({attendance1, attendance2, section1, section2, month}) =>
                             return(
                                 <td 
                                 key={i} 
-                                bgColor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
+                                bgcolor={a.split('\\').length > 2? 'red':(a.split('\\').length == 2? '#ffb74d':'#eeeeee' )}
                                 style={{ padding: '2px', textAlign: 'center',  textOverflow: 'ellipsis'}}>
                                     {a.trim() === ''? '-':a}
                                 </td>
