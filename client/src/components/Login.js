@@ -40,7 +40,6 @@ const LogIn = ({handleClick}) => {
     }
 
     useEffect(()=> { 
-      // console.log(userRef.current)
       userRef.current.focus()
     }, [])
 

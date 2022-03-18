@@ -114,7 +114,6 @@ const validateData = async (req,res) => {
 // @desc:       This will validate values from the Shift Report
 // @route:      /api/v1/shift_report/create
 const createReport = async (req, res) => {
-    
     // Get all the sections
     const {
         currentSupervisor, 

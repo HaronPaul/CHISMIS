@@ -32,7 +32,7 @@ let schema = Joi.object({
             {'string.empty': "Password is a required field",
             'string.pattern.base': "Password must have at least one character and at least one number", 
             'string.min': "Password length must be at least 8 characters long" }),
-        role: Joi.string().valid("MANAGER", "SUPERVISOR", "ADMINISTRATOR")
+    roleNumber: Joi.number().valid(1999,2121,2699)
         .messages({'any.only': 'Role must be either Manager, Supervisor, or Administrator'})
 })
 
@@ -43,24 +43,41 @@ let schema = Joi.object({
 // @route:      /api/v1/user
 const createUser =  async (req, res) => {
     // Destructure the contents of the body
-    const {firstName, lastName, username, password, role} = req.body
+    const {firstName, lastName, username, password, matchedPwd ,role} = req.body 
+    if(password !== matchedPwd) {
+        res.json({'message': 'Passwords do not match'})   
+    }
+
+    let roleNumber
+    switch (role) {
+        case 'ADMINISTRATOR':
+            roleNumber = 1999
+            break;
+        case 'SUPERVISOR':
+            roleNumber = 2121
+            break;
+        case 'MANAGER':
+            roleNumber = 2699
+            break;
+        default:
+            roleNumber = 2699
+            break;
+    }
+
+    console.log(roleNumber)
 
     try {
-        await schema.validateAsync({firstName, lastName, username, password, role})
-        
+        await schema.validateAsync({firstName, lastName, username, password, roleNumber})
+
         // Check if user already exists
         let user = await User.findOne({username})
-
         if(user) {
-            return res.json({
-                success: false,
-                message: 'Username already taken'
-            })
+            return res.sendStatus(409); // Conflict
         }
 
         // Create a new user
-        const newUser = new User({firstName, lastName, username, password, role})
-        
+        const newUser = new User({firstName, lastName, username, password, role: roleNumber})
+
         // Encrypt user's password using bcrypt
         const salt = await bcrypt.genSalt(10)
         newUser.password = await bcrypt.hash(password, salt)
@@ -68,14 +85,20 @@ const createUser =  async (req, res) => {
         //Insert the user in the database 
         await newUser.save()
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: "Successfully created user. Contact your admin to verify your account",
         })
     } catch(err) {
-        res.json({
-            success: false,
-            message: err.message
+        console.log(err.details)
+        if(err.details) {
+            return res.json({
+                message: err.details[0].message
+            })
+        } 
+
+        res.status(500).json({
+            'message': err.message
         })
     }
 }

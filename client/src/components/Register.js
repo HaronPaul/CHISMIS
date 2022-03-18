@@ -1,23 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Typography, Grid, FormControl, InputLabel, MenuItem, TextField, Button, Alert}
 from "@mui/material";
 import Select from '@mui/material/Select'
-import { makeStyles } from "@mui/styles";
 import axios from 'axios'
-
-const useStyles = makeStyles({
-    textArea: {
-        minWidth: '100%',
-        marginBottom: '3%',
-    }
-})
 
 let initialCreds = {
   firstName: '',
   lastName: '',
   username: '',
   password: '',
-  role: ''
+  role: '',
+  matchedPwd: ''
 }
 
 const SuccessAlert = ({message}) => {
@@ -37,10 +30,10 @@ const ErrorAlert = ({message}) => {
 }
 
 const Register = ({handleClick}) => {
-    const classes = useStyles()
     const [credentials, setCredentials] = useState(initialCreds)
     const [alert, setAlert] = useState(0)
     const [message, setMessage] = useState("")
+    const [disabled, setDisabled] = useState(true)
 
     const handleInputChange = e => {
       const {name, value} = e.target
@@ -50,15 +43,40 @@ const Register = ({handleClick}) => {
       })
     }
 
+    useEffect(() => { 
+
+      // Check if fields have an empty string/not yet filled. If so, disable the button, else enable
+      Object.values(credentials).some(value => value.length === 0)? setDisabled(true): setDisabled(false)
+
+      // Check if passwords matched. If so, enable the button, else disable
+      if(credentials.password.trim().length > 0 && credentials.password.trim().length > 0) 
+        (credentials.password !== credentials.matchedPwd)? setDisabled(true): setDisabled(false)
+      else
+        setDisabled(true)
+
+
+    }, [credentials])
+
+
     const handleRegisterButton = async () => {
       try {
-        const response = await axios.post('http://localhost:8000/api/v1/user', credentials)
-        console.log(response.data.message)
-        response.data.success? setAlert(1):setAlert(-1)
+        const response = await axios.post('http://localhost:8000/api/v1/user', JSON.stringify(credentials), {
+          headers: {'Content-Type': 'application/json'},
+        })
+        response.data?.success? setAlert(1):setAlert(-1)
         setMessage(response.data.message)
-        
-      } catch(err) {
-        console.log(err.message)
+        // setCredentials(null)
+      } catch(err) {  
+        console.log(Object.keys(err))
+        // When server is down
+        if(!err?.response) { 
+          setMessage('No Server response')
+        } else if(err.response?.status === 409) {
+          setMessage('Username is taken')
+        } else {
+          setMessage('Registration failed')
+        }
+        setAlert(-1)
       }
     }
 
@@ -71,9 +89,10 @@ const Register = ({handleClick}) => {
             variant="outlined"
             label="First Name"
             name="firstName"
+            autoComplete="off"
             style={{ minWidth: '100%'}}
             onChange={handleInputChange}
-            value={credentials.firstName}
+            value={credentials?.firstName || ''}
             /> 
           </Grid>
           <Grid item lg={6} sm={12} xs={12}>  
@@ -81,9 +100,10 @@ const Register = ({handleClick}) => {
             variant="outlined"
             name='lastName'
             label="Last Name"
+            autoComplete="off"
             style={{ minWidth: '100%'}}
             onChange={handleInputChange}
-            value={credentials.lastName}> </TextField>
+            value={credentials?.lastName || ''}> </TextField>
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
             <TextField 
@@ -91,8 +111,9 @@ const Register = ({handleClick}) => {
             label="Username"
             style={{ minWidth: '100%'}}
             name="username"
+            autoComplete="off"
             onChange={handleInputChange}
-            value={credentials.username}></TextField>
+            value={credentials?.username || ''}></TextField>
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
             <TextField 
@@ -102,7 +123,17 @@ const Register = ({handleClick}) => {
             style={{ minWidth: '100%'}}
             name="password"
             onChange={handleInputChange}
-            value={credentials.password}></TextField>
+            value={credentials?.password || ''}></TextField>
+          </Grid>
+          <Grid item lg={12} sm={12} xs={12}>
+            <TextField 
+            type='password'
+            variant="outlined"
+            label="Confirm Password"
+            style={{ minWidth: '100%'}}
+            name="matchedPwd"
+            onChange={handleInputChange}
+            value={credentials?.matchedPwd || ''}></TextField>
           </Grid>
           <Grid item lg={12} sm={12} xs={12}>
               <FormControl style={{ minWidth: '100%'}}>
@@ -117,7 +148,7 @@ const Register = ({handleClick}) => {
           {alert === 1 && <SuccessAlert message={message}/>}
           {alert === -1 && <ErrorAlert message={message}/>}
           <Grid item lg={12} sm={12} xs={12}>
-            <Button size="large" variant="contained" color='primary' disableElevation style={{minWidth: '100%'}} onClick={() => handleRegisterButton()}>Register</Button>
+            <Button size="large" variant="contained" color='primary' disabled={disabled} style={{minWidth: '100%'}} onClick={() => handleRegisterButton()}>Register</Button>
           </Grid>
           <Grid item>
               <Typography style={{marginRight: '10px'}}>Already have an account?</Typography>

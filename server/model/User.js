@@ -18,12 +18,15 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     role: {
-        type: String,
-        enum: ['MANAGER', 'SUPERVISOR', 'ADMINISTRATOR']
+        type: Number,
+        enum: [1999, 2121, 2699]
     },
     verified: {
         type: Boolean,
         default: false
+    },
+    refreshToken: {
+        type: String,
     }
 })
 
