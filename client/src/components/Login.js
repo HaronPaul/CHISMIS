@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect} from "react"
 import { Typography, Grid, TextField, Button, Alert} from "@mui/material"
 
 // Redux related improts
-import {useDispatch} from 'react-redux'
-import {login} from '../redux/apiCalls'
+import {useDispatch, useSelector} from 'react-redux'
+import { setUser } from "../redux/userSlice"
+import axios from 'axios'
 
 const SuccessAlert = ({message}) => {
   return(
@@ -23,7 +24,7 @@ const ErrorAlert = ({message}) => {
 
 const LogIn = ({handleClick}) => {
     const dispatch = useDispatch()  
-
+    const {currentUser} = useSelector((state) => state.user)
     // Refs
     const userRef = useRef()
     const errRef = useRef()
@@ -33,28 +34,52 @@ const LogIn = ({handleClick}) => {
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState(0)
     const [message, setMessage] = useState("")
-
-    const handleLoginButton = async ( ) => {
-      const body = {username,password}
-      login(dispatch, body)
-    }
+    const [disabled, setDisabled] = useState(true)
 
     useEffect(()=> { 
       userRef.current.focus()
     }, [])
 
-    useEffect(()=> {  
+    // Disbales the button if username and password fields are empty
+    useEffect(()=> {
       setAlert(0)
+      if(username.trim().length > 0 && password.trim().length > 0)
+        setDisabled(false)
+      else
+        setDisabled(true)
     }, [username, password])
 
-    const handleSubmit = (e) => {
+    // Send an axios request to the backend when button is clicked
+    const handleLoginButton = async (e) => {
       e.preventDefault()
-      console.log("Submitted")
+      const body = {username,password}
+
+      try {
+        const response = await axios.post('http://localhost:8000/api/v1/auth', JSON.stringify(body), {
+          headers: {'Content-type': 'application/json'},
+          withCredentials: true
+        })
+        const accessToken = response?.data?.accessToken
+        const role = response?.data?.role
+
+        dispatch(setUser({accessToken, role}))
+      } catch(err) {
+        setAlert(-1)
+        if(!err?.response) {
+          setMessage('No Server Response')
+        } else if(err.response?.status === 400) {
+          setMessage('Missing username/password')
+        } else if(err.response?.status === 401) {
+          setMessage('Unauthorized')
+        } else {
+          setMessage('Login Failed')
+        }
+      }
     }
 
     return(
       <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLoginButton}>
           <Typography variant="h2" style={{margin: '1%', textAlign: 'center'}}>Sign In</Typography>
           <Grid container spacing={2}>
             <Grid item lg={12} sm={12} xs={12}>
@@ -83,7 +108,7 @@ const LogIn = ({handleClick}) => {
             {alert === 1 && <SuccessAlert message={message}/>}
             {alert === -1 && <ErrorAlert message={message}/>}
             <Grid item lg={12} sm={12} xs={12}>
-              <Button size="large" variant="contained" color='primary' onClick={handleLoginButton} disableElevation style={{minWidth: '100%'}}>Sign In</Button>
+              <Button size="large" type="submit" variant="contained" color='primary' onClick={handleLoginButton} disabled={disabled} style={{minWidth: '100%'}}>Sign In</Button>
             </Grid>
             <Grid item>
                 <Typography style={{marginRight: '10px'}}>Don't have an account yet?</Typography>

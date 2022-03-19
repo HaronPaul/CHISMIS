@@ -8,9 +8,7 @@ import Supervisor from "./pages/Supervisor";
 import Manager from "./pages/Manager"
 import Users from "./pages/Users";
 import { useSelector } from "react-redux"
-import WeeklyReportDoc from "./components/WeeklyReportDoc";
 import WeeklyReport from "./pages/WeeklyReport";
-import MonthlyReport from "./components/AllTabs/MonthlyReport";
 import ViewReport from "./pages/ViewReport";
 import Inventory from "./pages/Inventory";
 import Attendance from "./pages/Attendance";
@@ -37,7 +35,7 @@ const App = (props) => {
             <Users/>
           </Route>
           <Route path='/' exact>
-            {currentUser? <Redirect to={roleRoute}/>:<Home/>}
+            <Home/>
           </Route>
           <Route path='/supervisor' exact>
             <Supervisor/>
