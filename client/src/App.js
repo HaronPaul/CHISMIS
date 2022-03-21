@@ -34,10 +34,11 @@ const App = (props) => {
             <Route path='view' element={<ViewReport />} />
             <Route path='unauthorized' element={<Unauthorized />} />
             <Route path='admin' element={<Admin />} />
+            <Route path='home' element={<UsersPage/>} />
 
             {/* All user routes */}
             <Route element={<RequireAuth allowedRoles={[ROLES_LIST.Administrator, ROLES_LIST.Supervisor, ROLES_LIST.Manager]}/>}>
-              <Route path='home' element={<UsersPage/>} />
+              {/* <Route path='home' element={<UsersPage/>} /> */}
             </Route>
 
             {/* Admin Routes */}
