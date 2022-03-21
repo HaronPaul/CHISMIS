@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect} from "react"
 import { Typography, Grid, TextField, Button, Alert} from "@mui/material"
+import {Link, useNavigate, useLocation} from 'react-router-dom'
 
 // Redux related improts
 import {useDispatch, useSelector} from 'react-redux'
@@ -24,7 +25,7 @@ const ErrorAlert = ({message}) => {
 
 const LogIn = ({handleClick}) => {
     const dispatch = useDispatch()  
-    const {currentUser} = useSelector((state) => state.user)
+    
     // Refs
     const userRef = useRef()
     const errRef = useRef()
@@ -35,6 +36,11 @@ const LogIn = ({handleClick}) => {
     const [alert, setAlert] = useState(0)
     const [message, setMessage] = useState("")
     const [disabled, setDisabled] = useState(true)
+
+    // Router functions
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/home' 
 
     useEffect(()=> { 
       userRef.current.focus()
@@ -61,8 +67,13 @@ const LogIn = ({handleClick}) => {
         })
         const accessToken = response?.data?.accessToken
         const role = response?.data?.role
+        const username = response?.data?.username
 
-        dispatch(setUser({accessToken, role}))
+        console.log('Successfully logged in')
+        // Set the global variable user with the credentials
+        dispatch(setUser({accessToken, role, username}))
+
+        navigate(from, {replace: true})
       } catch(err) {
         setAlert(-1)
         if(!err?.response) {

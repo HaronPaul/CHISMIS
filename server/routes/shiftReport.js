@@ -4,7 +4,7 @@ const checkConnection = require('../middleware/connectionCheck')
 const verifyJWT = require('../middleware/verifyJWT')
 
 router.post('/validate', validateData)
-router.post('/create', checkConnection, verifyJWT, createReport)
+router.post('/create', checkConnection, createReport)
 router.get('/getMTD/:date/:shift', checkConnection, getMTD)
 router.get('/get_reports/:date', checkConnection, getShiftReports)
 router.get('/get_report/:id', checkConnection, getSingleReport)

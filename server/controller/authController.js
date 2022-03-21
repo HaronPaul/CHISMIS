@@ -37,13 +37,14 @@ const handleLogin = async (req,res) => {
 
             // Set refresh token in a cookie 
             res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: 'None', secure: true})
-            res.json({accessToken, role: foundUser.role})
+            res.json({accessToken, role: foundUser.role, username: foundUser.username})
                 
         }  else {
             res.sendStatus(401)
         }
 
     } catch(err) {
+        console.log(err)
         res.sendStatus(500)
     }
 }
