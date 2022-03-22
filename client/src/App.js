@@ -3,7 +3,7 @@ import './override.css'
 import Home from "./pages/Home";
 import CreateSR from './pages/CreateSR'
 import Admin from "./pages/Admin";
-import Users from "./pages/Users";
+import ManageUsers from "./pages/ManageUsers";
 import WeeklyReport from "./pages/WeeklyReport";
 import ViewReport from "./pages/ViewReport";
 import Inventory from "./pages/Inventory";
@@ -34,22 +34,23 @@ const App = (props) => {
             <Route path='view' element={<ViewReport />} />
             <Route path='unauthorized' element={<Unauthorized />} />
             <Route path='admin' element={<Admin />} />
-            <Route path='home' element={<UsersPage/>} />
+            
 
             {/* All user routes */}
             <Route element={<RequireAuth allowedRoles={[ROLES_LIST.Administrator, ROLES_LIST.Supervisor, ROLES_LIST.Manager]}/>}>
               {/* <Route path='home' element={<UsersPage/>} /> */}
+              <Route path='home' element={<UsersPage/>} />
             </Route>
 
             {/* Admin Routes */}
-            {/* <Route element={<RequireAuth allowedRoles={[1999]} />} >
-              <Route path='admin/users' element={<Users/>}/>
-            </Route> */}
+            <Route element={<RequireAuth allowedRoles={[1999]} />} >
+              <Route path='home/manage_users' element={<ManageUsers/>}/>
+            </Route>
             
             {/* Supervisor Routes */}
-            {/* <Route element={<RequireAuth allowedRoles={[2121]} />} >
+            <Route element={<RequireAuth allowedRoles={[2121]} />} >
               <Route path='supervisor/create' element={<CreateSR/>} />
-            </Route> */}
+            </Route>
         
             <Route element={<RequireAuth allowedRoles={[2699]} />} >
               {/* Manager Routes */}

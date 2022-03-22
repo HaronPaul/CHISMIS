@@ -9,7 +9,7 @@ const handleLogin = async (req,res) => {
     if(!username && !password) return res.status(400).json({'message': 'Username and password are required'})
     try {
         // Match the enter password with the hashed password
-        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1})
+        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1})
         if(!foundUser) return res.sendStatus(401)
 
         // When user is found, check if hashedPassword matches 
@@ -37,7 +37,7 @@ const handleLogin = async (req,res) => {
 
             // Set refresh token in a cookie 
             res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: 'None', secure: true})
-            res.json({accessToken, role: foundUser.role, username: foundUser.username})
+            res.json({accessToken, role: foundUser.role, username: foundUser.username, firstName: foundUser.firstName})
                 
         }  else {
             res.sendStatus(401)

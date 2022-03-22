@@ -68,10 +68,10 @@ const LogIn = ({handleClick}) => {
         const accessToken = response?.data?.accessToken
         const role = response?.data?.role
         const username = response?.data?.username
+        const firstName = response?.data?.firstName
 
-        console.log('Successfully logged in')
         // Set the global variable user with the credentials
-        dispatch(setUser({accessToken, role, username}))
+        dispatch(setUser({accessToken, role, username, firstName}))
 
         navigate(from, {replace: true})
       } catch(err) {

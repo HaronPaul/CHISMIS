@@ -58,7 +58,7 @@ const UserDetails = ({user, handleClick, index}) => {
     )
 }
 
-const Users = () => {
+const ManageUsers = () => {
     const classes = useStyles()
     const [unverifiedUsers, setUnverifiedUsers] = useState([])
     const [verifiedUsers, setVerifiedUser] = useState([])
@@ -105,4 +105,4 @@ const Users = () => {
     )
 }
 
-export default Users
+export default ManageUsers
