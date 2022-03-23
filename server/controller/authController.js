@@ -9,10 +9,10 @@ const handleLogin = async (req,res) => {
     if(!username && !password) return res.status(400).json({'message': 'Username and password are required'})
     try {
         // Match the enter password with the hashed password
-        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1})
+        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1, verified: 1})
         if(!foundUser) return res.sendStatus(401)
-
-        // When user is found, check if hashedPassword matches 
+        if(!foundUser.verified) return res.status(401).json({message: 'You are not yet verified'})
+        // When user is found, check if hashedPassword matches  
         const match = await bcrypt.compare(password, foundUser.password)
         if(match) {
             // Create tokens here and send
@@ -24,10 +24,14 @@ const handleLogin = async (req,res) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '30s'}
+                {expiresIn: '5s'}
             )
             const refreshToken = jwt.sign(
-                {"username": foundUser.username},
+                {"userInfo": {
+                    "username": foundUser.username, 
+                    "role": foundUser.role
+                    }
+                },
                 process.env.REFRESH_TOKEN_SECRET,
                 {expiresIn: '1d'}
             )

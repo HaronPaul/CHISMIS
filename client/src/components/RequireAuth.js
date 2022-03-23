@@ -6,12 +6,6 @@ const RequireAuth = ({allowedRoles}) => {
     const location = useLocation()
     console.log(allowedRoles)
 
-    if(userLoggedIn) {
-        console.log(`User's role is ${role}`)
-        console.log(`allowed roles are: ${allowedRoles}`)
-        console.log('User has logged in')
-    }
-
     return(
         (role && allowedRoles.includes(role)) 
             ? <Outlet />

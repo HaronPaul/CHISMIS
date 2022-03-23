@@ -1,9 +1,12 @@
 const verifyRole = (...allowedRoles) => {
     return (req,res,next) => {
-        if(!req?.role) return res.sendStatus(401)
+        if(!req?.role) {
+            console.log('No role in request object') 
+            return res.sendStatus(401)
+        }
 
         const rolesArray = [...allowedRoles]
-        console.log(allowedRoles)
+        console.log(allowedRoles)   
         console.log(req.role)
         const isAllowed = rolesArray.includes(req.role)
 

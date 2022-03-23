@@ -13,6 +13,7 @@ import MissingPage from "./components/Missing";
 import Unauthorized from './components/Unauthorized'
 import RequireAuth from './components/RequireAuth'
 import UsersPage from './pages/UsersPage'
+import PersistLogin from './components/PersistLogin'
 
 import {Route, Routes} from 'react-router-dom'
 
@@ -37,27 +38,30 @@ const App = (props) => {
             
 
             {/* All user routes */}
-            <Route element={<RequireAuth allowedRoles={[ROLES_LIST.Administrator, ROLES_LIST.Supervisor, ROLES_LIST.Manager]}/>}>
-              {/* <Route path='home' element={<UsersPage/>} /> */}
-              <Route path='home' element={<UsersPage/>} />
-            </Route>
+            <Route element={<PersistLogin/>}>
+              <Route element={<RequireAuth allowedRoles={[ROLES_LIST.Administrator, ROLES_LIST.Supervisor, ROLES_LIST.Manager]}/>}>
+                {/* <Route path='home' element={<UsersPage/>} /> */}
+                <Route path='home' element={<UsersPage/>} />
+              </Route>
 
-            {/* Admin Routes */}
-            <Route element={<RequireAuth allowedRoles={[1999]} />} >
+
+              {/* Admin Routes */}
+              <Route element={<RequireAuth allowedRoles={[1999]} />} >
               <Route path='home/manage_users' element={<ManageUsers/>}/>
-            </Route>
-            
-            {/* Supervisor Routes */}
-            <Route element={<RequireAuth allowedRoles={[2121]} />} >
-              <Route path='supervisor/create' element={<CreateSR/>} />
-            </Route>
-        
-            <Route element={<RequireAuth allowedRoles={[2699]} />} >
-              {/* Manager Routes */}
-            </Route>
+              </Route>
+              
+              {/* Supervisor Routes */}
+              <Route element={<RequireAuth allowedRoles={[2121]} />} >
+                <Route path='supervisor/create' element={<CreateSR/>} />
+              </Route>
+          
+              <Route element={<RequireAuth allowedRoles={[2699]} />} >
+                {/* Manager Routes */}
+              </Route>
 
-            {/* Catch All */}
-            <Route path='*' element={<MissingPage/>} />            
+              {/* Catch All */}
+              <Route path='*' element={<MissingPage/>} />            
+            </Route>
           </Route>
       </Routes>
   );

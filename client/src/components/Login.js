@@ -72,7 +72,6 @@ const LogIn = ({handleClick}) => {
 
         // Set the global variable user with the credentials
         dispatch(setUser({accessToken, role, username, firstName}))
-
         navigate(from, {replace: true})
       } catch(err) {
         setAlert(-1)
@@ -81,7 +80,11 @@ const LogIn = ({handleClick}) => {
         } else if(err.response?.status === 400) {
           setMessage('Missing username/password')
         } else if(err.response?.status === 401) {
-          setMessage('Unauthorized')
+          console.log(err.response)
+          if(err.response?.data?.message) 
+            setMessage(err.response?.data.message)
+          else 
+            setMessage('Unauthorized')
         } else {
           setMessage('Login Failed')
         }
