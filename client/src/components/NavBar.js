@@ -2,7 +2,8 @@ import {Typography, AppBar, Box, Toolbar, Button, } from '@mui/material'
 import styled from 'styled-components'
 import "@fontsource/bebas-neue"
 import "@fontsource/roboto"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import useLogout from '../hooks/useLogout'
 
 // Redux Imports
 import {useSelector} from 'react-redux'
@@ -53,9 +54,12 @@ const NavItem = styled.h3`
 
 const NavBar = () => {
     const { userLoggedIn } = useSelector((state) => state.user)
+    const navigate = useNavigate()
+    const logout = useLogout()
 
-    const handleLogout = () => {
-        console.log('Logout button is clicked')
+    const handleLogout = async () => {
+        await logout()
+        navigate('/')
     }
         
     return (
@@ -69,6 +73,11 @@ const NavBar = () => {
                     <NavItem> Login </NavItem> 
                 </Link>
                 }
+                {userLoggedIn && 
+                    <Link to='/home' style={{textDecoration: 'none'}}>
+                        <NavItem> Home </NavItem> 
+                    </Link>
+                }
                 <Link to='attendance' style={{textDecoration: 'none'}}>
                     <NavItem> Attendance </NavItem> 
                 </Link>
@@ -81,7 +90,7 @@ const NavBar = () => {
                 <Link to='inventory' style={{textDecoration: 'none'}}>
                     <NavItem> Inventory </NavItem> 
                 </Link>
-                {userLoggedIn && <Button variant='contained' color='secondary'> Logout </Button>}
+                {userLoggedIn && <Button variant='contained' color='secondary' onClick={handleLogout}> Logout </Button>}
             </ItemsContainer>
         </NavContainer>
     )

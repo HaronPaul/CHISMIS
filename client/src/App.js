@@ -28,17 +28,18 @@ const App = (props) => {
       <Routes>
           <Route path='/' element={<Layout/>}>
             {/* Public Routes */}
-            <Route path='/' element={<Home/>}/> 
-            <Route path='inventory' element={<Inventory/>} />
-            <Route path='weekly' element={<WeeklyReport/>} />
-            <Route path='attendance' element={<Attendance/>} />
-            <Route path='view' element={<ViewReport />} />
-            <Route path='unauthorized' element={<Unauthorized />} />
-            <Route path='admin' element={<Admin />} />
             
+            <Route path='unauthorized' element={<Unauthorized />} />
 
             {/* All user routes */}
             <Route element={<PersistLogin/>}>
+              <Route path='weekly' element={<WeeklyReport/>} />
+              <Route path='inventory' element={<Inventory/>} />
+              <Route path='view' element={<ViewReport />} />
+              <Route path='/' element={<Home/>}/> 
+              <Route path='attendance' element={<Attendance/>} />
+              
+              {/* Routes accessible for all roles */}
               <Route element={<RequireAuth allowedRoles={[ROLES_LIST.Administrator, ROLES_LIST.Supervisor, ROLES_LIST.Manager]}/>}>
                 {/* <Route path='home' element={<UsersPage/>} /> */}
                 <Route path='home' element={<UsersPage/>} />

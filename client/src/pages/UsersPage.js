@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // SVG Imports for icons
-import people from '../assets/icons/people.svg'
-import report from '../assets/icons/report.svg'
 import users from '../assets/icons/users.svg'
 import inventory from '../assets/icons/inventory.svg'
 import sign_report from '../assets/icons/sign_report.svg'
@@ -75,14 +73,14 @@ const UsersPage = () => {
                     </ProtectedComponent>
 
                     <ProtectedComponent allowedRoles={[2121]}>
-                        <Link to='supervisor/create'>
+                        <Link to='/supervisor/create'>
                         <Box>
                             <Image src={create_report}/>
                             <Typography variant='h6' style={{color: 'black'}}>Create Shift Report</Typography>
                         </Box>
                         </Link>
                     </ProtectedComponent>
-                    
+
                     <ProtectedComponent allowedRoles={[2121,2699]}>
                         <Box>
                             <Image src={sign_report}/>
