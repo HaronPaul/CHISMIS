@@ -7,7 +7,7 @@ const RequireAuth = ({allowedRoles}) => {
     console.log(allowedRoles)
 
     return(
-        (role && allowedRoles.includes(role)) 
+        (userLoggedIn && role && allowedRoles.includes(role)) 
             ? <Outlet />
             : userLoggedIn? 
                 <Navigate to='/unauthorized' state={{from: location}} replace />

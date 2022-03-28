@@ -1,6 +1,6 @@
 import axios from '../api/axios'
 import {useDispatch, useSelector} from 'react-redux'
-import {changeToken} from '../redux/userSlice'
+import {setUser} from '../redux/userSlice'
 
 const useRefreshToken = () => {
     const dispatch = useDispatch()
@@ -12,7 +12,15 @@ const useRefreshToken = () => {
         })
         console.log('Response from refresh route: ')
         console.log(response)
-        dispatch(changeToken({accessToken: response.data.accessToken, role: response.data.role}))
+        dispatch(setUser(
+            {
+                accessToken: response.data.accessToken, 
+                role: response.data.role,
+                username: response.data.username,
+                firstName: response.data.firstName
+            }
+            
+            ))
         return response.data.accessToken
     }
     

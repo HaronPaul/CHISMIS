@@ -20,6 +20,9 @@ const userSlice = createSlice({
         changeToken: (state, action) => {
             state.token = action.payload.accessToken
             state.role = action.payload.role
+            state.firstName = action.payload.firstName
+            state.username = action.payload.username
+            state.userLoggedIn = true
         }
     }
 })

@@ -20,7 +20,8 @@ const handleLogin = async (req,res) => {
                 {
                 "userInfo": {
                     "username": foundUser.username, 
-                    "role": foundUser.role
+                    "role": foundUser.role,
+                    "firstName": foundUser.firstName
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -29,7 +30,8 @@ const handleLogin = async (req,res) => {
             const refreshToken = jwt.sign(
                 {"userInfo": {
                     "username": foundUser.username, 
-                    "role": foundUser.role
+                    "role": foundUser.role,
+                    "firstName": foundUser.firstName
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
