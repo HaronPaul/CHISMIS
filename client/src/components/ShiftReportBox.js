@@ -27,7 +27,7 @@ const loadingBoxStyle = {
     width: '500px',
     p: '2%',
     height: '10%'
-  };
+};
 
 const ShiftReportBox = ({closeDocModal}) => {
     const shiftReportData = useSelector((state) => state.section)

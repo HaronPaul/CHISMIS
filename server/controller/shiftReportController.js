@@ -115,7 +115,7 @@ const validateData = async (req,res) => {
 // @route:      /api/v1/shift_report/create
 const createReport = async (req, res) => {
     // Get all the sections
-    const {
+    let {
         currentSupervisor, 
         manager, 
         incomingSupervisor, 
@@ -163,6 +163,9 @@ const createReport = async (req, res) => {
             var qcbrine = new QCBrine({...qcBrineSection, date: jsDate, shift})
             await qcbrine.save()
         }
+
+        signCount += 1 // Increment the signCount
+        isComplete = signCount === 3? true: false
 
         // Update the inventory
         var newShiftReport = new ShiftReport({
@@ -283,6 +286,9 @@ const getMTD = async (req,res) => {
 // @desc:       This will get the shift reports with the specified date
 // @route:      /api/v1/shift_report/get/:date
 const getShiftReports = async (req,res) => {
+    
+    // Query Parameters
+    console.log(req.query) 
 
     const selectedDate = req.params.date
     const dateSplit = selectedDate.split('-')
@@ -290,7 +296,7 @@ const getShiftReports = async (req,res) => {
     var month = parseInt(dateSplit[0])
     var day = parseInt(dateSplit[1])
     const jsDate = new Date(year, month-1, day+1)
-
+    
     try {
         const shiftReports = await ShiftReport.find({date: jsDate}, {_id: 1, shift: 1, currentSupervisor: 1, date: 1})
         res.status(200).json({

@@ -14,6 +14,7 @@ import Unauthorized from './components/Unauthorized'
 import RequireAuth from './components/RequireAuth'
 import UsersPage from './pages/UsersPage'
 import PersistLogin from './components/PersistLogin'
+import SignPendingReports from './pages/SignPendingReports'
 
 import {Route, Routes} from 'react-router-dom'
 
@@ -54,6 +55,7 @@ const App = (props) => {
               {/* Supervisor Routes */}
               <Route element={<RequireAuth allowedRoles={[2121]} />} >
                 <Route path='supervisor/create' element={<CreateSR/>} />
+                <Route path='sign' element={<SignPendingReports/>} />
               </Route>
           
               <Route element={<RequireAuth allowedRoles={[2699]} />} >

@@ -14,7 +14,7 @@ import axios from 'axios'
 
 
 // Redux Imports
-import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro, changeSupervisor, addSignCount} from "../redux/sectionSlice"
+import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro, changeSupervisor} from "../redux/sectionSlice"
 import {addErrors} from '../redux/errorSlice'
 let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
@@ -201,7 +201,6 @@ const CreateSR = (props) => {
                 }
                     setOpenValidationModal(false)
                     dispatch(changeSupervisor(`${firstName} ${lastName}`))
-                    dispatch(addSignCount())
                     handleOpen()
             } else {
                 // Print the errors on the DOM

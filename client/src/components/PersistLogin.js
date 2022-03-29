@@ -16,7 +16,7 @@ const PersistLogin = () => {
             try {
                 await refresh()
                 if(pathname === '/')
-                    navigate('/home')
+                    navigate('/home', {replace: true})
             } catch(err) {
                 console.error(err)
             } finally{
@@ -25,11 +25,10 @@ const PersistLogin = () => {
         }
 
         !token? verifyRefreshToken():setIsLoading(false)
+
     }, [])
 
     useEffect(() => {
-        console.log(`isLoading: ${isLoading}`)
-        console.log(`aT: ${JSON.stringify(token)}`)
     }, [isLoading])
 
     return(

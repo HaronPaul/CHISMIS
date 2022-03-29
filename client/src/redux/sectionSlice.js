@@ -57,10 +57,6 @@ const sectionSlice = createSlice({
         changeDate: (state, action) => {state.date = action.payload },
         changeSupervisor: (state, action) => {state.currentSupervisor = action.payload},
         changeNextSupervisor: (state, action) => {state.incomingSupervisor = action.payload},
-        addSignCount: (state) => {
-            state.signCount += 1
-            state.isComplete = state.signCount === 3? true: false
-        },
         resetState: () => originalState,
         retrieveState: (state, action) => action.payload
     }
@@ -76,7 +72,6 @@ export const {
     addQcbrine, 
     addUsages, 
     addEval, 
-    addSignCount,
     changeShift, 
     changeDate,
     changeSupervisor,

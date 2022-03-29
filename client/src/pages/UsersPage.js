@@ -90,10 +90,12 @@ const UsersPage = () => {
                     </ProtectedComponent>
 
                     <ProtectedComponent allowedRoles={[2121,2699]}>
-                        <Box>
-                            <Image src={sign_report}/>
-                            <Typography variant='h6' style={{color: 'black'}}>Sign Pending Reports</Typography>
-                        </Box>
+                        <Link to='/sign' style={{textDecoration: 'none'}}>
+                            <Box>
+                                <Image src={sign_report}/>
+                                <Typography variant='h6' style={{color: 'black'}}>Sign Pending Reports</Typography>
+                            </Box>
+                        </Link>
                     </ProtectedComponent>
 
                     <ProtectedComponent allowedRoles={[2121,2699]}>
