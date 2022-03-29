@@ -17,10 +17,11 @@ const useRefreshToken = () => {
                 accessToken: response.data.accessToken, 
                 role: response.data.role,
                 username: response.data.username,
-                firstName: response.data.firstName
+                firstName: response.data.firstName,
+                lastName: response.data.lastName
             }
-            
-            ))
+            )
+        )
         return response.data.accessToken
     }
     

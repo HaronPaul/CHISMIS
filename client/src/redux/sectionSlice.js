@@ -26,7 +26,7 @@ const originalState = {
 const sectionSlice = createSlice({
     name: "section",
     initialState: {
-        currentSupervisor: 'Haron Paul Lorente',
+        currentSupervisor: '',
         manager: null,
         incomingSupervisor: null,
         date: null,
@@ -55,6 +55,8 @@ const sectionSlice = createSlice({
         addEval: (state,action) => {state.evalSection[`${action.payload.name}`] = action.payload.value},
         changeShift: (state, action) => {state.shift = action.payload },
         changeDate: (state, action) => {state.date = action.payload },
+        changeSupervisor: (state, action) => {state.currentSupervisor = action.payload},
+        changeNextSupervisor: (state, action) => {state.incomingSupervisor = action.payload},
         addSignCount: (state) => {
             state.signCount += 1
             state.isComplete = state.signCount === 3? true: false
@@ -74,8 +76,11 @@ export const {
     addQcbrine, 
     addUsages, 
     addEval, 
+    addSignCount,
     changeShift, 
     changeDate,
+    changeSupervisor,
+    changeNextSupervisor,
     resetState,
     retrieveState } = sectionSlice.actions
 export default sectionSlice.reducer

@@ -14,7 +14,7 @@ import axios from 'axios'
 
 
 // Redux Imports
-import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro} from "../redux/sectionSlice"
+import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro, changeSupervisor, addSignCount} from "../redux/sectionSlice"
 import {addErrors} from '../redux/errorSlice'
 let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
@@ -60,9 +60,11 @@ const CreateSR = (props) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
-    const {currentSupervisor, date, shift, usagesSection, electroSection, controlRoomSection, hclSection, evapSection} = useSelector((state) => state.section)
-    const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3,ac_alpha_cellulose, ac_power, ac_steam_brine} = usagesSection
     const {shiftReportErrors} = useSelector((state) => state.error)
+    const {firstName, lastName} = useSelector((state) => state.user)
+    const {currentSupervisor, date, shift, usagesSection, electroSection, controlRoomSection, hclSection, evapSection} = useSelector((state) => state.section)
+
+    const {ac_salt, ac_soda_ash, ac_naoh, ac_hcl, ac_bacl2, ac_flocullant, ac_na2so3,ac_alpha_cellulose, ac_power, ac_steam_brine} = usagesSection
 
     // Modal states and function
     const [open, setOpen] = useState(false);
@@ -176,11 +178,9 @@ const CreateSR = (props) => {
                         dispatch(addUsages({name: 'mtd_steam_evap', value: usagesSection.pdn_steam_evap}))
                         dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.pdn_steam_brine}))
                     } else {
-                        console.log('In MTD')
                         // Get the response from the DB query here
                         const mtdResponse = await axios.get(`http://localhost:8000/api/v1/shift_report/getMTD/${date}/${shift}`)
                         if(mtdResponse.data.success) {
-                            console.log(mtdResponse.data)
                             const acSum = mtdResponse.data.mtdAcSum
                             const {ac_alpha_cellulose, ac_bacl2, ac_flocullant, ac_hcl, ac_na2so3, ac_naoh, ac_power, ac_salt, ac_soda_ash, ac_steam_brine, ac_steam_evap,} = acSum
                             const cellLiquorSum = parseFloat(mtdResponse.data.mtdCellLiquorSum) + parseFloat(electroSection.cell_liq_prod)
@@ -200,6 +200,8 @@ const CreateSR = (props) => {
                     }
                 }
                     setOpenValidationModal(false)
+                    dispatch(changeSupervisor(`${firstName} ${lastName}`))
+                    dispatch(addSignCount())
                     handleOpen()
             } else {
                 // Print the errors on the DOM
@@ -232,7 +234,7 @@ const CreateSR = (props) => {
             elevation={4}>
                 <Grid container spacing={2}>
                     <Grid item lg={4}>
-                        <Typography variant="h6">Supervisor: {currentSupervisor} </Typography>
+                        <Typography variant="h6">Supervisor: {`${firstName} ${lastName}`} </Typography>
                     </Grid>
                     <Grid item lg={4}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>

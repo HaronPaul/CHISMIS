@@ -9,9 +9,10 @@ const handleLogin = async (req,res) => {
     if(!username && !password) return res.status(400).json({'message': 'Username and password are required'})
     try {
         // Match the enter password with the hashed password
-        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1, verified: 1})
+        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1, verified: 1, lastName: 1})
         if(!foundUser) return res.sendStatus(401)
         if(!foundUser.verified) return res.status(401).json({message: 'You are not yet verified'})
+        
         // When user is found, check if hashedPassword matches  
         const match = await bcrypt.compare(password, foundUser.password)
         if(match) {
@@ -21,7 +22,8 @@ const handleLogin = async (req,res) => {
                 "userInfo": {
                     "username": foundUser.username, 
                     "role": foundUser.role,
-                    "firstName": foundUser.firstName
+                    "firstName": foundUser.firstName,
+                    "lastName": foundUser.lastName
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -31,7 +33,8 @@ const handleLogin = async (req,res) => {
                 {"userInfo": {
                     "username": foundUser.username, 
                     "role": foundUser.role,
-                    "firstName": foundUser.firstName
+                    "firstName": foundUser.firstName,
+                    "lastName": foundUser.lastName
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
@@ -43,7 +46,7 @@ const handleLogin = async (req,res) => {
 
             // Set refresh token in a cookie 
             res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: 'None', secure: true})
-            res.json({accessToken, role: foundUser.role, username: foundUser.username, firstName: foundUser.firstName})
+            res.json({accessToken, role: foundUser.role, username: foundUser.username, firstName: foundUser.firstName, lastName: foundUser.lastName})
                 
         }  else {
             res.sendStatus(401)

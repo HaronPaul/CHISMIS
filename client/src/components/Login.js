@@ -69,9 +69,9 @@ const LogIn = ({handleClick}) => {
         const role = response?.data?.role
         const username = response?.data?.username
         const firstName = response?.data?.firstName
-
+        const lastName = response?.data?.lastName
         // Set the global variable user with the credentials
-        dispatch(setUser({accessToken, role, username, firstName}))
+        dispatch(setUser({accessToken, role, username, firstName, lastName}))
         navigate(from, {replace: true})
       } catch(err) {
         setAlert(-1)

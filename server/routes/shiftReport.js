@@ -9,4 +9,5 @@ router.get('/getMTD/:date/:shift', checkConnection, getMTD)
 router.get('/get_reports/:date', checkConnection, getShiftReports)
 router.get('/get_report/:id', checkConnection, getSingleReport)
 
+
 module.exports = router

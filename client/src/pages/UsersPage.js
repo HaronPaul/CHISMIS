@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ProtectedComponent from '../components/ProtectedComponent'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import '@fontsource/roboto'
 
 // SVG Imports for icons
 import users from '../assets/icons/users.svg'
@@ -54,6 +55,13 @@ const Image = styled.img`
     object-fit: contain;
 `
 
+const Label = styled.h3`
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: black;
+    font-weight: 100;
+`
+
 const UsersPage = () => {
     const {firstName} = useSelector((state)=> state.user)
 
@@ -73,11 +81,11 @@ const UsersPage = () => {
                     </ProtectedComponent>
 
                     <ProtectedComponent allowedRoles={[2121]}>
-                        <Link to='/supervisor/create'>
-                        <Box>
-                            <Image src={create_report}/>
-                            <Typography variant='h6' style={{color: 'black'}}>Create Shift Report</Typography>
-                        </Box>
+                        <Link to='/supervisor/create' style={{textDecoration: 'none'}}>
+                            <Box>
+                                <Image src={create_report}/>
+                                <Label>Create Shift Report</Label>
+                            </Box>
                         </Link>
                     </ProtectedComponent>
 

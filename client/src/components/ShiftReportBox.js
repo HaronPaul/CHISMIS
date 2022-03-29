@@ -6,7 +6,7 @@ import { Modal } from "@mui/material";
 import axios from 'axios'
 
 // Redux imports
-import { resetState } from "../redux/sectionSlice";
+import { resetState} from "../redux/sectionSlice";
 
 const style = {
     display: 'flex',
