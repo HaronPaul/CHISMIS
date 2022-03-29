@@ -119,12 +119,12 @@ const getUsers = async (req,res) => {
 }
 
 
-// @method:     GET
+// @method:     PUT
 // @access:     Private
-// @desc:       This will get all users
+// @desc:       This will update a user
 // @route:      /api/v1/user/:id
 const editUser = async (req,res) => {
-
+    
     try {
         const update = req.body
         const user = await User.findOneAndUpdate({_id: mongoose.Types.ObjectId(req.params.id)}, update, {new: true})
@@ -132,6 +132,7 @@ const editUser = async (req,res) => {
             message: "Successfully updated user",
             data: user
         })
+        
     } catch(error) {
         console.log(error.message)
         res.status(400).json(error.message)

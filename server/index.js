@@ -31,6 +31,9 @@ app.use(cors(corsOptions))
 
 app.use(express.urlencoded({ extended: false}))
 app.use(express.json())
+app.set('query parser', function(qs, options) {
+    
+})
 
 // Middleware for cookies
 app.use(cookieParser())

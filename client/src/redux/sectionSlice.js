@@ -5,9 +5,9 @@ import { controlRoom_values, hcl_values, evap_values, prBrine_values, electro_va
 
 const originalState = {
     currentSupervisor: 'Angielle Schnaider',
-    manager: null,
-    incomingSupervisor: null,
-    date: null,
+    manager: '',
+    incomingSupervisor: '',
+    date: '',
     shift: 1,
     signCount: 0,
     isComplete: false,
@@ -27,8 +27,8 @@ const sectionSlice = createSlice({
     name: "section",
     initialState: {
         currentSupervisor: '',
-        manager: null,
-        incomingSupervisor: null,
+        manager: '',
+        incomingSupervisor: '',
         date: null,
         shift: 1,
         signCount: 0,

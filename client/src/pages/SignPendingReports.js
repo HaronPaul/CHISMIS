@@ -3,6 +3,7 @@ import {Typography, TextField, Button, Paper, Alert, Modal, Box, CircularProgres
 import styled from 'styled-components'
 import reportSVG from '../assets/icons/report.svg'
 import axios from 'axios'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import ShiftReportDoc from '../components/ShiftReportDoc'
 
 // Date Imports
@@ -89,14 +90,19 @@ function convertDate(newDate) {
 }
 
 const SignPendingReports = () => {
+    const axiosPrivate = useAxiosPrivate()
+
     const [reports, setReports] = useState([])
     const [date, changeDate] = useState('')
     const [error, setError] = useState(true)
     const [open, setOpen] = useState(false);
+    const [currentReport, setCurrentReport] = useState('')
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const {role} = useSelector((state) => state.user)
+    const {role, userLoggedIn, firstName, lastName} = useSelector((state) => state.user)
+    let {signCount, isComplete} = useSelector((state) => state.section)
     const dispatch = useDispatch()
 
     const [openLoadingModal, setOpenLoadingModal] = useState(false)
@@ -123,13 +129,11 @@ const SignPendingReports = () => {
     }
 
     const handleViewButton = async () => {
-        const queryParam = role === 2121? {'incomingSupervisor': null}:{'manager': null}
-        
-        console.log(queryParam)
+        const queryParam = role === 2121? {incomingSupervisor: ''}:{manager: ''}
 
         if(!error){
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_reports/${date}}`, {params: {...queryParam}})
+                const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_reports/${date}`, {params: {...queryParam}})
                 console.log(response.data.success)
                 if(response.data.success === true) {
                     console.log('Successfully retrieved data')
@@ -142,6 +146,9 @@ const SignPendingReports = () => {
     }
 
     const handleReportClick = async (reportID) => {
+        // Set the current report's ID state
+        setCurrentReport(reportID) 
+
         // Request for the details of the shift report here
         setOpenLoadingModal(true)
         try {
@@ -153,6 +160,26 @@ const SignPendingReports = () => {
             }
         } catch(err) {
             setOpenLoadingModal(false)
+            console.log(err)
+        }
+    }
+
+    const handleSignButton = async () => {
+        
+        // Update the value of the incoming supervisor/manager
+        let signature = role === 2121? {incomingSupervisor: `${firstName} ${lastName}`}:{manager: `${firstName} ${lastName}`}
+        signCount += 1
+        isComplete = signCount === 3? true: false
+
+        try {
+            const response = await axiosPrivate.put(`http://localhost:8000/api/v1/shift_report/update/${currentReport}`, {
+                ...signature,
+                signCount: signCount,
+                isComplete: isComplete
+            })
+
+            console.log(response)
+        } catch(err) {
             console.log(err)
         }
     }
@@ -196,7 +223,8 @@ const SignPendingReports = () => {
             style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
         >
             <Box sx={reportModalStyle}>
-                <ShiftReportDoc download={true}></ShiftReportDoc>
+                <ShiftReportDoc download={false}></ShiftReportDoc>
+                <Button variant="contained" style={{marginTop: '10px'}} onClick={handleSignButton}>Sign This Report</Button>
             </Box>
         </Modal>
         <Modal

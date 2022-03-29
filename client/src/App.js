@@ -55,11 +55,12 @@ const App = (props) => {
               {/* Supervisor Routes */}
               <Route element={<RequireAuth allowedRoles={[2121]} />} >
                 <Route path='supervisor/create' element={<CreateSR/>} />
-                <Route path='sign' element={<SignPendingReports/>} />
+               
               </Route>
           
-              <Route element={<RequireAuth allowedRoles={[2699]} />} >
-                {/* Manager Routes */}
+              <Route element={<RequireAuth allowedRoles={[2121, 2699]} />} >
+                {/* Manager Routes and Supervisor Routes */}
+                <Route path='sign' element={<SignPendingReports/>} />
               </Route>
 
               {/* Catch All */}

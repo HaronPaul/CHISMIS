@@ -288,7 +288,7 @@ const getMTD = async (req,res) => {
 const getShiftReports = async (req,res) => {
     
     // Query Parameters
-    console.log(req.query) 
+    filters = req.query
 
     const selectedDate = req.params.date
     const dateSplit = selectedDate.split('-')
@@ -298,7 +298,7 @@ const getShiftReports = async (req,res) => {
     const jsDate = new Date(year, month-1, day+1)
     
     try {
-        const shiftReports = await ShiftReport.find({date: jsDate}, {_id: 1, shift: 1, currentSupervisor: 1, date: 1})
+        const shiftReports = await ShiftReport.find({date: jsDate, ...filters}, {_id: 1, shift: 1, currentSupervisor: 1, date: 1})
         res.status(200).json({
             success: true,
             shiftReports
@@ -331,7 +331,6 @@ const getSingleReport = async (req,res) => {
             .populate('qcBrineSection')
             .populate('usagesSection')
             .populate('evalSection')
-
         res.status(200).json({
             success: true,
             shiftReport
@@ -345,5 +344,23 @@ const getSingleReport = async (req,res) => {
     }
 }
 
+// @method:     PUT
+// @access:     PRIVATE
+// @desc:       This will get the shift reports with the specified date
+// @route:      /api/v1/shift_report/update/:id
+const updateReport = async (req,res) => {
 
-module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport}
+    console.log(`ID passed is ${req.params.id}`)
+    update = req.body
+
+    try {
+        await ShiftReport.findOneAndUpdate({_id: ObjectId(req.params.id)}, update, {new: true})
+        res.sendStatus(200)
+    } catch(err) {
+        console.log(err)
+        res.sendStatus(400)
+    }
+
+}
+
+module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport}
