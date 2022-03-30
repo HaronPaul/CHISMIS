@@ -92,21 +92,26 @@ function convertDate(newDate) {
 const SignPendingReports = () => {
     const axiosPrivate = useAxiosPrivate()
 
+
     const [reports, setReports] = useState([])
     const [date, changeDate] = useState('')
     const [error, setError] = useState(true)
     const [open, setOpen] = useState(false);
     const [currentReport, setCurrentReport] = useState('')
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    const {role, userLoggedIn, firstName, lastName} = useSelector((state) => state.user)
+    const {role, firstName, lastName} = useSelector((state) => state.user)
     let {signCount, isComplete} = useSelector((state) => state.section)
     const dispatch = useDispatch()
-
-    const [openLoadingModal, setOpenLoadingModal] = useState(false)
     
+    const handleOpen = () => setOpen(true); // For opening the document modal
+    const handleClose = () => setOpen(false); // For closing the document modal
+    
+    const [openLoadingModal, setOpenLoadingModal] = useState(false)
+    const [message, setMessage] = useState('') // Message for the loading modal
+    
+    const [openAlertModal, setOpenAlertModal] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+
     const handleDateChange = (newDate) => {
         try {
             const dateString = newDate.toString()
@@ -151,6 +156,7 @@ const SignPendingReports = () => {
 
         // Request for the details of the shift report here
         setOpenLoadingModal(true)
+        setMessage('Retrieving shift report...')
         try {
             const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_report/${reportID}`)
             if(response.data.success) {
@@ -160,6 +166,7 @@ const SignPendingReports = () => {
             }
         } catch(err) {
             setOpenLoadingModal(false)
+            setMessage('')
             console.log(err)
         }
     }
@@ -170,16 +177,35 @@ const SignPendingReports = () => {
         let signature = role === 2121? {incomingSupervisor: `${firstName} ${lastName}`}:{manager: `${firstName} ${lastName}`}
         signCount += 1
         isComplete = signCount === 3? true: false
-
+        setOpenLoadingModal(true)
+        setMessage('Signing Shift Report...')
         try {
             const response = await axiosPrivate.put(`http://localhost:8000/api/v1/shift_report/update/${currentReport}`, {
                 ...signature,
                 signCount: signCount,
                 isComplete: isComplete
             })
+            if(response.status === 200){
+                // Update modal states
+                setOpenLoadingModal(false)
+                handleClose()
+                setOpenAlertModal(true)
+                setAlertMessage('Successfully signed report')
+                setMessage('')
 
-            console.log(response)
+                // Delete the report from the array
+                setReports((reports) => reports.filter((report) => currentReport !== report._id))
+            }
         } catch(err) {
+            setOpenLoadingModal(false)
+            setMessage('')
+            handleClose()
+            setOpenAlertModal(true)
+            if(!err?.response) {
+                setAlertMessage('No server response')
+            } else if(err.response?.status === 400) {
+                setAlertMessage('An error occured when signing the report. Please try again')
+            }
             console.log(err)
         }
     }
@@ -237,7 +263,20 @@ const SignPendingReports = () => {
             <Paper sx={loadingModalStyle} elevation={5}>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <CircularProgress style={{marginRight: '20px'}} />
-                    <Typography variant="h5"> Retrieving shift report </Typography>
+                    <Typography variant="h5"> {message} </Typography>
+                </div>
+            </Paper>
+        </Modal>
+        <Modal
+            open={openAlertModal}
+            onClose={() => setOpenAlertModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}
+        >
+            <Paper sx={loadingModalStyle} elevation={5}>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <Typography variant="h5"> {alertMessage} </Typography>
                 </div>
             </Paper>
         </Modal>

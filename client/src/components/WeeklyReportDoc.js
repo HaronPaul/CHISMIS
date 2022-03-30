@@ -75,7 +75,7 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> {'Caustic Soda 32%'} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_32 || ''} </font></td>
                             <td align="center" rowSpan={2}><font face="Arial" size="2"> {numOfDays * 60} </font></td>
-                            <td align="center"><font face="Arial" size="2"> <b> &nbsp; </b> </font></td>
+                            <td align="center"><font face="Arial" size="2"> {parseFloat(((data?.production.ac_caustic_32 - (numOfDays * 60)) / (numOfDays * 60)) * 100).toFixed(2) } </font></td>
                             <td align="center">
                                 <CellInput type='text' onChange={(e) => handleRemarksChange(e,0)}/>
                             </td>
@@ -83,7 +83,7 @@ const WeeklyReportDoc = ({data, isWeekly, mtdData, numOfDays, mtdNumOfDays}) => 
                         <tr>
                             <td align="center" style={{minWidth: '200px'}} colSpan={2}><font face="Arial" size="2"> <b> Caustic Soda 50{'%'} </b> </font></td>
                             <td align="center"><font face="Arial" size="2"> {data?.production?.ac_caustic_50|| ''} </font></td>
-                            <td align="center"><font face="Arial" size="2">  </font></td>
+                            <td align="center"><font face="Arial" size="2"> {parseFloat(((data?.production.ac_caustic_50 - (numOfDays * 60)) / (numOfDays * 60)) * 100).toFixed(2)} </font></td>
                             <td align="center">
                                 <CellInput type='text' onChange={(e) => handleRemarksChange(e,1)}/>
                             </td>

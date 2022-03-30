@@ -71,7 +71,7 @@ function getDay(date) {
 
 const ShiftReportDoc = ({download}) => {
     const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection} = useSelector((state) => state.section)
-    const {date, shift, currentSupervisor, incomingSupervisor} = useSelector((state)=> state.section)
+    const {date, shift, currentSupervisor, incomingSupervisor, manager} = useSelector((state)=> state.section)
     const [monday, setMonday] = useState(0)
     const classes = useStyle()
 
@@ -1116,7 +1116,7 @@ const ShiftReportDoc = ({download}) => {
                         <tr>
                             <td align="center" colSpan={4}><font face="Arial" size="2" > {currentSupervisor}</font></td>
                             <td align="center" colSpan={4}><font face="Arial" size="2" > {incomingSupervisor}</font></td>
-                            <td align="center" colSpan={3}><font face="Arial" size="2" > &nbsp;</font></td>
+                            <td align="center" colSpan={3}><font face="Arial" size="2" > {manager}</font></td>
                         </tr>
                         <tr>
                             <td align="center" colSpan={4}><font face="Arial" size="2"><b> Prepared By: Section/Shift Supervisor </b></font></td>
