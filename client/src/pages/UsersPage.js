@@ -72,7 +72,7 @@ const UsersPage = () => {
                 <Typography variant="h5"> What would you like to do?</Typography>
                 <BoxContainer>
                     <ProtectedComponent allowedRoles={[1999]}>
-                        <Link to='manage_users'>
+                        <Link to='manage_users' style={{textDecoration: 'none'}}>
                             <Box>
                                 <Image src={users}/>
                                 <Typography variant='h6' style={{color: 'black'}}>Edit Users</Typography>
