@@ -144,7 +144,7 @@ const getWeeklyReport = async (req, res) => {
             // Production
             data: {
                 production: {
-                    ac_caustic_50: evap_sums[0].naoh_sum,                 
+                    ac_caustic_50: parseFloat(evap_sums[0].naoh_sum).toFixed(2),                 
                     ac_caustic_32: parseFloat(ac_caustic_32.toFixed(2)),
                     ac_hcl: parseFloat(hcl_sums[0].hcl_sum.toFixed(2)),
                     ac_naclo: naclos_sums[0].naclo_sum,

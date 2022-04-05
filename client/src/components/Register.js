@@ -3,6 +3,7 @@ import { Typography, Grid, FormControl, InputLabel, MenuItem, TextField, Button,
 from "@mui/material";
 import Select from '@mui/material/Select'
 import axios from 'axios'
+import GeneralModal from "./GeneralModal"
 
 let initialCreds = {
   firstName: '',
@@ -35,6 +36,10 @@ const Register = ({handleClick}) => {
     const [message, setMessage] = useState("")
     const [disabled, setDisabled] = useState(true)
 
+    // Modal states
+    const [openModal, setOpenModal] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
+
     const handleInputChange = e => {
       const {name, value} = e.target
       setCredentials({
@@ -44,29 +49,39 @@ const Register = ({handleClick}) => {
     }
 
     useEffect(() => { 
-
       // Check if fields have an empty string/not yet filled. If so, disable the button, else enable
-      Object.values(credentials).some(value => value.length === 0)? setDisabled(true): setDisabled(false)
-
-      // Check if passwords matched. If so, enable the button, else disable
-      if(credentials.password.trim().length > 0 && credentials.password.trim().length > 0) 
-        (credentials.password !== credentials.matchedPwd)? setDisabled(true): setDisabled(false)
-      else
+      if(Object.values(credentials).some(value => value.length === 0)) {
         setDisabled(true)
-
-
+      }
+      else {
+        setDisabled(false)
+        // Check if passwords matched. If so, enable the button, else disable
+        if(credentials.password.trim().length > 0 && credentials.password.trim().length > 0) 
+          (credentials.password !== credentials.matchedPwd)? setDisabled(true): setDisabled(false)
+        else
+          setDisabled(true)
+      }
     }, [credentials])
 
 
     const handleRegisterButton = async () => {
+      setOpenModal(true)
+      setModalMessage('Creating new user...')
       try {
         const response = await axios.post('http://localhost:8000/api/v1/user', JSON.stringify(credentials), {
           headers: {'Content-Type': 'application/json'},
         })
         response.data?.success? setAlert(1):setAlert(-1)
         setMessage(response.data.message)
-        // setCredentials(null)
+        
+        // Update modal states
+        setOpenModal(false)
+        setModalMessage('')
+        
       } catch(err) {  
+        setOpenModal(false)
+        setModalMessage('')
+
         console.log(Object.keys(err))
         // When server is down
         if(!err?.response) { 
@@ -138,7 +153,7 @@ const Register = ({handleClick}) => {
           <Grid item lg={12} sm={12} xs={12}>
               <FormControl style={{ minWidth: '100%'}}>
                   <InputLabel labelid="role">Role</InputLabel>
-                  <Select defaultValue = "" name="role" id="role" label="Role" onChange={handleInputChange}>
+                  <Select defaultValue = '' name="role" id="role" label="Role" onChange={handleInputChange}>
                       <MenuItem value={'SUPERVISOR'}>SUPERVISOR</MenuItem>
                       <MenuItem value={'MANAGER'}>MANAGER</MenuItem>
                       <MenuItem value={'ADMINISTRATOR'}>ADMINISTRATOR</MenuItem>
@@ -155,6 +170,7 @@ const Register = ({handleClick}) => {
               <Button size="small" variant="outlined" onClick={() => handleClick()}>Sign In</Button>
           </Grid>
         </Grid>
+        <GeneralModal message={modalMessage} openModal={openModal} />
       </>
     )
 }

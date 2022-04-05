@@ -6,12 +6,11 @@ import styled from "styled-components";
 import axios from '../api/axios'
 import {useNavigate, useLocation} from 'react-router-dom'
 
-const Container = styled.div`
+const UserContainer = styled.div`
     background: linear-gradient(to right, #4568dc, #b06ab3);
     display: flex;
     flex-direction: column;
     padding: 3%;
-    margin: 1.5%;
     border-radius: 20px;
 `
 
@@ -20,6 +19,18 @@ const MiniContainer = styled.div`
     justify-content: center;
     align-items: center;
     background-color: "blue";
+`
+
+const MainContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
+const Container = styled.div`
+    padding: 2%;
+    width: 90%;
+    margin-top: 2%;
+    border-radius: 20px;
 `
 
 const useStyles = makeStyles({
@@ -36,8 +47,15 @@ const useStyles = makeStyles({
 
 const UserDetails = ({user, handleClick, index}) => {
     const classes = useStyles()
-    
 
+    let roleText
+    if(user.role === 1999)
+        roleText = 'Administrator'
+    else if(user.role === 2121)
+        roleText = 'Supervisor'
+    else
+        roleText = 'Manager'
+    
     return(
         <Paper elevation={6} className={classes.paperContainer}>
             <Grid container spacing={1} className={classes.gridContainer}> 
@@ -46,7 +64,7 @@ const UserDetails = ({user, handleClick, index}) => {
                 </Grid>
                 <Grid item lg={2} sm={6} xs={6}>
                     <MiniContainer>
-                        <Typography style={{textAlign: 'center'}}>Role: {user.role}</Typography>
+                        <Typography style={{textAlign: 'center'}}>{roleText}</Typography>
                     </MiniContainer>
                 </Grid>
                 <Grid item lg={2} sm={6} xs={12}>
@@ -77,7 +95,6 @@ const ManageUsers = () => {
         } catch(error) {
             console.log(error.message)
         }
-
     }
 
     useEffect(()=> {
@@ -104,19 +121,31 @@ const ManageUsers = () => {
     }, [])
 
     return(
-        <>
-            <Typography variant="h1" style={{color: 'black', marginLeft: '1.5%'}}> Manage Users </Typography>
+        <MainContainer>
             <Container>
-                <Typography variant="h4" style={{color: 'white'}}> Pending users</Typography>
-                {unverifiedUsers.map((user, index) => {
-                    if(!user.verified) {
-                        return(
-                            <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
-                        )
-                    }
-                })}
+                <Typography variant="h2" style={{marginBottom: '1.5%'}}> Manage Users </Typography>
+                <UserContainer>
+                    <Typography variant="h4" style={{color: 'white'}}> Pending Users</Typography>
+                    {unverifiedUsers.map((user, index) => {
+                        if(!user.verified) {
+                            return(
+                                <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
+                            )
+                        }
+                    })}
+                </UserContainer>
+                <UserContainer style={{marginTop: '1.5%'}}>
+                    <Typography variant="h4" style={{color: 'white'}}> Verified Users</Typography>
+                    {unverifiedUsers.map((user, index) => {
+                        if(user.verified) {
+                            return(
+                                <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
+                            )
+                        }
+                    })}
+                </UserContainer>
             </Container>
-        </>
+        </MainContainer>
     )
 }
 

@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect} from "react"
 import { Typography, Grid, TextField, Button, Alert} from "@mui/material"
-import {Link, useNavigate, useLocation} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
+import GeneralModal from "./GeneralModal"
 
-// Redux related improts
-import {useDispatch, useSelector} from 'react-redux'
+// Redux related imports
+import {useDispatch} from 'react-redux'
 import { setUser } from "../redux/userSlice"
 import axios from 'axios'
+
 
 const SuccessAlert = ({message}) => {
   return(
@@ -28,7 +30,6 @@ const LogIn = ({handleClick}) => {
     
     // Refs
     const userRef = useRef()
-    const errRef = useRef()
 
     // States
     const [username, setUsername] = useState('')
@@ -41,6 +42,10 @@ const LogIn = ({handleClick}) => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || '/home' 
+
+    // Modal states
+    const [openModal, setOpenModal] = useState(false)
+    const [modalMessage, setModalMessage] = useState('')
 
     useEffect(()=> { 
       userRef.current.focus()
@@ -60,6 +65,8 @@ const LogIn = ({handleClick}) => {
       e.preventDefault()
       const body = {username,password}
 
+      setOpenModal(true)
+      setModalMessage('Signing In...')
       try {
         const response = await axios.post('http://localhost:8000/api/v1/auth', JSON.stringify(body), {
           headers: {'Content-type': 'application/json'},
@@ -70,10 +77,17 @@ const LogIn = ({handleClick}) => {
         const username = response?.data?.username
         const firstName = response?.data?.firstName
         const lastName = response?.data?.lastName
+
+        // Update Modal states
+        setOpenModal(false)
+        setModalMessage('')
+
         // Set the global variable user with the credentials
         dispatch(setUser({accessToken, role, username, firstName, lastName}))
         navigate(from, {replace: true})
       } catch(err) {
+        setOpenModal(false)
+        setModalMessage('')
         setAlert(-1)
         if(!err?.response) {
           setMessage('No Server Response')
@@ -90,6 +104,7 @@ const LogIn = ({handleClick}) => {
         }
       }
     }
+
 
     return(
       <>
@@ -130,6 +145,7 @@ const LogIn = ({handleClick}) => {
             </Grid>
           </Grid>
         </form>
+        <GeneralModal message={modalMessage} openModal={openModal} />
       </>
     )
 }
