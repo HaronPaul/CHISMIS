@@ -9,7 +9,7 @@ const handleRefreshToken = async (req,res) => {
     const refreshToken = cookies.jwt
     try {
         // Match the enter password with the hashed password
-        const foundUser = await User.findOne({refreshToken: refreshToken}, {username: 1, refreshToken: 1, role: 1, firstName: 1, lastName: 1})
+        const foundUser = await User.findOne({refreshToken: refreshToken}, {username: 1, refreshToken: 1, role: 1, firstName: 1, lastName: 1, _id: 1})
         if(!foundUser) return res.sendStatus(403) // Forbidden
 
         jwt.verify(
@@ -23,7 +23,8 @@ const handleRefreshToken = async (req,res) => {
                             "username": decoded.userInfo.username, 
                             "role": decoded.userInfo.role,
                             "firstName": decoded.userInfo.firstName,
-                            "lastName": decoded.userInfo.lastName
+                            "lastName": decoded.userInfo.lastName,
+                            "id": decoded.userInfo._id
                         }
                     },
                     process.env.ACCESS_TOKEN_SECRET,
@@ -34,7 +35,9 @@ const handleRefreshToken = async (req,res) => {
                     role: foundUser.role, 
                     firstName: foundUser.firstName,
                     lastName: foundUser.lastName,  
-                    username: foundUser.username})
+                    username: foundUser.username,
+                    id: foundUser._id}
+                )
             }
         )
 

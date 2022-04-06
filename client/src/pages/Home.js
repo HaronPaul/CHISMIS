@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import HomeImage from '../assets/MVC-364.jpg'
+import HomeImage from '../assets/wallpaper2.jpg'
 import { Grid, Paper, Typography} from "@mui/material";
 import {makeStyles} from '@mui/styles'
 import Register from '../components/Register'
 import LogIn from "../components/Login";
+import '@fontsource/bebas-neue'
 
 const paperContainer = {
   width: '70%',
@@ -64,7 +65,7 @@ const Home = (props) => {
     return(
       <Grid container style={mainContainer}>
         <Grid item lg={6} sm={12} style={rightGrid}>
-            <Typography variant="h1" style={mainTitle}>CHISMIS</Typography>
+            <h1 style={{fontFamily: 'Bebas Neue', fontSize: '7rem', letterSpacing: '5px', color: 'white', textShadow: '2px 2px 10px rgba(0, 0, 0, 1)'}}> CHISMIS </h1>
             <Typography variant="h4" style={mainTitle}>Centralized Historical and Integrated Shift Management Information System</Typography>
         </Grid>
         <Grid item lg={6} sm={12} style={leftGrid}>

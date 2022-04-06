@@ -6,6 +6,8 @@ import styled from "styled-components";
 import axios from '../api/axios'
 import {useNavigate, useLocation} from 'react-router-dom'
 
+import { useSelector } from "react-redux";
+
 const UserContainer = styled.div`
     background: linear-gradient(to right, #4568dc, #b06ab3);
     display: flex;
@@ -45,7 +47,7 @@ const useStyles = makeStyles({
     }
 })
 
-const UserDetails = ({user, handleClick, index}) => {
+const UserDetails = ({user, handleClick, index, verified, handleDeleteClick}) => {
     const classes = useStyles()
 
     let roleText
@@ -68,10 +70,12 @@ const UserDetails = ({user, handleClick, index}) => {
                     </MiniContainer>
                 </Grid>
                 <Grid item lg={2} sm={6} xs={12}>
-                    <Button variant="contained" color="primary" style={{minWidth: '100%'}} onClick={() => handleClick(index)}>Verify</Button>
+                    {!verified && 
+                        <Button variant="contained" color="primary" style={{minWidth: '100%'}} onClick={() => handleClick(index)}>Verify</Button>
+                    }
                 </Grid>
                 <Grid item lg={2} sm={6} xs={12}>
-                    <Button variant="contained" color="secondary" style={{minWidth: '100%'}}>Delete</Button>
+                    <Button variant="contained" color="secondary" style={{minWidth: '100%'}} onClick={() => handleDeleteClick(index)}>Delete</Button>
                 </Grid>
             </Grid>
         </Paper>
@@ -81,8 +85,9 @@ const UserDetails = ({user, handleClick, index}) => {
 const ManageUsers = () => {
     const classes = useStyles()
     const [unverifiedUsers, setUnverifiedUsers] = useState([])
-    const [verifiedUsers, setVerifiedUser] = useState([])
     const axiosPrivate = useAxiosPrivate()
+
+    const {id} = useSelector((state) => state.user)
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -91,11 +96,31 @@ const ManageUsers = () => {
         try {
             const response = await axios.put(`/user/${unverifiedUsers[index]._id}`, {verified: true})
             if(response.status === 200)
-                setUnverifiedUsers((unverifiedUsers) => unverifiedUsers.filter((_, i)=> i !== index))
+            
+            // setUnverifiedUsers((unverifiedUsers) => unverifiedUsers.filter((_, i)=> i !== index))
+            setUnverifiedUsers(unverifiedUsers.map((u,i) => {
+                if(i === index) {
+                    return {...u, verified: true}
+                }
+
+                return u
+            }))
+
         } catch(error) {
             console.log(error.message)
         }
     }
+
+    const handleDeleteClick = async (index) => {
+        console.log('Delete button clicked')
+        try {
+            const response = await axios.delete(`/user/${unverifiedUsers[index]._id}`)
+            setUnverifiedUsers((unverifiedUsers) => unverifiedUsers.filter((_, i)=> i !== index))
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
 
     useEffect(()=> {
         let isMounted = true
@@ -129,7 +154,13 @@ const ManageUsers = () => {
                     {unverifiedUsers.map((user, index) => {
                         if(!user.verified) {
                             return(
-                                <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
+                                <UserDetails 
+                                    user={user} 
+                                    key={index} 
+                                    handleClick={handleVerifyClick} 
+                                    handleDeleteClick={handleDeleteClick} 
+                                    index={index}
+                                    verified={false} />
                             )
                         }
                     })}
@@ -137,9 +168,15 @@ const ManageUsers = () => {
                 <UserContainer style={{marginTop: '1.5%'}}>
                     <Typography variant="h4" style={{color: 'white'}}> Verified Users</Typography>
                     {unverifiedUsers.map((user, index) => {
-                        if(user.verified) {
+                        if(user.verified && (user._id !== id)) {
                             return(
-                                <UserDetails user={user} key={index} handleClick={handleVerifyClick} index={index}></UserDetails>
+                                <UserDetails 
+                                    user={user} 
+                                    key={index} 
+                                    handleClick={handleVerifyClick} 
+                                    handleDeleteClick={handleDeleteClick} 
+                                    index={index}
+                                    verified={true} />
                             )
                         }
                     })}

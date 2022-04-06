@@ -139,4 +139,18 @@ const editUser = async (req,res) => {
     }
 }
 
-module.exports = {createUser, getUsers, editUser} 
+// @method:     DELETE
+// @access:     Private
+// @desc:       This will get all users
+// @route:      /api/v1/user/:id
+const deleteUser = async (req,res) => {
+    const userID = req.params.id
+    try {
+        await User.deleteOne({_id: mongoose.Types.ObjectId(userID)})
+        res.sendStatus(200)
+    } catch(err) {
+        res.sendStatus(500)
+    }
+}
+
+module.exports = {createUser, getUsers, editUser, deleteUser} 

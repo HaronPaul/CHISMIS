@@ -6,7 +6,8 @@ const originalState = {
     token: null,
     role: null,
     firstName: '',
-    lastName: ''
+    lastName: '',
+    id: ''
 } 
 
 const userSlice = createSlice({
@@ -20,6 +21,7 @@ const userSlice = createSlice({
             state.userLoggedIn = true
             state.firstName = action.payload.firstName
             state.lastName = action.payload.lastName
+            state.id = action.payload.id
         },
         changeToken: (state, action) => {
             state.token = action.payload.accessToken

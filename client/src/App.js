@@ -15,6 +15,7 @@ import RequireAuth from './components/RequireAuth'
 import UsersPage from './pages/UsersPage'
 import PersistLogin from './components/PersistLogin'
 import SignPendingReports from './pages/SignPendingReports'
+import EditReport from './pages/EditReport'
 
 import {Route, Routes} from 'react-router-dom'
 
@@ -49,15 +50,15 @@ const App = (props) => {
 
               {/* Admin Routes */}
               <Route element={<RequireAuth allowedRoles={[1999]} />} >
-              <Route path='home/manage_users' element={<ManageUsers/>}/>
+                <Route path='home/manage_users' element={<ManageUsers/>}/>
+                <Route path='home/edit' element={<EditReport/>} />
               </Route>
               
               {/* Supervisor Routes */}
               <Route element={<RequireAuth allowedRoles={[2121]} />} >
                 <Route path='supervisor/create' element={<CreateSR/>} />
-               
               </Route>
-          
+
               <Route element={<RequireAuth allowedRoles={[2121, 2699]} />} >
                 {/* Manager Routes and Supervisor Routes */}
                 <Route path='sign' element={<SignPendingReports/>} />

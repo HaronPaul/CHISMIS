@@ -9,7 +9,7 @@ const handleLogin = async (req,res) => {
     if(!username && !password) return res.status(400).json({'message': 'Username and password are required'})
     try {
         // Match the enter password with the hashed password
-        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1, verified: 1, lastName: 1})
+        const foundUser = await User.findOne({username}, {username: 1, password: 1, role: 1, firstName: 1, verified: 1, lastName: 1, _id: 1})
         if(!foundUser) return res.sendStatus(401)
         if(!foundUser.verified) return res.status(401).json({message: 'You are not yet verified'})
         
@@ -23,7 +23,8 @@ const handleLogin = async (req,res) => {
                     "username": foundUser.username, 
                     "role": foundUser.role,
                     "firstName": foundUser.firstName,
-                    "lastName": foundUser.lastName
+                    "lastName": foundUser.lastName,
+                    "id": foundUser._id
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -34,7 +35,8 @@ const handleLogin = async (req,res) => {
                     "username": foundUser.username, 
                     "role": foundUser.role,
                     "firstName": foundUser.firstName,
-                    "lastName": foundUser.lastName
+                    "lastName": foundUser.lastName,
+                    "id": foundUser._id
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,

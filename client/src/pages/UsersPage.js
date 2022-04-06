@@ -7,6 +7,7 @@ import '@fontsource/roboto'
 
 // SVG Imports for icons
 import users from '../assets/icons/users.svg'
+import edit from '../assets/icons/edit.svg'
 import inventory from '../assets/icons/inventory.svg'
 import sign_report from '../assets/icons/sign_report.svg'
 import create_report from '../assets/icons/create_report.svg'
@@ -76,6 +77,15 @@ const UsersPage = () => {
                             <Box>
                                 <Image src={users}/>
                                 <Typography variant='h6' style={{color: 'black'}}>Edit Users</Typography>
+                            </Box>
+                        </Link>
+                    </ProtectedComponent>
+
+                    <ProtectedComponent allowedRoles={[1999]}>
+                        <Link to='edit' style={{textDecoration: 'none'}}>
+                            <Box>
+                                <Image src={edit}/>
+                                <Typography variant='h6' style={{color: 'black'}}>Edit Shift Reports</Typography>
                             </Box>
                         </Link>
                     </ProtectedComponent>

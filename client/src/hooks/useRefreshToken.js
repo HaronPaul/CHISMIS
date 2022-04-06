@@ -18,7 +18,8 @@ const useRefreshToken = () => {
                 role: response.data.role,
                 username: response.data.username,
                 firstName: response.data.firstName,
-                lastName: response.data.lastName
+                lastName: response.data.lastName,
+                id: response.data.id
             }
             )
         )
