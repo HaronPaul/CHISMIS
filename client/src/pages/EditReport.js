@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import reportSVG from '../assets/icons/report.svg'
 import axios from '../api/axios'
 import ShiftReportDoc from '../components/ShiftReportDoc'
-import OSRTabs from '../components/Tabs'
+import CreateSR from './CreateSR'
 
 // Date Imports
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -109,6 +109,7 @@ function convertDate(newDate) {
 
 const EditReport = () => {
     const [reports, setReports] = useState([])
+    const [currentReport, setCurrentReport] = useState('')
     const [date, changeDate] = useState('')
     const [error, setError] = useState(true)
     const [open, setOpen] = useState(false);
@@ -144,7 +145,7 @@ const EditReport = () => {
     const handleViewButton = async () => {
         if(!error){
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_reports/${date}}`)
+                const response = await axios.get(`/shift_report/get_reports/${date}}`)
                 console.log(response.data.success)
                 if(response.data.success === true) {
                     console.log('Successfully retrieved data')
@@ -160,10 +161,11 @@ const EditReport = () => {
         // Request for the details of the shift report here
         setOpenLoadingModal(true)
         try {
-            const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_report/${reportID}`)
+            const response = await axios.get(`/shift_report/get_report/${reportID}`)
             if(response.data.success) {
                 setOpenLoadingModal(false)
                 dispatch(retrieveState(response.data.shiftReport))
+                setCurrentReport(reportID)
                 handleOpen()
             }
         } catch(err) {
@@ -171,7 +173,7 @@ const EditReport = () => {
             console.log(err)
         }
     }
-
+    
     return(
         <>
         <MainContainer> 
@@ -211,10 +213,7 @@ const EditReport = () => {
             style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
         >
             <Box sx={reportModalStyle}>
-                <OSRTabs/>
-                <Button variant='contained'> Edit Report </Button>
-                <Button variant='contained'> Cancel </Button>
-                {/* <ShiftReportDoc download={true}></ShiftReportDoc> */}
+                <CreateSR editMode={true} currentReport={currentReport}/>
             </Box>
         </Modal>
         <Modal

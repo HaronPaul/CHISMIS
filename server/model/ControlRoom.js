@@ -13,6 +13,7 @@ const ControlRoomSchema = new mongoose.Schema({
     eos_load: {type: Number},
     rd_water: {type: Number},
     cells_voltage: {type: String},
+    cells_total_voltage: {type: Number},
     xformer_oil_temp: {type: Number},
     date: {type: Date},
     shift: {type: Number},

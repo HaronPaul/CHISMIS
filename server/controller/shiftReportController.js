@@ -48,7 +48,7 @@ const validateData = async (req,res) => {
         evalErrors: [],
     }
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
-    
+    console.log(req.body)
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
@@ -101,7 +101,7 @@ const validateData = async (req,res) => {
         errors
     }
 
-    console.log('--- END ----')
+
     if(response.success) {
         return res.status(200).json(response)
     } else {
@@ -322,15 +322,15 @@ const getSingleReport = async (req,res) => {
     try { 
         const shiftReport = await ShiftReport
             .findOne({_id: ObjectId(reportID) })
-            .populate('controlRoomSection')
-            .populate('hclSection')
-            .populate('evapSection')
-            .populate('prBrineSection')
-            .populate('electroSection')
-            .populate('nacloSection')
-            .populate('qcBrineSection')
-            .populate('usagesSection')
-            .populate('evalSection')
+            .populate('controlRoomSection', '-_id -__v -shift -date')
+            .populate('hclSection', '-_id -__v -shift -date')
+            .populate('evapSection', '-_id -__v -shift -date')
+            .populate('prBrineSection', '-_id -__v -shift -date')
+            .populate('electroSection', '-_id -__v -shift -date')
+            .populate('nacloSection', '-_id -__v -shift -date')
+            .populate('qcBrineSection', '-_id -__v -shift -date')
+            .populate('usagesSection', '-_id -__v -shift -date')
+            .populate('evalSection', '-_id -__v -shift -date')
         res.status(200).json({
             success: true,
             shiftReport
@@ -346,13 +346,12 @@ const getSingleReport = async (req,res) => {
 
 // @method:     PUT
 // @access:     PRIVATE
-// @desc:       This will get the shift reports with the specified date
+// @desc:       This will update the incoming supervisor/manager in the shift report document
 // @route:      /api/v1/shift_report/update/:id
 const updateReport = async (req,res) => {
 
     console.log(`ID passed is ${req.params.id}`)
     update = req.body
-
     try {
         await ShiftReport.findOneAndUpdate({_id: ObjectId(req.params.id)}, update, {new: true})
         res.sendStatus(200)
@@ -360,7 +359,16 @@ const updateReport = async (req,res) => {
         console.log(err)
         res.sendStatus(400)
     }
-
 }
 
-module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport}
+// @method:     PUT
+// @access:     PRIVATE
+// @desc:       This will update the values of the sections in the shift report
+// @route:      /api/v1/shift_report/update/:id
+const updateSections = (req,res) => {
+    console.log(req.params.id)
+
+    
+}
+
+module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections}

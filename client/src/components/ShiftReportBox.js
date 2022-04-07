@@ -3,7 +3,7 @@ import { Typography, Button, Box, Paper, CircularProgress  } from "@mui/material
 import ShiftReportDoc from "./ShiftReportDoc";
 import {useSelector, useDispatch} from 'react-redux'
 import { Modal } from "@mui/material";
-import axios from 'axios'
+import axios from '../api/axios'
 
 // Redux imports
 import { resetState} from "../redux/sectionSlice";
@@ -29,7 +29,7 @@ const loadingBoxStyle = {
     height: '10%'
 };
 
-const ShiftReportBox = ({closeDocModal}) => {
+const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
     const shiftReportData = useSelector((state) => state.section)
     const dispatch = useDispatch()
 
@@ -45,7 +45,12 @@ const ShiftReportBox = ({closeDocModal}) => {
     const handleSubmit = async() => {
         handleOpen()
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report/create', shiftReportData)
+            let response
+            if(editMode)
+                // response = await axios.put(`shift_report/update/${currentReport}`)
+                console.log('Wewew')
+            else     
+                response = await axios.post('/shift_report/create', shiftReportData)
             setMessage(response.data.message)
             if(response.data) {
                 setSubmitted(true)

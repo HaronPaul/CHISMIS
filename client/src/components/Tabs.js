@@ -10,13 +10,18 @@ import ElectrolysisTab from './AllTabs/ElectrolysisTab'
 import NaCLOTab from './AllTabs/NaClOTab'
 import QCBrine from './AllTabs/QCBrine'
 import SpecificUsagesTab from './AllTabs/SpecificUsages'
-import SPEval from './AllTabs/SPEval'
 import {useSelector} from 'react-redux'
  
 const useStyles = makeStyles({
+    mainContainer: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+
     container: {
         width: '90%',
-        flexGrow: 1,
         flexWrap: 'wrap',
         boxSizing: 'border-box',
         backgroundColor: '#4dabf5',
@@ -41,6 +46,7 @@ const OSRTabs = (props) => {
 
     return( 
         <>
+        <div className={classes.mainContainer}>
             <div className={classes.container}>
                 <Tabs 
                     value={value}
@@ -66,6 +72,7 @@ const OSRTabs = (props) => {
             <div className={classes.tabPanelContainer}>
                 <TabPanel value={value} shift={shift}></TabPanel>
             </div>
+        </div>
         </>
     )
 }

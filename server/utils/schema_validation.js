@@ -43,9 +43,7 @@ let controlRoomSchema = Joi.object({
         'string.empty': 'Rectifier Demi Water required',
         'number.base': 'Rectifier Demi Water must be a number'
     }),
-    cells_voltage: Joi.string().required().messages({
-        'string.empty': 'Cells with Voltage field required',
-    }),
+    cells_voltage: Joi.string().optional().allow(''),
     cells_total_voltage: Joi.number().required().messages({
         'string.empty': 'Cells Total Voltage required',
         'number.base': 'Cells Total Voltage must be a number'

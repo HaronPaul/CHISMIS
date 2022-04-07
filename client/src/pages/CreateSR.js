@@ -14,7 +14,7 @@ import axios from 'axios'
 
 
 // Redux Imports
-import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro, changeSupervisor} from "../redux/sectionSlice"
+import { changeDate, changeShift, addUsages, addHcl, addEvap, addElectro, changeSupervisor, resetState} from "../redux/sectionSlice"
 import {addErrors} from '../redux/errorSlice'
 let actual_consumptions = ['ac_salt', 'ac_soda_ash', 'ac_naoh', 'ac_hcl', 'ac_bacl2', 'ac_flocullant', 'ac_na2so3', 'ac_alpha_cellulose', 'ac_power', 'ac_steam_brine']
 
@@ -56,7 +56,7 @@ const validationModalStyle = {
     height: '10%'
   };
 
-const CreateSR = (props) => {
+const CreateSR = ({editMode, currentReport}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
@@ -107,6 +107,7 @@ const CreateSR = (props) => {
 
     // Calculate the HCl Synthesis Efficiency
     useEffect(()=> {
+        console.log('Side effect!!')
         if(controlRoomSection.hours && controlRoomSection.avg_load && hclSection.hcl) {
             var theoretical = (1.36 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
             var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
@@ -164,7 +165,6 @@ const CreateSR = (props) => {
                     const day = splitDate[1]
                     // When it is first day of the month and first day
                     if(parseInt(day) === 1 && parseInt(shift) === 1) {
-                        console.log('In zero MTD')
                         // Add the current actual consumption with 0
                         dispatch(addUsages({name: 'mtd_salt', value: usagesSection.pdn_salt}))
                         dispatch(addUsages({name: 'mtd_soda_ash', value: usagesSection.pdn_soda_ash}))
@@ -227,43 +227,46 @@ const CreateSR = (props) => {
     return(
         <>
         <div className={classes.mainContainerStyle}>
-            <Typography variant="h2" className={classes.titleStyle}>Create Operation Shift Report</Typography>
-            <Paper 
-            className={classes.paperContainerStyle}
-            elevation={4}>
-                <Grid container spacing={2}>
-                    <Grid item lg={4}>
-                        <Typography variant="h6">Supervisor: {`${firstName} ${lastName}`} </Typography>
+
+            <Typography variant="h2" className={classes.titleStyle}>{editMode? 'Edit Operation Shift Report': 'Create Operation Shift Report'} </Typography>
+            {!editMode &&
+                <Paper 
+                className={classes.paperContainerStyle}
+                elevation={4}>
+                    <Grid container spacing={2}>
+                        <Grid item lg={4}>
+                            <Typography variant="h6">Supervisor: {`${firstName} ${lastName}`} </Typography>
+                        </Grid>
+                        <Grid item lg={4}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                            label="Date desktop"
+                            inputFormat="MM/dd/yyyy"
+                            value={date || null}
+                            onChange={handleDateChange}
+                            renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
+                        </Grid> 
+                        <Grid item lg={4}>
+                        <FormControl style={{minWidth: '100%'}}>
+                            <InputLabel labelid="shift">Shift</InputLabel>
+                            <Select
+                            id="shift"
+                            label="Shift"
+                            defaultValue = ""
+                            name='shift'
+                            value={shift || ''}
+                            onChange={(e) => dispatch(changeShift(e.target.value))}>
+                                <MenuItem value={1}>1</MenuItem>
+                                <MenuItem value={2}>2</MenuItem>
+                                <MenuItem value={3}>3</MenuItem>
+                            </Select>
+                        </FormControl>
+                        </Grid>
                     </Grid>
-                    <Grid item lg={4}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DesktopDatePicker
-                        label="Date desktop"
-                        inputFormat="MM/dd/yyyy"
-                        value={date || null}
-                        onChange={handleDateChange}
-                        renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                    </Grid> 
-                    <Grid item lg={4}>
-                    <FormControl style={{minWidth: '100%'}}>
-                        <InputLabel labelid="shift">Shift</InputLabel>
-                        <Select
-                        id="shift"
-                        label="Shift"
-                        defaultValue = ""
-                        name='shift'
-                        value={shift || ''}
-                        onChange={(e) => dispatch(changeShift(e.target.value))}>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </Grid>
-                </Grid>
-            </Paper>  
+                </Paper>  
+            }
             <div style={{width: '90%' }}>
                 {shiftReportErrors.length === 0? <></>:<ErrorSection errors={shiftReportErrors} type="shiftreport"/>}
             </div>
@@ -272,13 +275,22 @@ const CreateSR = (props) => {
                 <Button 
                 variant="contained" 
                 style={{marginRight: '2%', marginTop: '1%', marginBottom: '1%', width: '10%'}}
-                onClick={handleSubmitButton}>Submit</Button>
-                <Button 
+                onClick={handleSubmitButton}>{editMode? 'Edit Report':'Submit'}</Button>
+                { editMode && 
+                    <Button 
+                    variant="contained"
+                    color="secondary"
+                    style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}>
+                        Delete Report    
+                    </Button>
+                }
+
+                {/* <Button 
                 style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}
                 variant="contained"
                 onClick={handleValidateButton}>
                     Validate
-                </Button>
+                </Button> */}
             </div> 
              <Modal
                 open={open}

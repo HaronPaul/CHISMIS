@@ -45,7 +45,8 @@ const leftGrid = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  background: 'linear-gradient(to bottom, #34e89e, #0f3443)',
+  background: 'linear-gradient(to top, #136a8a, #267871)',
+
 
   '@media (minWidth: 600px) and (maxWidth: 900px)': {
     justifyContent: 'flex-start',

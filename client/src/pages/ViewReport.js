@@ -159,6 +159,7 @@ const ViewReport = () => {
         setOpenLoadingModal(true)
         try {
             const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_report/${reportID}`)
+            console.log(response.data)
             if(response.data.success) {
                 setOpenLoadingModal(false)
                 dispatch(retrieveState(response.data.shiftReport))
