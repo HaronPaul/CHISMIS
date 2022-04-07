@@ -3,10 +3,10 @@ import { Typography, Button, Box, Paper, CircularProgress  } from "@mui/material
 import ShiftReportDoc from "./ShiftReportDoc";
 import {useSelector, useDispatch} from 'react-redux'
 import { Modal } from "@mui/material";
-import axios from '../api/axios'
+import {axiosPrivate} from '../api/axios'
 
 // Redux imports
-import { resetState} from "../redux/sectionSlice";
+import {resetState} from "../redux/sectionSlice";
 
 const style = {
     display: 'flex',
@@ -47,10 +47,9 @@ const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
         try {
             let response
             if(editMode)
-                // response = await axios.put(`shift_report/update/${currentReport}`)
-                console.log('Wewew')
+                response = await axiosPrivate.put(`/shift_report/edit/${currentReport}`, shiftReportData)
             else     
-                response = await axios.post('/shift_report/create', shiftReportData)
+                response = await axiosPrivate.post('/shift_report/create', shiftReportData)
             setMessage(response.data.message)
             if(response.data) {
                 setSubmitted(true)
@@ -67,10 +66,10 @@ const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
 
     const closeSubmitModal = () => {
         if(success) {
-            dispatch(resetState())
+            // dispatch(resetState())
             closeDocModal()
         }
-
+        
         setMessage('')
         setSuccess(false)
         setSubmitted(false)

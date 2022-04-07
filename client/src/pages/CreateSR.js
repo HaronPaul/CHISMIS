@@ -107,7 +107,6 @@ const CreateSR = ({editMode, currentReport}) => {
 
     // Calculate the HCl Synthesis Efficiency
     useEffect(()=> {
-        console.log('Side effect!!')
         if(controlRoomSection.hours && controlRoomSection.avg_load && hclSection.hcl) {
             var theoretical = (1.36 * controlRoomSection.hours * controlRoomSection.avg_load * controlRoomSection.cells * 0.94) / 1000
             var eff = parseFloat((hclSection.hcl * 100) / theoretical).toFixed(2) 
@@ -212,18 +211,6 @@ const CreateSR = ({editMode, currentReport}) => {
         }
     }
 
-    const handleValidateButton = async () => {
-        setOpenValidationModal(true)
-        try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report/validate', shiftReportData)
-            if(response) setOpenValidationModal(false)
-            dispatch(addErrors(response.data.errors)) 
-        } catch(error) {
-            setOpenValidationModal(false)
-            console.log(error)
-        }
-    }
-
     return(
         <>
         <div className={classes.mainContainerStyle}>
@@ -300,7 +287,7 @@ const CreateSR = ({editMode, currentReport}) => {
                 style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
             >   
                 <>
-                    <ShiftReportBox closeDocModal={handleClose}/>
+                    <ShiftReportBox closeDocModal={handleClose} editMode={editMode} currentReport={currentReport}/>
                 </>
             </Modal>
             <Modal

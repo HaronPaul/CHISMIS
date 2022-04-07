@@ -48,7 +48,6 @@ const validateData = async (req,res) => {
         evalErrors: [],
     }
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
-    console.log(req.body)
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
@@ -58,8 +57,8 @@ const validateData = async (req,res) => {
         var day = parseInt(dateSplit[1])
         var year = parseInt(dateSplit[2])
         console.log(new Date(year, month-1, day+1))
+        
         const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift}, {_id: 1})
-        console.log(reportExist)
         if(reportExist) {
             console.log('Report already exists')
             errors.shiftReportErrors.push('Shift Report for this day and shift already exists')
@@ -365,10 +364,31 @@ const updateReport = async (req,res) => {
 // @access:     PRIVATE
 // @desc:       This will update the values of the sections in the shift report
 // @route:      /api/v1/shift_report/update/:id
-const updateSections = (req,res) => {
+const updateSections = async (req,res) => {
     console.log(req.params.id)
+    update = req.body
+    console.log(update.controlRoomSection)
 
-    
+    try {
+
+        // Get the ID of each section from the current shift report
+        const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection, evalSection} = await ShiftReport.findById(req.params.id)
+
+        // Update each section
+        await ControlRoom.findByIdAndUpdate(controlRoomSection, update.controlRoomSection)
+        await HCl.findByIdAndUpdate(hclSection, update.hclSection)
+        await Evaporator.findByIdAndUpdate(evapSection, update.evapSection)
+        await PrimaryBrine.findByIdAndUpdate(prBrineSection, update.prBrineSection)
+        await Electrolysis.findByIdAndUpdate(electroSection, update.electroSection)
+        await NaClO.findByIdAndUpdate(nacloSection, update.nacloSection)
+        await QCBrine.findByIdAndUpdate(qcBrineSection, update.qcBrineSection)
+        await SpecificUsages.findByIdAndUpdate(usagesSection, update.usagesSection)
+        await SPEvaluation.findByIdAndUpdate(evalSection, update.evalSection)
+
+        res.sendStatus(200)
+    } catch(err) {
+        res.sendStatus(500)
+    }
 }
 
 module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections}

@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {Typography, TextField, Button, Paper, Alert, Modal, Box, CircularProgress} from '@mui/material' 
 import styled from 'styled-components'
 import reportSVG from '../assets/icons/report.svg'
 import axios from '../api/axios'
-import ShiftReportDoc from '../components/ShiftReportDoc'
 import CreateSR from './CreateSR'
 
 // Date Imports
@@ -12,8 +11,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
 
 // Redux Imports
-import { useSelector, useDispatch } from 'react-redux'
-import {retrieveState} from '../redux/sectionSlice'
+import {useDispatch } from 'react-redux'
+import {changeDate, retrieveState} from '../redux/sectionSlice'
 
 const MainContainer = styled.div`
     display: flex;
@@ -79,50 +78,29 @@ const reportModalStyle = {
     overflowY: 'scroll',
 };
 
-const paperStyle = {
-    '&:hover': {
-        background: "#efefef"
-    }
-}
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-function convertDate(newDate) {
-    const dateString = newDate.toString()
-    console.log(dateString)
-    const DD = String(dateString.getDate()).padStart(2, '0');
-    const MM = String(dateString.getMonth() + 1).padStart(2, '0');
-    const YYYY = dateString.getFullYear();
-    const convertedDate = `${MM}-${DD}-${YYYY}`
+function convertISODate(newDate) {
+    const dateString = newDate.toISOString().split('T')[0]
+    const splitDate = dateString.split('-')
+    const convertedDate = `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`
     return convertedDate
 }
 
 const EditReport = () => {
     const [reports, setReports] = useState([])
     const [currentReport, setCurrentReport] = useState('')
-    const [date, changeDate] = useState('')
+    const [date, setDate] = useState('')
     const [error, setError] = useState(true)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    
     const dispatch = useDispatch()
-    const shiftReportData = useSelector((state) => state.section)
-
+    
     const [openLoadingModal, setOpenLoadingModal] = useState(false)
     
     const handleDateChange = (newDate) => {
         try {
+            console.log(newDate)
             const dateString = newDate.toString()
             if(dateString !== "Invalid Date") {
                 setError(false)
@@ -131,10 +109,10 @@ const EditReport = () => {
                 const YYYY = newDate.getFullYear();
                 const dateCreated = `${MM}-${DD}-${YYYY}`
                 console.log(dateCreated)
-                changeDate(dateCreated)
+                setDate(dateCreated)
             } else {
                 setError(true)
-                changeDate('')
+                setDate('')
                 console.log("Date is invalid")
             }
         } catch(err) {
@@ -158,13 +136,15 @@ const EditReport = () => {
     }
 
     const handleReportClick = async (reportID) => {
-        // Request for the details of the shift report here
         setOpenLoadingModal(true)
+
         try {
+            // Get data of this shift report by ID
             const response = await axios.get(`/shift_report/get_report/${reportID}`)
             if(response.data.success) {
                 setOpenLoadingModal(false)
                 dispatch(retrieveState(response.data.shiftReport))
+                dispatch(changeDate(convertISODate(new Date(response.data.shiftReport.date)))) 
                 setCurrentReport(reportID)
                 handleOpen()
             }
