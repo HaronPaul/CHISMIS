@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections } = require('../controller/shiftReportController')
+const { validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections, deleteReport } = require('../controller/shiftReportController')
 const checkConnection = require('../middleware/connectionCheck')
 
 router.post('/validate', validateData)
@@ -9,5 +9,7 @@ router.get('/get_reports/:date', checkConnection, getShiftReports)
 router.get('/get_report/:id', checkConnection, getSingleReport)
 router.put('/update/:id', checkConnection, updateReport)
 router.put('/edit/:id', checkConnection, updateSections)
+router.delete('/delete/:id', checkConnection, deleteReport)
+
 
 module.exports = router

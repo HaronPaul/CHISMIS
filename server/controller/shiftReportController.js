@@ -34,6 +34,7 @@ const SPEvaluation = require('../model/SPEvaluation')
 // @desc:       This will validate values from the Shift Report
 // @route:      /api/v1/shift_report/validate
 const validateData = async (req,res) => {
+    const editMode = parseInt(req.query.editMode)
     let errors = {
         numErrors: 0,
         shiftReportErrors: [],
@@ -47,8 +48,8 @@ const validateData = async (req,res) => {
         usagesErrors: [],
         evalErrors: [],
     }
+
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
-    console.log(req.body)
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
@@ -58,13 +59,15 @@ const validateData = async (req,res) => {
         var day = parseInt(dateSplit[1])
         var year = parseInt(dateSplit[2])
         console.log(new Date(year, month-1, day+1))
-        
-        const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift}, {_id: 1})
-        if(reportExist) {
-            console.log('Report already exists')
-            errors.shiftReportErrors.push('Shift Report for this day and shift already exists')
-            errors.numErrors += errors.shiftReportErrors.length
-        }
+    
+        if(editMode !== 1) {
+            const reportExist = await ShiftReport.findOne({date: new Date(year, month-1, day+1), shift: shift}, {_id: 1})
+            if(reportExist) {
+                console.log('Report already exists')
+                errors.shiftReportErrors.push('Shift Report for this day and shift already exists')
+                errors.numErrors += errors.shiftReportErrors.length
+            }
+        } 
     }
 
     const controlRoomResponse = await validate(req.body.controlRoomSection, controlRoomSchema)
@@ -100,7 +103,6 @@ const validateData = async (req,res) => {
         numErrors: errors.length,
         errors
     }
-
 
     if(response.success) {
         return res.status(200).json(response)
@@ -267,7 +269,6 @@ const getMTD = async (req,res) => {
         }
 
         cellLiquorSum.length === 0? mtdCellLiquorSum = 0:mtdCellLiquorSum = cellLiquorSum[0].cell_liq_prod
-
         res.json({
             success: true,
             mtdAcSum,
@@ -392,4 +393,19 @@ const updateSections = async (req,res) => {
     }
 }
 
-module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections}
+// @method:     DELETE
+// @access:     PRIVATE
+// @desc:       This delete a report
+// @route:      /api/v1/shift_report/update/:id
+const deleteReport = async (req,res) => {
+    const reportID = req.params.id
+    console.log(reportID)
+    try {
+        const currentReport = await ShiftReport.findById(ObjectId(reportID))
+        res.sendStatus(200)
+    } catch(err) {
+        
+    }
+}
+
+module.exports = {validateData, createReport, getMTD, getShiftReports, getSingleReport, updateReport, updateSections, deleteReport}

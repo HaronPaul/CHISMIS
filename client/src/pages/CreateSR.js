@@ -10,7 +10,7 @@ import { makeStyles } from "@mui/styles";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
-import axios from 'axios'
+import {axiosPrivate} from '../api/axios'
 
 
 // Redux Imports
@@ -151,12 +151,11 @@ const CreateSR = ({editMode, currentReport}) => {
 
     // Button for viewing the report in tabuler form
     const handleSubmitButton = async () => {
+        const editValue = editMode? '1':'0'
+        // Validate the data when submitting
         setOpenValidationModal(true)
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/shift_report/validate', shiftReportData, {validateStatus: function(status){
-                    return status < 500;
-                }
-            }) 
+            const response = await axiosPrivate.post(`/shift_report/validate?editMode=${editValue}`, shiftReportData) 
             if(response.data.success) {
                  // This will get the Per DMT NaOH MTD for the specific usages 
                 if(date) {
@@ -178,7 +177,7 @@ const CreateSR = ({editMode, currentReport}) => {
                         dispatch(addUsages({name: 'mtd_steam_brine', value: usagesSection.pdn_steam_brine}))
                     } else {
                         // Get the response from the DB query here
-                        const mtdResponse = await axios.get(`http://localhost:8000/api/v1/shift_report/getMTD/${date}/${shift}`)
+                        const mtdResponse = await axiosPrivate.get(`/shift_report/getMTD/${date}/${shift}`)
                         if(mtdResponse.data.success) {
                             const acSum = mtdResponse.data.mtdAcSum
                             const {ac_alpha_cellulose, ac_bacl2, ac_flocullant, ac_hcl, ac_na2so3, ac_naoh, ac_power, ac_salt, ac_soda_ash, ac_steam_brine, ac_steam_evap,} = acSum
@@ -209,6 +208,11 @@ const CreateSR = ({editMode, currentReport}) => {
         } catch(error) {
             console.log(error)
         }
+    }
+
+    const handleDeleteClick = async () => {
+        console.log('Delete Button is clicked!!')
+        const response = await axiosPrivate.delete(`shift_report/delete/${currentReport}`)
     }
 
     return(
@@ -267,17 +271,12 @@ const CreateSR = ({editMode, currentReport}) => {
                     <Button 
                     variant="contained"
                     color="secondary"
-                    style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}>
+                    style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}
+                    onClick={handleDeleteClick}
+                    >
                         Delete Report    
                     </Button>
                 }
-
-                {/* <Button 
-                style={{ marginTop: '1%', marginBottom: '1%', width: '10%'}}
-                variant="contained"
-                onClick={handleValidateButton}>
-                    Validate
-                </Button> */}
             </div> 
              <Modal
                 open={open}
