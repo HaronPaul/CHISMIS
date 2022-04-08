@@ -2,7 +2,7 @@ import React, { useEffect, useState }  from "react";
 import styled from "styled-components";
 import axios from 'axios'
 import UpdateModal from "../components/UpdateModal";
-
+import ProtectedComponent from '../components/ProtectedComponent'
 import { Typography, Paper, Button, Modal, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import inventory from '../assets/icons/inventory.svg'
@@ -121,7 +121,9 @@ const Inventory = () => {
                         <Typography variant='h4'>Sodium Sulfite</Typography>
                     </Paper>
                 </div>
-                <Button variant="contained" onClick={handleUpdateButton} style={{marginTop: '30px', width: '20%', alignSelf: 'flex-end'}}>Edit Inventory</Button>
+                <ProtectedComponent allowedRoles={[1999, 2121]}>
+                    <Button variant="contained" onClick={handleUpdateButton} style={{marginTop: '30px', width: '20%', alignSelf: 'flex-end'}}>Edit Inventory</Button>
+                </ProtectedComponent>
             </Container>
         </MainContainer>
         <Modal

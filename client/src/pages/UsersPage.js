@@ -80,7 +80,7 @@ const UsersPage = () => {
                             </Box>
                         </Link>
                     </ProtectedComponent>
-
+                    
                     <ProtectedComponent allowedRoles={[1999]}>
                         <Link to='edit' style={{textDecoration: 'none'}}>
                             <Box>

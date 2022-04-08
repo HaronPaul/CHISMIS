@@ -48,6 +48,7 @@ const validateData = async (req,res) => {
         evalErrors: [],
     }
     let {currentSupervisor, manager, incomingSupervisor, date, shift, signCount, isComplete} = req.body
+    console.log(req.body)
     const shiftReportResponse = await validate({date, shift}, shiftReportSchema)
     if(!shiftReportResponse.success) errors.shiftReportErrors.push(...shiftReportResponse.error); errors.numErrors += errors.shiftReportErrors.length
 
