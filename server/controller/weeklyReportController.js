@@ -23,7 +23,7 @@ const getWeeklyReport = async (req, res) => {
     const startDate = convertToJSDate(req.params.startDate)
     const endDate = convertToJSDate(req.params.endDate)
 
-    if(endDate.getTime() <= startDate.getTime()) {
+    if(endDate.getTime() < startDate.getTime()) {
         return res.json({
             success: false,
             message: 'Date range not valid'
@@ -144,16 +144,16 @@ const getWeeklyReport = async (req, res) => {
             // Production
             data: {
                 production: {
-                    ac_caustic_50: parseFloat(evap_sums[0].naoh_sum).toFixed(2),                 
-                    ac_caustic_32: parseFloat(ac_caustic_32.toFixed(2)),
-                    ac_hcl: parseFloat(hcl_sums[0].hcl_sum.toFixed(2)),
+                    ac_caustic_50: evap_sums[0].naoh_sum,                 
+                    ac_caustic_32: ac_caustic_32,
+                    ac_hcl: hcl_sums[0].hcl_sum,
                     ac_naclo: naclos_sums[0].naclo_sum,
                 },
                 
                 // Load & Number of Cells
                 load: {
-                    average_current_load: parseFloat(average_current_load.toFixed(2)),
-                    average_op_cells: parseFloat(average_op_cells.toFixed(2)),
+                    average_current_load: average_current_load,
+                    average_op_cells: average_op_cells,
                 },
                 // Operating Time
                 operating_time: {
@@ -166,24 +166,24 @@ const getWeeklyReport = async (req, res) => {
                 
                 // Efficiency
                 efficiency: {
-                    electro_eff: parseFloat(electro_eff.toFixed(2)),
-                    hcl_eff: parseFloat(hcl_eff.toFixed(2)),
-                    evap_eff: parseFloat(evap_eff.toFixed(2)),
+                    electro_eff: electro_eff,
+                    hcl_eff: hcl_eff,
+                    evap_eff: evap_eff,
                 },
                 
                 // Usages
                 usages: {
-                    ac_salt:parseFloat((usagesSum[0].ac_salt / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_soda_ash: parseFloat((usagesSum[0].ac_soda_ash / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_naoh: parseFloat((usagesSum[0].ac_naoh / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_hcl: parseFloat((usagesSum[0].ac_hcl / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_bacl2: parseFloat((usagesSum[0].ac_bacl2 / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_flocullant: parseFloat((usagesSum[0].ac_flocullant / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_na2so3: parseFloat((usagesSum[0].ac_na2so3 / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_alpha_cellulose: parseFloat((usagesSum[0].ac_alpha_cellulose / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_power: parseFloat((usagesSum[0].ac_power / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_steam_evap: parseFloat((usagesSum[0].ac_steam_evap / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
-                    ac_steam_brine: parseFloat((usagesSum[0].ac_steam_brine / electro_sums[0].cell_liq_prod_sum).toFixed(2)),
+                    ac_salt:usagesSum[0].ac_salt / electro_sums[0].cell_liq_prod_sum,
+                    ac_soda_ash: usagesSum[0].ac_soda_ash / electro_sums[0].cell_liq_prod_sum,
+                    ac_naoh: usagesSum[0].ac_naoh / electro_sums[0].cell_liq_prod_sum,
+                    ac_hcl: usagesSum[0].ac_hcl / electro_sums[0].cell_liq_prod_sum,
+                    ac_bacl2: usagesSum[0].ac_bacl2 / electro_sums[0].cell_liq_prod_sum,
+                    ac_flocullant: usagesSum[0].ac_flocullant / electro_sums[0].cell_liq_prod_sum,
+                    ac_na2so3: usagesSum[0].ac_na2so3 / electro_sums[0].cell_liq_prod_sum,
+                    ac_alpha_cellulose: usagesSum[0].ac_alpha_cellulose / electro_sums[0].cell_liq_prod_sum,
+                    ac_power: usagesSum[0].ac_power / electro_sums[0].cell_liq_prod_sum,
+                    ac_steam_evap: usagesSum[0].ac_steam_evap / electro_sums[0].cell_liq_prod_sum,
+                    ac_steam_brine: usagesSum[0].ac_steam_brine / electro_sums[0].cell_liq_prod_sum,
                 },
     
                 // Products to Dist
