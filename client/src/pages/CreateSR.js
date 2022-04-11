@@ -56,7 +56,7 @@ const validationModalStyle = {
     height: '10%'
   };
 
-const CreateSR = ({editMode, currentReport}) => {
+const CreateSR = ({editMode, currentReport, reports, setReports, handleCloseEdit}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const shiftReportData = useSelector((state) => state.section)
@@ -68,11 +68,12 @@ const CreateSR = ({editMode, currentReport}) => {
 
     // Modal states and function
     const [open, setOpen] = useState(false);
-    const [openValidationModal, setOpenValidationModal] = useState(false)
+    const [loadingModal, setLoadingModal] = useState(false)
+    const [loadingMessage, setLoadingMessage] = useState('')
 
     // For opening and closing the modal document report
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpenDocument = () => setOpen(true);
+    const handleCloseDocument = () => setOpen(false);
  
     const handleDateChange = (date) => {
         try {
@@ -149,11 +150,13 @@ const CreateSR = ({editMode, currentReport}) => {
         }
     }, [usagesSection.ac_steam_evap, evapSection.naoh_prod])
 
-    // Button for viewing the report in tabuler form
+    // Button for viewing the report in tabuler form. This also opens the document modal
     const handleSubmitButton = async () => {
         const editValue = editMode? '1':'0'
+        
         // Validate the data when submitting
-        setOpenValidationModal(true)
+        setLoadingModal(true)
+        setLoadingMessage('Validating Data...')
         try {
             const response = await axiosPrivate.post(`/shift_report/validate?editMode=${editValue}`, shiftReportData) 
             if(response.data.success) {
@@ -197,12 +200,12 @@ const CreateSR = ({editMode, currentReport}) => {
                         }
                     }
                 }
-                    setOpenValidationModal(false)
+                    setLoadingModal(false)
                     dispatch(changeSupervisor(`${firstName} ${lastName}`))
-                    handleOpen()
+                    handleOpenDocument()
             } else {
                 // Print the errors on the DOM
-                setOpenValidationModal(false)
+                setLoadingModal(false)
                 dispatch(addErrors(response.data.errors))
             }
         } catch(error) {
@@ -211,8 +214,20 @@ const CreateSR = ({editMode, currentReport}) => {
     }
 
     const handleDeleteClick = async () => {
-        console.log('Delete Button is clicked!!')
-        const response = await axiosPrivate.delete(`shift_report/delete/${currentReport}`)
+        try {
+            setLoadingModal(true)
+            setLoadingMessage('Deleting Report...')
+            await axiosPrivate.delete(`shift_report/delete/${currentReport}`)
+            
+            // When deleting is done, update modals
+            handleCloseEdit()   // Closes the whole edit modal
+            setLoadingModal(false)
+            setReports(reports.filter((r) => r._id !== currentReport))
+        } catch(err) {
+            handleCloseEdit()   
+            setLoadingModal(false)
+            console.log(err)
+        }
     }
 
     return(
@@ -261,7 +276,7 @@ const CreateSR = ({editMode, currentReport}) => {
             <div style={{width: '90%' }}>
                 {shiftReportErrors.length === 0? <></>:<ErrorSection errors={shiftReportErrors} type="shiftreport"/>}
             </div>
-            <OSRTabs> </OSRTabs>
+            <OSRTabs editMode={editMode}/>
             <div style={{display: 'flex', width: '90%', justifyContent: 'flex-end'}}>
                 <Button 
                 variant="contained" 
@@ -280,18 +295,17 @@ const CreateSR = ({editMode, currentReport}) => {
             </div> 
              <Modal
                 open={open}
-                onClose={handleClose}
+                onClose={handleCloseDocument}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
             >   
                 <>
-                    <ShiftReportBox closeDocModal={handleClose} editMode={editMode} currentReport={currentReport}/>
+                    <ShiftReportBox closeDocModal={handleCloseDocument} editMode={editMode} currentReport={currentReport} handleCloseEdit={handleCloseEdit}/>
                 </>
             </Modal>
             <Modal
-                open={openValidationModal}
-                // onClose={handleClose}
+                open={loadingModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 style={{display: 'flex', justifyContent: 'center', alignItems: 'center' ,padding: '0.5%'}}
@@ -299,7 +313,7 @@ const CreateSR = ({editMode, currentReport}) => {
                 <Paper sx={validationModalStyle} elevation={5}>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <CircularProgress style={{marginRight: '20px'}} />
-                        <Typography variant="h5"> Validating data... </Typography>
+                        <Typography variant="h5"> {loadingMessage} </Typography>
                     </div>
                 </Paper>
             </Modal>

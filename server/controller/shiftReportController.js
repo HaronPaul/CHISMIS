@@ -372,7 +372,6 @@ const updateSections = async (req,res) => {
     console.log(update.controlRoomSection)
 
     try {
-
         // Get the ID of each section from the current shift report
         const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection, evalSection} = await ShiftReport.findById(req.params.id)
 
@@ -387,7 +386,10 @@ const updateSections = async (req,res) => {
         await SpecificUsages.findByIdAndUpdate(usagesSection, update.usagesSection)
         await SPEvaluation.findByIdAndUpdate(evalSection, update.evalSection)
 
-        res.sendStatus(200)
+        res.status(200).json({
+            success: true,
+            message: 'Sucessfully edited report'
+        })
     } catch(err) {
         res.sendStatus(500)
     }
@@ -399,12 +401,25 @@ const updateSections = async (req,res) => {
 // @route:      /api/v1/shift_report/update/:id
 const deleteReport = async (req,res) => {
     const reportID = req.params.id
-    console.log(reportID)
     try {
-        const currentReport = await ShiftReport.findById(ObjectId(reportID))
+        const {controlRoomSection, hclSection, evapSection, prBrineSection, electroSection, nacloSection, qcBrineSection, usagesSection, evalSection} =  await ShiftReport.findById(ObjectId(reportID))
+
+        // Delete each data from each section 
+        await ControlRoom.findByIdAndDelete(controlRoomSection)
+        await HCl.findByIdAndDelete(hclSection)
+        await Evaporator.findByIdAndDelete(evapSection)
+        await PrimaryBrine.findByIdAndDelete(prBrineSection)
+        await Electrolysis.findByIdAndDelete(electroSection)
+        await NaClO.findByIdAndDelete(nacloSection)
+        if(qcBrineSection) await QCBrine.findByIdAndDelete(qcBrineSection)
+        await SpecificUsages.findByIdAndDelete(usagesSection)
+        await SPEvaluation.findByIdAndDelete(evalSection)
+        await ShiftReport.findByIdAndDelete(reportID)
+
         res.sendStatus(200)
     } catch(err) {
-        
+        console.log(err)
+        res.sendStatus(500)
     }
 }
 

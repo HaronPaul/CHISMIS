@@ -60,6 +60,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         required
                         name='ac_salt'
                         onChange={handleChange}/>
@@ -77,6 +78,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         required
                         name='ac_bacl2'
                         onChange={handleChange}/>
@@ -94,6 +96,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         name='ac_soda_ash'
                         required
                         onChange={handleChange}
@@ -112,9 +115,9 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         name='ac_flocullant'
                         required
-                        value={newInventory.ac_flocullant || ''}
                         onChange={handleChange}/>
                     </Grid>
                 </Grid>
@@ -130,6 +133,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         name='ac_naoh'
                         required
                         onChange={handleChange}/>
@@ -147,6 +151,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         name='ac_hcl'
                         required
                         onChange={handleChange}/>
@@ -164,6 +169,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
+                        step={0.001}
                         name='ac_na2so3'
                         required
                         onChange={handleChange}/>

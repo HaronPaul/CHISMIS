@@ -120,13 +120,13 @@ const EditReport = () => {
         }
     }
 
+    // handler for clicking the view button 
     const handleViewButton = async () => {
         if(!error){
-            try {
+            try {   
                 const response = await axios.get(`/shift_report/get_reports/${date}}`)
                 console.log(response.data.success)
                 if(response.data.success === true) {
-                    console.log('Successfully retrieved data')
                     setReports(response.data.shiftReports)
                 }
             } catch(err) {
@@ -135,6 +135,7 @@ const EditReport = () => {
         }
     }
 
+    // handler for clicking a report thumbnail
     const handleReportClick = async (reportID) => {
         setOpenLoadingModal(true)
 
@@ -193,7 +194,7 @@ const EditReport = () => {
             style={{display: 'flex', justifyContent: 'center', padding: '0.5%'}}
         >
             <Box sx={reportModalStyle}>
-                <CreateSR editMode={true} currentReport={currentReport}/>
+                <CreateSR editMode={true} currentReport={currentReport} reports={reports} setReports={setReports} handleCloseEdit={handleClose}/>
             </Box>
         </Modal>
         <Modal

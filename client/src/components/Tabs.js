@@ -21,14 +21,14 @@ const useStyles = makeStyles({
     },
 
     container: {
-        width: '90%',
+        width: (props) => props.editMode? '100%':'90%',
         flexWrap: 'wrap',
         boxSizing: 'border-box',
         backgroundColor: '#4dabf5',
     },
 
     tabPanelContainer: {
-        width: '90%',
+        width: (props) => props.editMode? '100%':'90%',
         backgroundColor: 'whitesmoke',
         boxSizing: 'border-box',
         padding: '1%'
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 })
 
 const OSRTabs = (props) => {
-    const classes = useStyles()
+    const classes = useStyles(props)
     const [value, setValue] = useState(0)
     const {shift} = useSelector((state) => state.section)    
 
@@ -69,7 +69,7 @@ const OSRTabs = (props) => {
                         <Tab label="Specific Usages" wrapped/>
                 </Tabs>
             </div>
-            <div className={classes.tabPanelContainer}>
+            <div className={classes.tabPanelContainer} >
                 <TabPanel value={value} shift={shift}></TabPanel>
             </div>
         </div>

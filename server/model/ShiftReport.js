@@ -19,11 +19,4 @@ const ShiftReportSchema = new mongoose.Schema({
     evalSection: {type: mongoose.Schema.Types.ObjectId, ref: 'sp evaluation'},
 })
 
-ShiftReportSchema.pre('findById', function(next) {
-    const report = this
-    console.log('--------- IN Mongoose middleware ---------')
-    console.log(report)
-    console.lo
-})
-
 module.exports = ShiftReport = mongoose.model('shift report', ShiftReportSchema)

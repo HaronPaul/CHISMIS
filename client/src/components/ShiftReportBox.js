@@ -29,7 +29,7 @@ const loadingBoxStyle = {
     height: '10%'
 };
 
-const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
+const ShiftReportBox = ({closeDocModal, editMode, currentReport, handleCloseEdit}) => {
     const shiftReportData = useSelector((state) => state.section)
     const dispatch = useDispatch()
 
@@ -51,7 +51,7 @@ const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
             else     
                 response = await axiosPrivate.post('/shift_report/create', shiftReportData)
             setMessage(response.data.message)
-            if(response.data) {
+            if(response.status === 200) {
                 setSubmitted(true)
                 setSuccess(true)
             } else {
@@ -74,6 +74,7 @@ const ShiftReportBox = ({closeDocModal, editMode, currentReport}) => {
         setSuccess(false)
         setSubmitted(false)
         handleClose()
+        handleCloseEdit()
     }
 
     return(
