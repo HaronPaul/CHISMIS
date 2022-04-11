@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Typography, TextField, Button, Paper, Alert, Modal, Box, CircularProgress} from '@mui/material' 
 import styled from 'styled-components'
 import reportSVG from '../assets/icons/report.svg'
-import axios from 'axios'
+import axios from '../api/axios'
 import ShiftReportDoc from '../components/ShiftReportDoc'
 
 // Date Imports
@@ -142,7 +142,7 @@ const ViewReport = () => {
     const handleViewButton = async () => {
         if(!error){
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_reports/${date}}`)
+                const response = await axios.get(`/shift_report/get_reports/${date}}`)
                 console.log(response.data.success)
                 if(response.data.success === true) {
                     console.log('Successfully retrieved data')
@@ -158,7 +158,7 @@ const ViewReport = () => {
         // Request for the details of the shift report here
         setOpenLoadingModal(true)
         try {
-            const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_report/${reportID}`)
+            const response = await axios.get(`/shift_report/get_report/${reportID}`)
             console.log(response.data)
             if(response.data.success) {
                 setOpenLoadingModal(false)

@@ -10,7 +10,7 @@ import { makeStyles } from "@mui/styles";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns  from '@mui/lab/AdapterDateFns'
-import {axiosPrivate} from '../api/axios'
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 
 // Redux Imports
@@ -59,6 +59,7 @@ const validationModalStyle = {
 const CreateSR = ({editMode, currentReport, reports, setReports, handleCloseEdit}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const axiosPrivate = useAxiosPrivate()
     const shiftReportData = useSelector((state) => state.section)
     const {shiftReportErrors} = useSelector((state) => state.error)
     const {firstName, lastName} = useSelector((state) => state.user)

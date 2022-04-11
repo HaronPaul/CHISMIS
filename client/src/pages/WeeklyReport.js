@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {Typography, TextField, Button, Modal, Box, CircularProgress, Paper, Alert, FormControl, InputLabel, Select, MenuItem} from '@mui/material'
 import WeeklyReportDoc from '../components/WeeklyReportDoc'
-import axios from 'axios'
+import axios from '../api/axios'
 
 // Date Imports
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -68,9 +68,9 @@ const WeeklyReport = () => {
 
         try {        
             let mtdResponse
-            const response = await axios.get(`http://localhost:8000/api/v1/weekly_report/get/${startDate}/${endDate}`)
+            const response = await axios.get(`/weekly_report/get/${startDate}/${endDate}`)
             if(startDate !== beginningDate) {
-                mtdResponse = await axios.get(`http://localhost:8000/api/v1/weekly_report/get/${beginningDate}/${endDate}`)
+                mtdResponse = await axios.get(`/weekly_report/get/${beginningDate}/${endDate}`)
                 setMtdData(mtdResponse.data.data)
             }
             else {

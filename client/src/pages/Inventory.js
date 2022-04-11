@@ -1,6 +1,6 @@
 import React, { useEffect, useState }  from "react";
 import styled from "styled-components";
-import axios from 'axios'
+import axios from '../api/axios'
 import UpdateModal from "../components/UpdateModal";
 import ProtectedComponent from '../components/ProtectedComponent'
 import { Typography, Paper, Button, Modal, Box } from "@mui/material";
@@ -69,7 +69,7 @@ const Inventory = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get('http://localhost:8000/api/v1/inventory/getInventory')
+            const response = await axios.get('/inventory/getInventory')
             console.log(response)
             if(response.status === 200) {
                 setInventory(response.data.data)

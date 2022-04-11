@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react'
 import { Typography, TextField, Grid, Button } from "@mui/material"
-import axios from 'axios'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import makeStyles from '@mui/styles/makeStyles'
 
 const useStyle = makeStyles({
@@ -19,6 +19,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
     const classes = useStyle()
     const [newInventory, setNewInventory] = useState({...inventory})
     const formRef = useRef()
+    const axiosPrivate = useAxiosPrivate()
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -27,11 +28,12 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
         setNewInventory({...newInventory, [name]: parseFloat(value)})
     }
 
+    // Update the inventory
     const handleUpdateButton = async () => {
         const validity = formRef.current.reportValidity()
         if(validity) {
             try {
-                const response = await axios.put('http://localhost:8000/api/v1/inventory/resetInventory', newInventory)
+                const response = await axiosPrivate.put('/inventory/resetInventory', newInventory)
                 console.log(response.data)
                 if(response.data?.success) {
                     setInventory(response.data.data)
@@ -60,7 +62,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
-                        step={0.001}
+                        step='0.0001'
                         required
                         name='ac_salt'
                         onChange={handleChange}/>

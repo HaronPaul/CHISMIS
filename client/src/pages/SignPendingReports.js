@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Typography, TextField, Button, Paper, Alert, Modal, Box, CircularProgress} from '@mui/material' 
 import styled from 'styled-components'
 import reportSVG from '../assets/icons/report.svg'
-import axios from 'axios'
+import axios from '../api/axios'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import ShiftReportDoc from '../components/ShiftReportDoc'
 
@@ -92,7 +92,6 @@ function convertDate(newDate) {
 const SignPendingReports = () => {
     const axiosPrivate = useAxiosPrivate()
 
-
     const [reports, setReports] = useState([])
     const [date, changeDate] = useState('')
     const [error, setError] = useState(true)
@@ -138,7 +137,7 @@ const SignPendingReports = () => {
 
         if(!error){
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_reports/${date}`, {params: {...queryParam}})
+                const response = await axios.get(`/shift_report/get_reports/${date}`, {params: {...queryParam}})
                 console.log(response.data.success)
                 if(response.data.success === true) {
                     console.log('Successfully retrieved data')
@@ -158,7 +157,7 @@ const SignPendingReports = () => {
         setOpenLoadingModal(true)
         setMessage('Retrieving shift report...')
         try {
-            const response = await axios.get(`http://localhost:8000/api/v1/shift_report/get_report/${reportID}`)
+            const response = await axios.get(`/shift_report/get_report/${reportID}`)
             if(response.data.success) {
                 setOpenLoadingModal(false)
                 dispatch(retrieveState(response.data.shiftReport))
@@ -180,7 +179,7 @@ const SignPendingReports = () => {
         setOpenLoadingModal(true)
         setMessage('Signing Shift Report...')
         try {
-            const response = await axiosPrivate.put(`http://localhost:8000/api/v1/shift_report/update/${currentReport}`, {
+            const response = await axiosPrivate.put(`/shift_report/update/${currentReport}`, {
                 ...signature,
                 signCount: signCount,
                 isComplete: isComplete

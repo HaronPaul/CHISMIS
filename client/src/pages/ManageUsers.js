@@ -3,7 +3,6 @@ import {Grid, Paper, Typography, Button} from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import styled from "styled-components";
-import axios from '../api/axios'
 import {useNavigate, useLocation} from 'react-router-dom'
 
 import { useSelector } from "react-redux";
@@ -94,7 +93,7 @@ const ManageUsers = () => {
 
     const handleVerifyClick = async (index) => {
         try {
-            const response = await axios.put(`/user/${unverifiedUsers[index]._id}`, {verified: true})
+            const response = await axiosPrivate.put(`/user/${unverifiedUsers[index]._id}`, {verified: true})
             if(response.status === 200)
             
             // setUnverifiedUsers((unverifiedUsers) => unverifiedUsers.filter((_, i)=> i !== index))
@@ -114,7 +113,7 @@ const ManageUsers = () => {
     const handleDeleteClick = async (index) => {
         console.log('Delete button clicked')
         try {
-            const response = await axios.delete(`/user/${unverifiedUsers[index]._id}`)
+            const response = await axiosPrivate.delete(`/user/${unverifiedUsers[index]._id}`)
             setUnverifiedUsers((unverifiedUsers) => unverifiedUsers.filter((_, i)=> i !== index))
         } catch(err) {
             console.log(err)

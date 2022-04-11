@@ -6,8 +6,7 @@ import GeneralModal from "./GeneralModal"
 // Redux related imports
 import {useDispatch} from 'react-redux'
 import { setUser } from "../redux/userSlice"
-import axios from 'axios'
-
+import axios from '../api/axios'
 
 const SuccessAlert = ({message}) => {
   return(
@@ -68,7 +67,7 @@ const LogIn = ({handleClick}) => {
       setOpenModal(true)
       setModalMessage('Signing In...')
       try {
-        const response = await axios.post('http://localhost:8000/api/v1/auth', JSON.stringify(body), {
+        const response = await axios.post('/auth', JSON.stringify(body), {
           headers: {'Content-type': 'application/json'},
           withCredentials: true
         })

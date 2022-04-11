@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Typography, Grid, FormControl, InputLabel, MenuItem, TextField, Button, Alert}
 from "@mui/material";
 import Select from '@mui/material/Select'
-import axios from 'axios'
+import axios from '../api/axios'
 import GeneralModal from "./GeneralModal"
 
 let initialCreds = {
@@ -68,7 +68,7 @@ const Register = ({handleClick}) => {
       setOpenModal(true)
       setModalMessage('Creating new user...')
       try {
-        const response = await axios.post('http://localhost:8000/api/v1/user', JSON.stringify(credentials), {
+        const response = await axios.post('/user', JSON.stringify(credentials), {
           headers: {'Content-Type': 'application/json'},
         })
         response.data?.success? setAlert(1):setAlert(-1)

@@ -3,7 +3,7 @@ import { Typography, Button, Box, Paper, CircularProgress  } from "@mui/material
 import ShiftReportDoc from "./ShiftReportDoc";
 import {useSelector, useDispatch} from 'react-redux'
 import { Modal } from "@mui/material";
-import {axiosPrivate} from '../api/axios'
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 // Redux imports
 import {resetState} from "../redux/sectionSlice";
@@ -32,6 +32,7 @@ const loadingBoxStyle = {
 const ShiftReportBox = ({closeDocModal, editMode, currentReport, handleCloseEdit}) => {
     const shiftReportData = useSelector((state) => state.section)
     const dispatch = useDispatch()
+    const axiosPrivate = useAxiosPrivate()
 
     const [open, setOpen] = useState(false);
     const [isSubmitted, setSubmitted] = useState(false)
@@ -60,7 +61,7 @@ const ShiftReportBox = ({closeDocModal, editMode, currentReport, handleCloseEdit
             }
         } catch(err) {
             setSubmitted(false)
-            console.log(err)
+                console.log(err)
         } 
     }
 
