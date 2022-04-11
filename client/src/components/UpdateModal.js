@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react'
-import { Typography, TextField, Grid, Button } from "@mui/material"
+import { Typography, TextField, Grid, Button, FormControl } from "@mui/material"
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import makeStyles from '@mui/styles/makeStyles'
 
@@ -24,7 +24,6 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
     const handleChange = (e) => {
         const name = e.target.name
         const value = e.target.value
-        console.log(value)
         setNewInventory({...newInventory, [name]: parseFloat(value)})
     }
 
@@ -59,10 +58,11 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                     </Grid>
                     <Grid item lg={8}>
                         <TextField 
+                        inputProps={{ type: 'number'}}
                         className={classes.textField}
                         placeholder='Add value'
-                        type="number"
-                        step='0.0001'
+                        // type="number"
+                        // step='0.0001'
                         required
                         name='ac_salt'
                         onChange={handleChange}/>
@@ -171,7 +171,7 @@ const UpdateModal = ({inventory, setInventory, handleClose}) => {
                         className={classes.textField}
                         placeholder='Add value'
                         type="number"
-                        step={0.001}
+                        step='any'
                         name='ac_na2so3'
                         required
                         onChange={handleChange}/>
